@@ -9,7 +9,7 @@
 <meta property="og:description" content="Paragliding, and software built to understand it.">
 <meta name="robots" content="index, follow">
 <meta property="og:url" content="https://joerxc.org/">
-<meta property="og:image" content="https://joerxc.org/assets/goms-hero.jpg">
+<meta property="og:image" content="https://joerxc.org/assets/joerg-pod.jpg">
 <link rel="canonical" href="https://joerxc.org/">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪂</text></svg>">
@@ -76,7 +76,20 @@ a:hover{text-decoration:underline}
   padding:3px 9px; border-radius:980px; cursor:pointer; line-height:1.5;
 }
 .langbtn:hover{color:var(--text); border-color:var(--text-3)}
-@media (max-width:720px){ .navlinks a{display:none} }
+.navscroll{display:flex; gap:26px; align-items:center}
+@media (max-width:720px){
+  .nav .wrap{gap:12px; padding:0 16px}
+  .brand{flex:0 0 auto}
+  .navlinks{gap:12px; min-width:0}
+  .navscroll{
+    gap:16px; overflow-x:auto; min-width:0;
+    scrollbar-width:none; -ms-overflow-style:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .navscroll::-webkit-scrollbar{display:none}
+  .navscroll a{font-size:12.5px; white-space:nowrap}
+  .langbtn{flex:0 0 auto}
+}
 
 /* ---------- hero ---------- */
 .hero{padding:96px 0 40px; text-align:center}
@@ -212,10 +225,12 @@ html.de [data-lang="en"]{display:none !important}
   <div class="wrap">
     <a class="brand" href="#top">joerxc</a>
     <div class="navlinks">
+      <div class="navscroll">
       <a href="#writing"><span data-lang="en">Writing</span><span data-lang="de">Texte</span></a>
       <a href="#tools"><span data-lang="en">Tools</span><span data-lang="de">Tools</span></a>
       <a href="#planner"><span data-lang="en">Planner</span><span data-lang="de">Planer</span></a>
       <a href="#labs"><span data-lang="en">Experiments</span><span data-lang="de">Experimente</span></a>
+      </div>
       <button class="langbtn" id="lang" type="button" aria-label="Language"><span data-lang="en">DE</span><span data-lang="de">EN</span></button>
     </div>
   </div>
@@ -230,22 +245,6 @@ html.de [data-lang="en"]{display:none !important}
       <span data-lang="en">I fly paragliders and create software to understand flying better.</span>
       <span data-lang="de">Ich fliege Gleitschirm und kreiere Software, um das Fliegen besser zu verstehen.</span>
     </h1>
-    <p class="lede">
-      <span data-lang="en">And I publish texts based on it.</span>
-      <span data-lang="de">Und ich publiziere Texte, die darauf basieren.</span>
-    </p>
-    <div class="photo">
-      <figure>
-        <img src="assets/goms-hero.jpg"
-             srcset="assets/goms-hero-small.jpg 1000w, assets/goms-hero.jpg 1800w"
-             sizes="(max-width:980px) 100vw, 936px"
-             alt="Map of the Goms valley with two routes drawn on it, red for the best flight and blue for the model, with the two altitude profiles below">
-        <figcaption>
-          <span data-lang="en">goms — the model&rsquo;s route in blue against the best flight in red, and the two altitude profiles below.</span>
-          <span data-lang="de">goms — die Route des Modells in Blau gegen den besten Flug in Rot, darunter die beiden Höhenprofile.</span>
-        </figcaption>
-      </figure>
-    </div>
   </div>
 </header>
 
