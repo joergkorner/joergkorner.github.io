@@ -1,0 +1,8 @@
+# joerxc — allow everything, point crawlers at the sitemap.
+# After joerxc.org is live, change the Sitemap line to
+# https://joerxc.org/sitemap.xml
+
+User-agent: *
+Allow: /
+
+Sitemap: https://joergkorner.github.io/sitemap.xml

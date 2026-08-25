@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jörg Korner — joerxc</title>
+<meta name="description" content="Paragliding, and software built to understand it. Flight analysis, route planning, meteorology.">
+<meta property="og:title" content="Jörg Korner — joerxc">
+<meta property="og:description" content="Paragliding, and software built to understand it.">
+<meta name="robots" content="index, follow">
+<meta property="og:url" content="https://joergkorner.github.io/">
+<meta property="og:image" content="https://joergkorner.github.io/assets/joerg-pod.jpg">
+<!-- When joerxc.org is live: swap the two URLs above to https://joerxc.org/... and
+     uncomment the canonical line below.
+<link rel="canonical" href="https://joerxc.org/">
+-->
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪂</text></svg>">
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-alt:#f5f5f7;
+  --text:#1d1d1f;
+  --text-2:#6e6e73;
+  --text-3:#86868b;
+  --line:rgba(0,0,0,.10);
+  --card:#ffffff;
+  --card-line:rgba(0,0,0,.08);
+  --blue:#0066cc;
+  --nav:rgba(255,255,255,.72);
+  --shadow:0 2px 10px rgba(0,0,0,.045);
+  --shadow-hi:0 12px 34px rgba(0,0,0,.10);
+  --chip:rgba(0,0,0,.055);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#000000;
+    --bg-alt:#101012;
+    --text:#f5f5f7;
+    --text-2:#a1a1a6;
+    --text-3:#86868b;
+    --line:rgba(255,255,255,.14);
+    --card:#151517;
+    --card-line:rgba(255,255,255,.10);
+    --blue:#2997ff;
+    --nav:rgba(0,0,0,.72);
+    --shadow:0 2px 10px rgba(0,0,0,.4);
+    --shadow-hi:0 12px 34px rgba(0,0,0,.55);
+    --chip:rgba(255,255,255,.09);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;
+  font-size:17px; line-height:1.47; letter-spacing:-.01em;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+.wrap{max-width:980px; margin:0 auto; padding:0 22px}
+a{color:var(--blue); text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky; top:0; z-index:50; height:48px;
+  background:var(--nav); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--line);
+}
+.nav .wrap{height:48px; display:flex; align-items:center; gap:28px}
+.brand{font-size:15px; font-weight:600; color:var(--text); letter-spacing:-.015em}
+.brand:hover{text-decoration:none; opacity:.7}
+.navlinks{display:flex; gap:26px; margin-left:auto; align-items:center}
+.navlinks a{font-size:12.5px; color:var(--text-2); letter-spacing:-.005em}
+.navlinks a:hover{color:var(--text); text-decoration:none}
+.langbtn{
+  border:1px solid var(--line); background:transparent; color:var(--text-2);
+  font:inherit; font-size:11.5px; font-weight:500; letter-spacing:.04em;
+  padding:3px 9px; border-radius:980px; cursor:pointer; line-height:1.5;
+}
+.langbtn:hover{color:var(--text); border-color:var(--text-3)}
+@media (max-width:720px){ .navlinks a{display:none} }
+
+/* ---------- hero ---------- */
+.hero{padding:96px 0 40px; text-align:center}
+.eyebrow{
+  font-size:13px; font-weight:600; letter-spacing:.02em; color:var(--text-3);
+  text-transform:none; margin:0 0 16px;
+}
+h1{
+  margin:0; font-size:clamp(38px,6.6vw,72px); line-height:1.05;
+  font-weight:600; letter-spacing:-.028em; max-width:19ch; margin-inline:auto;
+}
+.lede{
+  margin:22px auto 0; max-width:38ch; font-size:clamp(18px,2.1vw,22px);
+  line-height:1.42; color:var(--text-2); letter-spacing:-.012em;
+}
+.photo{margin:56px 0 0}
+.photo figure{margin:0}
+.photo img{
+  display:block; width:100%; height:auto; border-radius:22px;
+  box-shadow:var(--shadow-hi);
+}
+.photo figcaption{
+  margin-top:14px; text-align:center; font-size:13px; color:var(--text-3);
+}
+
+/* ---------- sections ---------- */
+section.band{padding:88px 0}
+section.band.alt{background:var(--bg-alt)}
+.sec-head{max-width:760px; margin:0 0 40px}
+.kicker{
+  font-size:13px; font-weight:600; color:var(--text-3); letter-spacing:.01em; margin:0 0 10px;
+}
+h2{
+  margin:0; font-size:clamp(28px,4vw,44px); font-weight:600;
+  letter-spacing:-.024em; line-height:1.1;
+}
+.sec-sub{margin:14px 0 0; font-size:18px; color:var(--text-2); line-height:1.45; max-width:60ch}
+
+/* ---------- cards ---------- */
+.grid{display:grid; gap:20px; grid-template-columns:repeat(2,1fr)}
+
+.grid.one{grid-template-columns:1fr}
+@media (max-width:760px){ .grid{grid-template-columns:1fr} }
+.card{
+  position:relative; background:var(--card); border:1px solid var(--card-line);
+  border-radius:20px; padding:30px 30px 26px; box-shadow:var(--shadow);
+  transition:transform .25s cubic-bezier(.28,.11,.32,1), box-shadow .25s cubic-bezier(.28,.11,.32,1);
+  display:flex; flex-direction:column;
+}
+.card:hover{transform:translateY(-3px); box-shadow:var(--shadow-hi)}
+.card h3{
+  margin:0 0 10px; font-size:23px; font-weight:600; letter-spacing:-.019em; line-height:1.2;
+}
+.card p{margin:0; color:var(--text-2); font-size:16px; line-height:1.5}
+.card p + p{margin-top:10px}
+.card .links{margin-top:auto; padding-top:20px; display:flex; flex-wrap:wrap; gap:18px}
+.card .links a{font-size:16px; font-weight:400}
+.card .links a::after{content:" ›"; letter-spacing:0}
+.chips{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 14px}
+.chip{
+  font-size:11.5px; font-weight:600; letter-spacing:.02em; color:var(--text-2);
+  background:var(--chip); padding:4px 9px; border-radius:980px; line-height:1.4;
+}
+.chip.live{color:#1d7a3e; background:rgba(40,167,80,.13)}
+.chip.dropped{color:#9a4a1f; background:rgba(200,110,40,.14)}
+.chip.private{color:#5b4bb8; background:rgba(110,90,230,.14)}
+@media (prefers-color-scheme: dark){
+  .chip.live{color:#5ddb8a}
+  .chip.dropped{color:#f0a468}
+  .chip.private{color:#b0a4ff}
+}
+.card.feature{grid-column:1 / -1}
+.card.feature h3{font-size:clamp(25px,3.2vw,32px); letter-spacing:-.022em}
+.card.feature p{font-size:17.5px; max-width:62ch}
+
+/* screenshot card */
+.card.shots{grid-column:1 / -1}
+.card.shots p{max-width:64ch}
+.shots{display:grid; gap:22px; margin-top:26px}
+.shots figure{margin:0}
+.shots img{
+  display:block; width:100%; height:auto; border-radius:12px;
+  border:1px solid var(--card-line); background:#fff;
+}
+.card p.note{
+  margin-top:16px; padding-left:16px; border-left:2px solid var(--card-line);
+  font-size:15.5px; color:var(--text-3);
+}
+.shots figcaption{margin-top:9px; font-size:13px; color:var(--text-3); line-height:1.45}
+
+/* ---------- attempts / timeline ---------- */
+.steps{display:flex; flex-direction:column; gap:0; margin-top:8px}
+.step{
+  display:grid; grid-template-columns:56px 1fr; gap:22px;
+  padding:26px 0; border-top:1px solid var(--line);
+}
+.step:last-child{border-bottom:1px solid var(--line)}
+.step .n{
+  font-size:15px; font-weight:600; color:var(--text-3); letter-spacing:-.01em;
+  padding-top:2px;
+}
+.step h3{margin:0 0 8px; font-size:20px; font-weight:600; letter-spacing:-.017em}
+.step p{margin:0; color:var(--text-2); font-size:16px; line-height:1.5}
+.step .links{margin-top:14px; display:flex; flex-wrap:wrap; gap:18px}
+.step .links a::after{content:" ›"}
+@media (max-width:600px){ .step{grid-template-columns:1fr; gap:8px} }
+
+/* ---------- about + footer ---------- */
+.about p{font-size:19px; line-height:1.55; color:var(--text-2); max-width:62ch}
+.about p strong{color:var(--text); font-weight:600}
+footer{padding:44px 0 60px; border-top:1px solid var(--line); background:var(--bg)}
+footer .wrap{display:flex; flex-wrap:wrap; gap:10px 26px; align-items:center}
+footer p{margin:0; font-size:13px; color:var(--text-3)}
+footer a{font-size:13px; color:var(--text-2)}
+footer .sp{margin-left:auto}
+
+/* ---------- language ---------- */
+html:not(.de) [data-lang="de"]{display:none !important}
+html.de [data-lang="en"]{display:none !important}
+</style></head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">joerxc</a>
+    <div class="navlinks">
+      <a href="#writing"><span data-lang="en">Writing</span><span data-lang="de">Texte</span></a>
+      <a href="#tools"><span data-lang="en">Tools</span><span data-lang="de">Tools</span></a>
+      <a href="#planner"><span data-lang="en">Planner</span><span data-lang="de">Planer</span></a>
+      <a href="#labs"><span data-lang="en">Experiments</span><span data-lang="de">Experimente</span></a>
+      <button class="langbtn" id="lang" type="button" aria-label="Language"><span data-lang="en">DE</span><span data-lang="de">EN</span></button>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Jörg Korner</p>
+    <h1>
+      <span data-lang="en">I fly paragliders and create software to understand flying better.</span>
+      <span data-lang="de">Ich fliege Gleitschirm und kreiere Software, um das Fliegen besser zu verstehen.</span>
+    </h1>
+    <p class="lede">
+      <span data-lang="en">And I publish texts based on it.</span>
+      <span data-lang="de">Und ich publiziere Texte, die darauf basieren.</span>
+    </p>
+    <div class="photo">
+      <figure>
+        <img src="assets/joerg-pod.jpg"
+             srcset="assets/joerg-pod-small.jpg 1100w, assets/joerg-pod.jpg 2000w"
+             sizes="(max-width:980px) 100vw, 936px"
+             alt="Jörg Korner in a GIN Genie Race pod harness, suspended in a workshop">
+        <figcaption>
+          <span data-lang="en">GIN Genie Race. Trying things out&hellip;</span>
+          <span data-lang="de">GIN Genie Race. Dinge ausprobieren&hellip;</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<!-- WRITING -->
+<section class="band alt" id="writing">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker"><span data-lang="en">Writing</span><span data-lang="de">Texte</span></p>
+      <h2><span data-lang="en">Published writing</span><span data-lang="de">Publizierte Texte</span></h2>
+    </div>
+    <div class="grid">
+      <article class="card feature">
+        <div class="chips">
+          <span class="chip"><span data-lang="en">Article</span><span data-lang="de">Artikel</span></span>
+          <span class="chip live"><span data-lang="en">Online</span><span data-lang="de">Online</span></span>
+        </div>
+        <h3>The invisible railway</h3>
+        <p>
+          <span data-lang="en">How a capped dryline carried a paraglider 612 km. Twenty-five parameters matched an ordinary day; one did not — ground speed while climbing, 41.5 against 34.5 km/h. From there the piece follows wind shear beneath a capping inversion and Blackadar&rsquo;s pendulum effect. It contains a forecast link for the Texas dryline.</span>
+          <span data-lang="de">Wie eine gedeckelte Dryline einen Gleitschirm 612 km weit trug. Fünfundzwanzig Parameter entsprachen einem gewöhnlichen Tag; einer nicht — die Grundgeschwindigkeit im Steigen, 41,5 gegen 34,5 km/h. Von dort verfolgt der Text die Windscherung unter einer Sperrschicht und Blackadars Pendel-Effekt. Er enthält einen Forecast-Link für die Texas-Dryline.</span>
+        </p>
+        <p class="note">
+          <span data-lang="en">Cross Country Magazine will run a piece about it on 10 September.</span>
+          <span data-lang="de">Cross Country Magazine bringt am 10. September einen Text darüber.</span>
+        </p>
+        <div class="links">
+          <a href="https://joergkorner.github.io/invisible-railway/"><span data-lang="en">Read the piece</span><span data-lang="de">Zum Artikel</span></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="band" id="tools">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker"><span data-lang="en">Tools</span><span data-lang="de">Tools</span></p>
+      <h2><span data-lang="en">Usable today</span><span data-lang="de">Heute nutzbar</span></h2>
+      <p class="sec-sub"><span data-lang="en">One takes your own tracks. The other is a fixed collection of flights.</span><span data-lang="de">Eines nimmt eigene Tracks. Das andere ist eine feste Sammlung von Flügen.</span></p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
+        <h3>flyfaster</h3>
+        <p>
+          <span data-lang="en">Compares pilots who flew in the same air, so what is left is the difference between the pilots, not between the days. Upload tracks, get a radar profile per pilot.</span>
+          <span data-lang="de">Vergleicht Piloten, die in derselben Luft geflogen sind — was bleibt, ist der Unterschied zwischen den Piloten, nicht zwischen den Tagen. Tracks hochladen, Radarprofil pro Pilot.</span>
+        </p>
+        <div class="links"><a href="https://flyfaster-production.up.railway.app/"><span data-lang="en">Open flyfaster</span><span data-lang="de">flyfaster öffnen</span></a></div>
+      </article>
+
+      <article class="card">
+        <div class="chips">
+          <span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span>
+          <span class="chip"><span data-lang="en">Collection</span><span data-lang="de">Sammlung</span></span>
+        </div>
+        <h3>Jura-Player</h3>
+        <p>
+          <span data-lang="en">A collection of Jura flights to study — no upload, the flights are already there. Pick one, for instance Sebastian Benz&rsquo;s longest, and replay it: many data sources on one timeline, satellite clouds included, and a bar showing which section of the arc between La Dôle and Weissenstein the flight touched. Even with a simulated vario sound.</span>
+          <span data-lang="de">Eine Sammlung von Jura-Flügen zum Studieren — kein Upload, die Flüge sind schon da. Einen auswählen, etwa den längsten von Sebastian Benz, und ihn abspielen: viele Datenquellen auf einer Zeitachse, Satellitenwolken inklusive, und ein Balken, der zeigt, welchen Abschnitt des Bogens zwischen La Dôle und Weissenstein der Flug berührt hat. Sogar mit simuliertem Vario-Sound.</span>
+        </p>
+        <div class="links"><a href="https://joergkorner.github.io/juraplayer/"><span data-lang="en">Browse the flights</span><span data-lang="de">Flüge ansehen</span></a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PLANNER -->
+<section class="band alt" id="planner">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker"><span data-lang="en">Long-term project</span><span data-lang="de">Langzeitprojekt</span></p>
+      <h2><span data-lang="en">&ldquo;Google Maps for paragliding&rdquo;</span><span data-lang="de">&bdquo;Google Maps fürs Gleitschirmfliegen&ldquo;</span></h2>
+      <p class="sec-sub">
+        <span data-lang="en">Three attempts at the same problem, each on a different basis. Two dropped, one carried on.</span>
+        <span data-lang="de">Drei Anläufe an derselben Aufgabe, jeder auf anderer Grundlage. Zwei verworfen, einer weiterverfolgt.</span>
+      </p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="n">01</div>
+        <div>
+          <div class="chips"><span class="chip dropped"><span data-lang="en">Dropped</span><span data-lang="de">Verworfen</span></span></div>
+          <h3>FAIplaner</h3>
+          <p><span data-lang="en">Based on kk7 hotspots and Dijkstra.</span><span data-lang="de">Basierend auf kk7-Hotspots und Dijkstra.</span></p>
+          <div class="links"><a href="https://joergkorner.github.io/FAIplaner/"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="n">02</div>
+        <div>
+          <div class="chips"><span class="chip dropped"><span data-lang="en">Dropped</span><span data-lang="de">Verworfen</span></span></div>
+          <h3>planner</h3>
+          <p><span data-lang="en">Based on kk7 hotspots, a generalised map and Dijkstra.</span><span data-lang="de">Basierend auf kk7-Hotspots, generalisierter Karte und Dijkstra.</span></p>
+          <div class="links">
+            <a href="https://joergkorner.github.io/planner/science.html"><span data-lang="en">Method</span><span data-lang="de">Methode</span></a>
+            <a href="https://joergkorner.github.io/planner/map.html"><span data-lang="en">Map</span><span data-lang="de">Karte</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="n">03</div>
+        <div>
+          <div class="chips"><span class="chip live"><span data-lang="en">Pilot study positive</span><span data-lang="de">Vorstudie positiv</span></span></div>
+          <h3>goms</h3>
+          <p><span data-lang="en">Based on finely segmented IGC data and Bellman&rsquo;s principle.</span><span data-lang="de">Basierend auf fein segmentierten IGC-Daten und dem Bellman-Prinzip.</span></p>
+          <div class="links"><a href="https://joergkorner.github.io/goms/"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LABS -->
+<section class="band" id="labs">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker"><span data-lang="en">Experiments</span><span data-lang="de">Experimente</span></p>
+      <h2><span data-lang="en">Trying techniques out</span><span data-lang="de">Techniken ausprobieren</span></h2>
+    </div>
+
+    <div class="grid">
+      <article class="card shots">
+        <div class="chips"><span class="chip private"><span data-lang="en">Private &middot; Tailscale only</span><span data-lang="de">Privat &middot; nur via Tailscale</span></span></div>
+        <h3>windfieldmap</h3>
+        <p>
+          <span data-lang="en">An in-flight tool showing the surrounding air and trajectories from satellite data. The idea: see the new clouds via satellite, assign each one a trajectory — a thermal — and derive from the wind data how long it would take me to reach it and what altitude I would have left. It runs on my Mac mini and reaches my phone over Tailscale, so there is nothing public to open.</span>
+          <span data-lang="de">Ein Inflight-Tool zur Darstellung von Umgebungsluft und Trajektorien aus Satellitendaten. Die Idee: via Satellit die neuen Wolken sehen, ihnen je eine Trajektorie — einen Bart — zuordnen, und aus den Winddaten ableiten, wie lange ich zum Bart brauchen würde und welche Höhe ich dann noch hätte. Läuft auf meinem Mac mini und erreicht mein Handy über Tailscale — es gibt also nichts Öffentliches zu öffnen.</span>
+        </p>
+        <p class="note">
+          <span data-lang="en">These days the picture gets faster. MTG-I2 launches on 27 August 2026 on an Ariane 62 and joins Meteosat-12 in geostationary orbit. Its imager scans the full disc every 10 minutes and, in rapid-scan mode, the upper quarter — Europe — every 2½ minutes. Once the satellite is in service, that is four times as many images to work a trajectory out of.</span>
+          <span data-lang="de">Dieser Tage wird das Bild schneller. Am 27. August 2026 startet MTG-I2 auf einer Ariane 62 und stösst zu Meteosat-12 im geostationären Orbit. Sein Imager scannt die volle Scheibe alle 10 Minuten und im Rapid-Scan das obere Viertel — Europa — alle 2½ Minuten. Sobald der Satellit im Dienst ist, sind das viermal so viele Bilder, um eine Trajektorie daraus abzuleiten.</span>
+        </p>
+        <div class="shots">
+          <figure>
+            <img src="assets/windfield-inflight.jpg" alt="Screenshot taken in flight: instrument readouts, an airspace map with the track, and a wind-field map with a cloud, its assigned trajectory and an arrival estimate">
+            <figcaption>
+              <span data-lang="en">Taken in flight, because I could not read the number in the air. The label on the trajectory reads 4 min.</span>
+              <span data-lang="de">Im Flug aufgenommen, weil ich die Zahl in der Luft nicht sehen konnte. Die Beschriftung an der Trajektorie zeigt 4 min.</span>
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="assets/windfield-decay.jpg" alt="Wide map of the Jura and Swiss plateau showing thermal trajectories in green and grey">
+            <figcaption>
+              <span data-lang="en">How thermals that are no longer active could be shown: grey instead of green.</span>
+              <span data-lang="de">Wie nicht mehr aktive Bärte dargestellt werden könnten: grau statt grün.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </article>
+    </div>
+
+    <div class="grid" style="margin-top:20px">
+      <article class="card">
+        <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
+        <h3>Jura-Konvergenz-Planer</h3>
+        <p><span data-lang="en">Based on historical satellite data.</span><span data-lang="de">Basierend auf historischen Satellitendaten.</span></p>
+        <div class="links"><a href="https://joergkorner.github.io/jura/"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
+      </article>
+
+      <article class="card">
+        <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
+        <h3>inflight1</h3>
+        <p>
+          <span data-lang="en">A test bench for checking a widget: put it into a historical flight and see how it would have behaved in the air — second by second.</span>
+          <span data-lang="de">Ein Prüfstand, um ein Widget zu prüfen: Man kann es in einen historischen Flug einsetzen und sehen, wie es sich in der Luft verhalten hätte — Sekunde für Sekunde.</span>
+        </p>
+        <div class="links"><a href="https://joergkorner.github.io/inflight1"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="band alt about" id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker"><span data-lang="en">About</span><span data-lang="de">Über mich</span></p>
+      <h2><span data-lang="en">Build it, fly it, understand it.</span><span data-lang="de">Bauen, fliegen, verstehen.</span></h2>
+    </div>
+    <p>
+      <span data-lang="en">Natural scientist; co-founder of several startups, often with IT at the centre. Paragliding gives the work its subject: build the tool, fly with it, write down what changed. And not only my own flights — I take other pilots&rsquo; apart in software, Kayrouz&rsquo;s, Benz&rsquo;s, Aeschbach&rsquo;s and so on, to learn what actually happened in them.</span>
+      <span data-lang="de">Naturwissenschaftler; Mitgründer mehrerer Startups, oft mit IT im Kern. Das Gleitschirmfliegen gibt der Arbeit ihr Thema: das Werkzeug bauen, damit fliegen, aufschreiben, was sich geändert hat. Und nicht nur die eigenen Flüge — die von anderen zerlege ich in Software, Kayrouz, Benz, Aeschbach und so weiter, um zu lernen, was darin wirklich passiert ist.</span>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="yr">2026</span> Jörg Korner</p>
+    <a href="mailto:joergkorner@gmail.com">joergkorner@gmail.com</a>
+    <a href="https://github.com/joergkorner">GitHub</a>
+    <p class="sp">joerxc.org</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var html = document.documentElement;
+  function setLang(de){
+    html.classList.toggle('de', de);
+    html.lang = de ? 'de' : 'en';
+  }
+  setLang(false);            /* default: English */
+  var btn = document.getElementById('lang');
+  if(btn) btn.addEventListener('click', function(){ setLang(!html.classList.contains('de')); });
+  var y = document.getElementById('yr');
+  if(y) y.textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
