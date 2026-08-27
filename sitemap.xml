@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- After joerxc.org is live, replace every joergkorner.github.io with joerxc.org. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://joergkorner.github.io/</loc><lastmod>2026-08-25</lastmod><priority>1.0</priority></url>
-  <url><loc>https://joergkorner.github.io/invisible-railway/</loc><lastmod>2026-08-25</lastmod><priority>0.9</priority></url>
-  <url><loc>https://joergkorner.github.io/juraplayer/</loc><lastmod>2026-08-25</lastmod><priority>0.8</priority></url>
-  <url><loc>https://joergkorner.github.io/goms/</loc><lastmod>2026-08-25</lastmod><priority>0.8</priority></url>
-  <url><loc>https://joergkorner.github.io/jura/</loc><lastmod>2026-08-25</lastmod><priority>0.6</priority></url>
-  <url><loc>https://joergkorner.github.io/inflight1/</loc><lastmod>2026-08-25</lastmod><priority>0.6</priority></url>
-  <url><loc>https://joergkorner.github.io/planner/science.html</loc><lastmod>2026-08-25</lastmod><priority>0.5</priority></url>
-  <url><loc>https://joergkorner.github.io/planner/map.html</loc><lastmod>2026-08-25</lastmod><priority>0.5</priority></url>
-  <url><loc>https://joergkorner.github.io/FAIplaner/</loc><lastmod>2026-08-25</lastmod><priority>0.4</priority></url>
+  <url><loc>https://joerxc.org/</loc><lastmod>2026-08-27</lastmod><priority>1.0</priority></url>
+  <url><loc>https://joerxc.org/invisible-railway/</loc><lastmod>2026-08-25</lastmod><priority>0.9</priority></url>
+  <url><loc>https://joerxc.org/information-worth/</loc><lastmod>2026-08-27</lastmod><priority>0.9</priority></url>
+  <url><loc>https://joerxc.org/goms2/</loc><lastmod>2026-08-27</lastmod><priority>0.9</priority></url>
+  <url><loc>https://joerxc.org/juraplayer/</loc><lastmod>2026-08-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://joerxc.org/goms/</loc><lastmod>2026-08-25</lastmod><priority>0.8</priority></url>
+  <url><loc>https://joerxc.org/jura/</loc><lastmod>2026-08-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://joerxc.org/inflight1/</loc><lastmod>2026-08-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://joerxc.org/planner/science.html</loc><lastmod>2026-08-25</lastmod><priority>0.5</priority></url>
+  <url><loc>https://joerxc.org/planner/map.html</loc><lastmod>2026-08-25</lastmod><priority>0.5</priority></url>
+  <url><loc>https://joerxc.org/FAIplaner/</loc><lastmod>2026-08-25</lastmod><priority>0.4</priority></url>
 </urlset>
