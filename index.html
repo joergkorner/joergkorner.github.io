@@ -492,5 +492,36 @@ html.de [data-lang="en"]{display:none !important}
   if(y) y.textContent = new Date().getFullYear();
 })();
 </script>
+<script>
+/* joerxc: Sprachwahl merken (localStorage) und aus ?lang=de uebernehmen */
+(function(){
+  var KEY = 'joerxc_lang';
+  function gewaehlt(){
+    var m = location.search.match(/[?&]lang=([a-z]{2})/i) || location.hash.match(/lang=([a-z]{2})/i);
+    if (m) return m[1].toLowerCase();
+    try { return localStorage.getItem(KEY) || ''; } catch(e) { return ''; }
+  }
+  function merken(l){ try { localStorage.setItem(KEY, l); } catch(e) {} }
+  function anwenden(l){
+    var radio = document.getElementById('lang-' + l);      /* Artikel mit Radio-Umschalter */
+    if (radio) { radio.checked = true; return; }
+    document.documentElement.classList.toggle('de', l === 'de');
+    document.documentElement.lang = l;
+  }
+  function aktuell(){
+    var r = document.querySelector('.langsel:checked');
+    if (r) return r.id.replace('lang-', '');
+    return document.documentElement.classList.contains('de') ? 'de' : 'en';
+  }
+  var l = gewaehlt();
+  if (l) anwenden(l);
+  document.addEventListener('click', function(e){
+    var t = e.target.closest && e.target.closest('#lang, .langbtn, .lang-switch label');
+    if (!t) return;
+    setTimeout(function(){ merken(aktuell()); }, 0);
+  });
+})();
+</script>
+
 </body>
 </html>
