@@ -279,21 +279,7 @@ html.de [data-lang="en"]{display:none !important}
         </div>
       </article>
 
-      <article class="card feature">
-        <div class="chips">
-          <span class="chip"><span data-lang="en">Article</span><span data-lang="de">Artikel</span></span>
-          <span class="chip live"><span data-lang="en">Online</span><span data-lang="de">Online</span></span>
-        </div>
-        <h3><span data-lang="en">What information is worth</span><span data-lang="de">Was Information wert ist</span></h3>
-        <p>
-          <span data-lang="en">A measured argument for why flight software can move more than the next glider. By building a lift field and an avatar that finds its way with limited knowledge, the worth of that knowledge can be estimated. A first run was done for the busy Goms valley: one of the best pilots lost 13 % of speed against my avatar. Next come more regions and more such tests. And one day, perhaps every pilot has an avatar of their own, working out the best next move for them mid-flight. Progress in flying characteristics would look marginal beside that. The potential of data science here is still large.</span>
-          <span data-lang="de">Ein gemessenes Argument, warum Flugsoftware mehr bewegen kann als das nächste Gerät. Mit einem Auftriebsfeld und einem Avatar, der sich mit begrenztem Wissen zurechtfindet, lässt sich der Wert dieses Wissens abschätzen. Ein erster Lauf entstand fürs vielbeflogene Goms: Einer der besten Piloten verlor 13 % Geschwindigkeit gegen meinen Avatar. Als Nächstes kommen weitere Regionen und weitere solche Tests. Und eines Tages hat vielleicht jeder Pilot seinen eigenen Avatar, der ihm während des Fluges den besten nächsten Schritt austüftelt. Die Fortschritte bei den Flugeigenschaften wären dagegen wohl nur noch marginal. Das Potential von Data Science ist noch gross.</span>
-        </p>
-        <div class="links">
-          <a href="https://joerxc.org/information-worth/"><span data-lang="en">Read the piece</span><span data-lang="de">Zum Artikel</span></a>
-        </div>
-      </article>
-    </div>
+      </div>
   </div>
 </section>
 
@@ -499,7 +485,9 @@ html.de [data-lang="en"]{display:none !important}
   function gewaehlt(){
     var m = location.search.match(/[?&]lang=([a-z]{2})/i) || location.hash.match(/lang=([a-z]{2})/i);
     if (m) return m[1].toLowerCase();
-    try { return localStorage.getItem(KEY) || ''; } catch(e) { return ''; }
+    try { var g = localStorage.getItem(KEY); if (g) return g; } catch(e) {}
+    var b = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    return b.toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
   }
   function merken(l){ try { localStorage.setItem(KEY, l); } catch(e) {} }
   function anwenden(l){
