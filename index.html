@@ -136,6 +136,7 @@ h2{
 .grid{display:grid; gap:20px; grid-template-columns:repeat(2,1fr)}
 
 .grid.one{grid-template-columns:1fr}
+#tools .card.weit{grid-column:1 / -1}
 @media (max-width:760px){ .grid{grid-template-columns:1fr} }
 .card{
   position:relative; background:var(--card); border:1px solid var(--card-line);
@@ -289,7 +290,7 @@ html.de [data-lang="en"]{display:none !important}
     <div class="sec-head">
       <p class="kicker"><span data-lang="en">Tools</span><span data-lang="de">Tools</span></p>
       <h2><span data-lang="en">Usable today</span><span data-lang="de">Heute nutzbar</span></h2>
-      <p class="sec-sub"><span data-lang="en">One takes your own tracks. The other is a fixed collection of flights.</span><span data-lang="de">Eines nimmt eigene Tracks. Das andere ist eine feste Sammlung von Flügen.</span></p>
+      <p class="sec-sub"><span data-lang="en">One takes your own tracks. The second is a fixed collection of flights. The third lets you picture how the air moves over the Goms on light-wind days — derived from 300 hours of gliding.</span><span data-lang="de">Eines nimmt eigene Tracks. Das zweite ist eine feste Sammlung von Flügen. Das dritte erlaubt, sich die Luftströmung an windschwachen Tagen im Goms einmal vorzustellen — abgeleitet aus 300 Flugstunden.</span></p>
     </div>
     <div class="grid">
       <article class="card">
@@ -313,6 +314,19 @@ html.de [data-lang="en"]{display:none !important}
           <span data-lang="de">Eine Sammlung von Jura-Flügen zum Studieren — kein Upload, die Flüge sind schon da. Einen auswählen, etwa den längsten von Sebastian Benz, und ihn abspielen: viele Datenquellen auf einer Zeitachse, Satellitenwolken inklusive, und ein Balken, der zeigt, welchen Abschnitt des Bogens zwischen La Dôle und Weissenstein der Flug berührt hat. Sogar mit simuliertem Vario-Sound.</span>
         </p>
         <div class="links"><a href="https://joerxc.org/juraplayer/"><span data-lang="en">Browse the flights</span><span data-lang="de">Flüge ansehen</span></a></div>
+      </article>
+
+      <article class="card weit">
+        <div class="chips">
+          <span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span>
+          <span class="chip"><span data-lang="en">Study</span><span data-lang="de">Studie</span></span>
+        </div>
+        <h3><span data-lang="en">Goms in 3D</span><span data-lang="de">Goms r&auml;umlich</span></h3>
+        <p>
+          <span data-lang="en">What the air does over a valley, measured from the flights themselves. Vertical motion comes from the glides, horizontal motion from the drift while circling &mdash; two independent measurements, 300 hours of gliding on 184 days. Turn the valley, cut it open anywhere by dragging a line, let the arrows move, and run through the day: mornings look different from afternoons. Not a forecast, and not a single day &mdash; an average of the hours people actually fly.</span>
+          <span data-lang="de">Was die Luft &uuml;ber einem Tal tut, gemessen aus den Fl&uuml;gen selbst. Das Senkrechte stammt aus den Gleitstrecken, das Waagrechte aus der Abdrift beim Kreisen &mdash; zwei unabh&auml;ngige Messungen, 300 Gleitstunden an 184 Tagen. Das Tal drehen, mit einem Mausstrich beliebig aufschneiden, die Pfeile laufen lassen und den Tag durchfahren: der Vormittag sieht anders aus als der Nachmittag. Keine Vorhersage und kein einzelner Tag &mdash; ein Mittel &uuml;ber die Stunden, in denen wirklich geflogen wird.</span>
+        </p>
+        <div class="links"><a href="https://joerxc.org/goms-stroemung/"><span data-lang="en">Open the field</span><span data-lang="de">Str&ouml;mungsfeld &ouml;ffnen</span></a></div>
       </article>
     </div>
   </div>
