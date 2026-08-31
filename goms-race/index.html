@@ -706,6 +706,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
      diese Checkbox; angehakt blendet CSS die Startseite aus. Funktioniert
      in jedem Browser und jeder Vorschau, auch wenn kein Script laeuft. */
   #startchk:checked ~ #start { display:none !important; }
+  /* Kein-JavaScript-Hinweis: erscheint erst nach 4 s — laeuft das Script,
+     ist er dann laengst entfernt, nichts blitzt auf. */
+  #nojs { color:#b3261e; font-weight:600; visibility:hidden; animation: nojszeig 0s 4s forwards; }
+  @keyframes nojszeig { to { visibility:visible; } }
   #start { position:fixed; inset:0; z-index:5000; background:rgba(24,23,21,.45); display:flex;
     align-items:center; justify-content:center; padding:16px; }
   #startbox { background:#fcfcfb; border:1px solid #d7d5d0; border-radius:12px; max-width:540px; padding:22px 26px;
@@ -776,7 +780,7 @@ window.addEventListener('error', function (e) {
    
    <p style="color:#6e6a61">Red: the real flight. Press play and watch.</p>
   </span>
-  <p id="nojs" style="color:#b3261e;font-weight:600">Hier l&auml;uft kein JavaScript &mdash; in dieser Ansicht kann der Player nicht abspielen. Die Datei in einem Browser &ouml;ffnen (Safari, Chrome). / No JavaScript is running here &mdash; open the file in a browser.</p>
+  <p id="nojs">Hier l&auml;uft kein JavaScript &mdash; in dieser Ansicht kann der Player nicht abspielen. Die Datei in einem Browser &ouml;ffnen (Safari, Chrome). / No JavaScript is running here &mdash; open the file in a browser.</p>
   <div style="text-align:center"><label for="startchk" id="mzu">Zur Karte</label></div>
  </div>
 </div>
@@ -1038,7 +1042,13 @@ function aktive() { return split ? ['rot', 'blau'] : Object.keys(SETS).filter(k 
 function masse() {
   const unten = div.classList.contains('zu') ? 31 : 205;
   if (!split) { document.getElementById('karte').style.inset = '0 0 ' + unten + 'px 0'; karte.invalidateSize(); return; }
-  const frei = window.innerHeight - unten, mitte = Math.round(frei/2);
+  // Bezugsgroesse ist der Container der Karten, NICHT window.innerHeight:
+  // beim Seiten-Zoom auf dem Handy laufen die beiden auseinander, und die
+  // Karten schrumpften auf null (riesiger weisser Balken).
+  const H = document.getElementById('karte').offsetParent
+            ? document.getElementById('karte').offsetParent.clientHeight
+            : document.documentElement.clientHeight;
+  const frei = H - unten, mitte = Math.round(frei/2);
   document.getElementById('karte').style.inset = '0 0 ' + (unten + (frei-mitte) + 12) + 'px 0';
   const d2 = document.getElementById('karte2'); d2.style.top = mitte + 'px'; d2.style.bottom = unten + 'px';
   karte.invalidateSize(); karte2.invalidateSize();
