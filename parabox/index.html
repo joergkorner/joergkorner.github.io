@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parabox — joerxc</title>
+<meta name="description" content="Parabox: eine Blackbox für den Gleitschirm, die Kappe, Hände, Höhe und Beschleunigung aufzeichnet, damit eine Störung nachträglich verstanden werden kann. Drei Anläufe seit 2018.">
+<style>
+:root{--bg:#ffffff;--bg2:#f5f5f7;--text:#1d1d1f;--text2:#55555a;--text3:#86868b;--line:rgba(0,0,0,.10);--accent:#1f6fd1;--idea:#5b4bb8;--idea-bg:rgba(110,90,230,.14);--chip:rgba(0,0,0,.055)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.top{max-width:980px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line)}
+.top .brand{font-weight:600;color:var(--text);font-size:15px}
+.langbtn{margin-left:auto;font:inherit;font-size:13px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer}
+main{max-width:980px;margin:0 auto;padding:40px 20px 80px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 10px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.1;margin:0 0 18px;letter-spacing:-.02em;text-wrap:balance}
+h2{font-size:22px;margin:46px 0 10px;letter-spacing:-.01em;text-wrap:balance}
+.prose{max-width:68ch}
+.lead{font-size:20px;color:var(--text2)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+.chip{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--text2);background:var(--chip);padding:4px 9px;border-radius:980px;line-height:1.4}
+.chip.idea{color:var(--idea);background:var(--idea-bg)}
+.chip.dropped{color:#9a4a1f;background:rgba(200,110,40,.14)}
+@media (prefers-color-scheme:dark){.chip.dropped{color:#f0a468}}
+.steps{margin:26px 0 0;max-width:72ch}
+.step{display:grid;grid-template-columns:56px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
+.step:last-child{border-bottom:1px solid var(--line)}
+.step .n{font-size:15px;font-weight:600;color:var(--text3);padding-top:4px}
+.step h3{margin:0 0 8px;font-size:21px;font-weight:600;letter-spacing:-.017em;line-height:1.2}
+.step p{margin:0;color:var(--text2);font-size:16.5px;line-height:1.55}
+.step p+p{margin-top:10px}
+.shot{float:right;width:210px;margin:4px 0 12px 24px}
+.shot img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+.shot figcaption{font-size:12.5px;color:var(--text3);margin-top:6px;line-height:1.4}
+@media (max-width:600px){.shot{float:none;width:200px;margin:0 0 14px}}
+.step .clear{clear:both}
+@media (max-width:600px){.step{grid-template-columns:1fr;gap:8px}}
+.plan{max-width:72ch}
+.plan h3{font-size:18px;margin:30px 0 8px;letter-spacing:-.01em}
+.plan p{margin:0 0 10px;color:var(--text2)}
+table{border-collapse:collapse;width:100%;max-width:72ch;margin:12px 0 6px;font-size:15.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--text3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.sum td{font-weight:600;color:var(--text)}
+.tbl{overflow-x:auto}
+.method{font-size:15px;color:var(--text2);background:var(--bg2);border-radius:10px;padding:14px 18px;max-width:72ch;margin:14px 0}
+.end{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);font-size:15px;color:var(--text2)}
+html:not(.de) [data-lang="de"]{display:none!important}
+html.de [data-lang="en"]{display:none!important}
+</style>
+</head>
+<body>
+<div class="top"><a class="brand" href="https://joerxc.org/">joerxc</a>
+<button class="langbtn" id="lang" type="button" aria-label="Sprache / language"><span data-lang="de">EN</span><span data-lang="en">DE</span></button></div>
+<main>
+<p class="kicker"><span data-lang="de">Langzeitprojekt · seit 2018</span><span data-lang="en">Long-term project · since 2018</span></p>
+<h1><span data-lang="de">Parabox — die Blackbox für den Gleitschirm</span><span data-lang="en">Parabox — a black box for the paraglider</span></h1>
+
+<div class="prose">
+<p class="lead">
+<span data-lang="de">Jedes Jahr sterben in der Schweiz Gleitschirmpiloten, und bei den meisten Unfällen weiss niemand genau, was in den letzten Sekunden geschah. Flugzeuge haben dafür die Blackbox. Parabox will dasselbe für den Gleitschirm: Kappe, Hände, Höhe und Beschleunigung aufzeichnen, damit eine Störung nachträglich verstanden werden kann — vom Piloten selbst, vom Fluglehrer, und wenn es schlimm ausgeht, von denen, die wissen wollen, warum.</span>
+<span data-lang="en">Every year paraglider pilots die in Switzerland, and in most accidents nobody knows exactly what happened in the last seconds. Aircraft have the black box for this. Parabox wants the same for the paraglider: record the canopy, the hands, altitude and acceleration, so that an incident can be understood afterwards — by the pilot, by the instructor, and when it ends badly, by those who want to know why.</span>
+</p>
+<p>
+<span data-lang="de">Drei Anläufe bisher. Die ersten beiden sind an derselben Stelle gescheitert: nicht an der Technik, sondern daran, dass ein Gerät, das man vor jedem Flug einschalten muss, nicht eingeschaltet wird. Der dritte beginnt darum bei dieser Bedingung.</span>
+<span data-lang="en">Three attempts so far. The first two failed at the same point: not at the technology, but at the fact that a device you have to switch on before every flight does not get switched on. The third therefore starts from that condition.</span>
+</p>
+</div>
+
+<div class="steps">
+  <div class="step">
+    <div class="n">1</div>
+    <div>
+      <div class="chips"><span class="chip">2018–2020</span><span class="chip"><span data-lang="de">Prototyp geflogen</span><span data-lang="en">Prototype flown</span></span></div>
+      <h3><span data-lang="de">Die App am Tragegurt</span><span data-lang="en">The app on the risers</span></h3>
+      <figure class="shot">
+        <img src="parabox-app-2019.png" alt="Parabox app, 2019: fisheye video of the canopy, the flight track on a map, the altitude curve, playback controls">
+        <figcaption><span data-lang="de">Die App 2019: Kappe durchs Fischauge, Spur auf der Karte, Höhenkurve, synchron abspielbar.</span><span data-lang="en">The app in 2019: canopy through the fisheye, track on the map, altitude curve, synchronised playback.</span></figcaption>
+      </figure>
+      <p>
+      <span data-lang="de">2018 Innosuisse-Innovationsscheck «Paragliding Blackbox», zusammen mit der Fachhochschule Nordwestschweiz. Das Design entstand mit der Flugschule Aerosport; der Prototyp war eine Android-App auf einem Smartphone, das am Tragegurt befestigt die Unterseite der Kappe filmt und dazu Position und Höhe aufzeichnet. Nach dem Flug spielt man alles synchron ab: Bild, Karte, Höhenkurve. Der Testflug im Dezember 2019 funktionierte einwandfrei.</span>
+      <span data-lang="en">2018 Innosuisse innovation cheque “Paragliding Blackbox”, together with the University of Applied Sciences Northwestern Switzerland. The design was worked out with the flight school Aerosport; the prototype was an Android app on a smartphone fixed to the risers, filming the underside of the canopy and logging position and altitude. After the flight everything plays back in sync: picture, map, altitude curve. The test flight in December 2019 worked without a hitch.</span>
+      </p>
+      <p>
+      <span data-lang="de">Der Befund am Ende: Die Technik war nicht das Problem. Eine App, die man vor jedem Flug startet und danach stoppt, wird nicht gestartet, auch nicht von Flugschülern mit einem Fluglehrer daneben. Das Projekt wurde 2020 abgeschlossen und nicht weiterverfolgt. Der Projektbericht der FHNW (44 Seiten) ist <a href="mailto:joergkorner@gmail.com?subject=Parabox-Bericht">auf Anfrage</a> erhältlich.</span>
+      <span data-lang="en">The finding at the end: the technology was not the problem. An app that has to be started before every flight and stopped afterwards does not get started, not even by students with an instructor beside them. The project was closed in 2020 and not pursued. The FHNW project report (44 pages) is available <a href="mailto:joergkorner@gmail.com?subject=Parabox%20report">on request</a>.</span>
+      </p>
+      <div class="clear"></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">2</div>
+    <div>
+      <div class="chips"><span class="chip">2024</span><span class="chip dropped"><span data-lang="de">Abgebrochen</span><span data-lang="en">Abandoned</span></span></div>
+      <h3><span data-lang="de">Eigene Elektronik, ohne Smartphone</span><span data-lang="en">Own electronics, no smartphone</span></h3>
+      <p>
+      <span data-lang="de">Zweiter Anlauf mit eigener Hardware um die Stromspar-Kamera HM01B0 (320 × 320 Punkte, unter 2 Milliwatt), um vom Smartphone loszukommen. Die Ansteuerung der Kamera und eine Weitwinkellinse, die auf den winzigen Sensor passt, waren für eine Person zu viel; abgebrochen.</span>
+      <span data-lang="en">Second attempt with own hardware around the low-power camera HM01B0 (320 × 320 pixels, under 2 milliwatts), to get away from the smartphone. Driving the camera and finding a wide-angle lens that fits the tiny sensor turned out to be too much for one person; abandoned.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">3</div>
+    <div>
+      <div class="chips"><span class="chip">2026</span><span class="chip idea"><span data-lang="de">Idee</span><span data-lang="en">Idea</span></span></div>
+      <h3><span data-lang="de">Montieren und vergessen</span><span data-lang="en">Install and forget</span></h3>
+      <p>
+      <span data-lang="de">Ein kleines Gerät im Cockpit des Gurtzeugs, das von selbst aufzeichnet, sobald geflogen wird, das niemand lädt, weil es seinen Strom von der Sonne holt, und das die letzten Stunden als Bildfolge und Messdaten im Ring behält. Nach einer Störung lädt man den Speicher auf eine Webseite und sieht die Störung als Player: Kappe, Hände, Höhe, Beschleunigung, Eigengeschwindigkeit, synchron. Der Plan dazu steht unten. Was ihn 2024 unmöglich machte, die Firmware, ist heute die Arbeit, die eine KI übernimmt; was bleibt, ist Physik.</span>
+      <span data-lang="en">A small device in the harness cockpit that records by itself whenever flying happens, that nobody charges because it takes its power from the sun, and that keeps the last hours as an image sequence and sensor data in a ring. After an incident you upload the storage to a web page and see the incident as a player: canopy, hands, altitude, acceleration, airspeed, in sync. The plan is below. What made it impossible in 2024, the firmware, is now the work an AI does; what remains is physics.</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="plan">
+<h2><span data-lang="de">Der Plan für Anlauf 3</span><span data-lang="en">The plan for attempt 3</span></h2>
+
+<h3><span data-lang="de">Wo es sitzt</span><span data-lang="en">Where it sits</span></h3>
+<p>
+<span data-lang="de">Im Cockpit, nicht am Helm. Vom Cockpit aus liegt alles Interessante in derselben Halbkugel nach oben: Kappe, Leinen, Tragegurte und dazwischen die Hände mit den Bremsen. Der Helm dreht sich mit dem Kopf, und die Hände liegen unter seinem Horizont. Das Cockpit bewegt sich mit dem Körper, zeigt im Flug zur Sonne und ist immer dabei. Was man von dort nicht sieht, ist der Beschleuniger; den liest man aus der Eigengeschwindigkeit in den Daten.</span>
+<span data-lang="en">In the cockpit, not on the helmet. From the cockpit everything of interest lies in the same upward hemisphere: canopy, lines, risers and, between them, the hands with the brakes. The helmet turns with the head, and the hands lie below its horizon. The cockpit moves with the body, faces the sun in flight and is always there. What you cannot see from there is the speed bar; that is read from the airspeed in the data.</span>
+</p>
+
+<h3><span data-lang="de">Kamera und Linse</span><span data-lang="en">Camera and lens</span></h3>
+<p>
+<span data-lang="de">Der Nachfolger des Sensors von 2024: Himax HM0360, 640 × 480 Punkte, schwarzweiss oder Farbe, 7.8 mA bei 60 Bildern pro Sekunde, 0.14 mA bei 2 Bildern pro Sekunde, mit eigener Bewegungserkennung und einem Wächter-Modus. Bei 2 bis 3 Bildern pro Sekunde braucht er 1 bis 2 Milliwatt. Es gibt ihn fertig als Modul für den Raspberry Pi Pico.</span>
+<span data-lang="en">The successor of the 2024 sensor: Himax HM0360, 640 × 480 pixels, monochrome or colour, 7.8 mA at 60 frames per second, 0.14 mA at 2 frames per second, with its own motion detection and a watchdog mode. At 2 to 3 frames per second it needs 1 to 2 milliwatts. It comes ready-made as a module for the Raspberry Pi Pico.</span>
+</p>
+<p>
+<span data-lang="de">Die Linse ist der Punkt, an dem Software nicht hilft. Fischaugen mit M12-Gewinde sind meist für grössere Sensoren gerechnet; auf einem 1/6-Zoll-Sensor nutzen sie nur die Bildmitte, und aus 180 Grad werden 90. Es braucht eine Linse, deren Bildkreis zum Sensor passt, 1.7 bis 2 mm Brennweite für 1/4-Zoll-Sensoren; damit sind 130 bis 150 Grad realistisch. Das reicht: Die Kappe füllt rund 70 Grad, die Hände liegen 40 bis 60 Grad seitlich vom Zenit. Bei 640 Punkten über 140 Grad ist die Kappe 300 Punkte breit, eine Hand in einem halben Meter Abstand etwa 40. Die Verzerrung rechnet der Player heraus. Der erste Schritt des ganzen Anlaufs ist darum ein Nachmittag mit drei gekauften Linsen.</span>
+<span data-lang="en">The lens is the point where software does not help. M12 fisheye lenses are mostly designed for larger sensors; on a 1/6-inch sensor they use only the centre of the image, and 180 degrees become 90. It takes a lens whose image circle matches the sensor, 1.7 to 2 mm focal length for 1/4-inch sensors; with that, 130 to 150 degrees are realistic. That is enough: the canopy fills about 70 degrees, the hands lie 40 to 60 degrees off the zenith. With 640 pixels across 140 degrees the canopy is 300 pixels wide, a hand half a metre away about 40. The player undoes the distortion. The first step of the whole attempt is therefore an afternoon with three bought lenses.</span>
+</p>
+
+<h3><span data-lang="de">Was aufgezeichnet wird</span><span data-lang="en">What is recorded</span></h3>
+<p>
+<span data-lang="de">Bilder mit 2 bis 3 pro Sekunde, durchgehend, im Ring über die letzten drei Stunden. Dazu liegen die letzten acht Sekunden immer mit 10 bis 15 Bildern pro Sekunde im Arbeitsspeicher; meldet der Beschleunigungssensor einen Klapper, einen Stall oder einen Aufschlag, werden sie gesichert. So sind die Hände in dem Fenster, in dem es zählt, in Zehntelsekunden festgehalten, der Rest des Flugs grob. Beschleunigung und Drehraten mit 100 Hz, Druckhöhe mit 10 Hz, eine Uhr. Kein GPS: Es wäre der grösste Stromverbraucher, und die Position hat der Pilot ohnehin in seinem Vario; beim Auswerten legt man die Barometerkurve der Box über die IGC-Datei des Flugs, dann ist jedes Bild verortet. Starten, sobald der Barometer steigt, stoppen nach zehn Minuten Ruhe, kein Knopf.</span>
+<span data-lang="en">Images at 2 to 3 per second, continuously, in a ring over the last three hours. In addition, the last eight seconds are always held in memory at 10 to 15 frames per second; when the accelerometer reports a collapse, a stall or an impact, they are saved. So the hands are captured in tenths of a second in the window that matters, the rest of the flight coarsely. Acceleration and turn rates at 100 Hz, pressure altitude at 10 Hz, a clock. No GPS: it would be the largest consumer, and the pilot has the position in the vario anyway; when analysing, the box’s barometric curve is laid over the IGC file of the flight, and every image is located. Start when the barometer rises, stop after ten minutes of rest, no button.</span>
+</p>
+
+<h3><span data-lang="de">Das Watt-Budget</span><span data-lang="en">The power budget</span></h3>
+<div class="tbl"><table>
+<tr><th><span data-lang="de">Teil</span><span data-lang="en">Part</span></th><th class="num"><span data-lang="de">im Flug</span><span data-lang="en">in flight</span></th></tr>
+<tr><td><span data-lang="de">Kamera HM0360, 2–3 Bilder/s</span><span data-lang="en">Camera HM0360, 2–3 frames/s</span></td><td class="num">1–2 mW</td></tr>
+<tr><td><span data-lang="de">Rechner, ein Stromspar-Chip (Ambiq Apollo, STM32U5; oder ein Pico, der zwischen den Bildern schläft)</span><span data-lang="en">Processor, a low-power chip (Ambiq Apollo, STM32U5; or a Pico sleeping between frames)</span></td><td class="num">3–10 mW</td></tr>
+<tr><td><span data-lang="de">Beschleunigung 100 Hz, Barometer 10 Hz, Uhr</span><span data-lang="en">Accelerometer 100 Hz, barometer 10 Hz, clock</span></td><td class="num">1 mW</td></tr>
+<tr><td><span data-lang="de">Speicher, in Schüben: SD-Karte alle 30 s kurz ein, sonst stromlos, oder SPI-Flash</span><span data-lang="en">Storage in bursts: SD card on briefly every 30 s, otherwise unpowered, or SPI flash</span></td><td class="num">1–3 mW</td></tr>
+<tr class="sum"><td><span data-lang="de">zusammen</span><span data-lang="en">total</span></td><td class="num">10–20 mW</td></tr>
+<tr><td><span data-lang="de">im Schlaf (Bewegungswächter)</span><span data-lang="en">asleep (motion watchdog)</span></td><td class="num">&lt; 0.1 mW</td></tr>
+<tr><td><span data-lang="de">zum Vergleich: GPS, das nicht dabei ist</span><span data-lang="en">for comparison: the GPS that is left out</span></td><td class="num">15–40 mW</td></tr>
+</table></div>
+<p>
+<span data-lang="de">Dagegen die Sonne: 15 bis 20 cm² Solarzelle auf dem Cockpit liefern bei voller Sonne und gutem Winkel 0.3 W, im Flug, schräg und mit Wolken, im Mittel 50 bis 100 mW, an einem trüben Tag 10 bis 20 mW. Das Fünffache des Verbrauchs an guten Tagen, die Deckung an schlechten. Als Vorrat eine Zelle von 100 bis 200 mAh aus Lithium-Titanat, weil sie auch bei Minusgraden geladen werden darf und tausende Zyklen hält; das sind fünf bis zehn Flugtage ohne Sonne. Ein Lade-Chip, der schon bei einigen Milliwatt arbeitet (TI BQ25570), erledigt das Laden ohne Zutun. Ein Gurtzeug im Keller lädt nicht; eines am Startplatz schon.</span>
+<span data-lang="en">Against that, the sun: 15 to 20 cm² of solar cell on the cockpit give 0.3 W in full sun at a good angle, in flight, oblique and with clouds, 50 to 100 mW on average, on a dull day 10 to 20 mW. Five times the consumption on good days, break-even on bad ones. As a reserve a 100 to 200 mAh lithium-titanate cell, because it may be charged below freezing and lasts thousands of cycles; that is five to ten flying days without sun. A charger chip that already works at a few milliwatts (TI BQ25570) does the charging unattended. A harness in the cellar does not charge; one at the launch site does.</span>
+</p>
+
+<h3><span data-lang="de">Was man am Ende hat</span><span data-lang="en">What you get in the end</span></h3>
+<p>
+<span data-lang="de">Eine Webseite, auf die man den Inhalt der Box und die IGC-Datei des Flugs zieht, und die daraus den Player baut: die Bildfolge, darunter Höhe, Beschleunigung in g, Drehrate und Eigengeschwindigkeit, und die Markierungen, wo die Box eine Störung gesichert hat. Man scrollt zur Störung und sieht, was die Kappe tat und was die Hände taten, Zehntelsekunde für Zehntelsekunde. Dieser Teil ist Software und wird als erstes gebaut, mit Aufnahmen, die es schon gibt, damit der Wert sichtbar ist, bevor ein Bauteil bestellt wird.</span>
+<span data-lang="en">A web page onto which you drop the contents of the box and the IGC file of the flight, and which builds the player from them: the image sequence, below it altitude, acceleration in g, turn rate and airspeed, and the marks where the box saved an incident. You scroll to the incident and see what the canopy did and what the hands did, tenth of a second by tenth of a second. This part is software and gets built first, with recordings that already exist, so that the value is visible before a single part is ordered.</span>
+</p>
+
+<h3><span data-lang="de">Was offen ist</span><span data-lang="en">What is open</span></h3>
+<p>
+<span data-lang="de">Die Linse (zuerst). Das Gehäuse und die Befestigung im Cockpit, so dass die Zelle Sonne sieht und die Kamera nach oben schaut, ohne zu stören. Ob 3 Bilder pro Sekunde ausserhalb des Störungsfensters genügen oder ob die Sonne mehr erlaubt. Und der ehrliche Punkt aus Anlauf 1: ob ein Gerät, das niemand bedienen muss, auch getragen wird.</span>
+<span data-lang="en">The lens (first). The housing and the mounting in the cockpit, so that the cell sees the sun and the camera looks up without being in the way. Whether 3 frames per second outside the incident window are enough or whether the sun allows more. And the honest point from attempt 1: whether a device nobody has to operate will actually be carried.</span>
+</p>
+</div>
+
+<p class="end"><span data-lang="de">Anlauf 1 mit Innosuisse, FHNW Hochschule für Technik und Flugschule Aerosport, 2018–2020.</span><span data-lang="en">Attempt 1 with Innosuisse, FHNW School of Engineering and the flight school Aerosport, 2018–2020.</span><br><a href="https://joerxc.org/">← joerxc.org</a></p>
+</main>
+<script>
+(function(){
+  var KEY='joerxc_lang', html=document.documentElement;
+  function wahl(){
+    var m=location.search.match(/[?&]lang=([a-z]{2})/i); if(m) return m[1].toLowerCase();
+    try{var g=localStorage.getItem(KEY); if(g) return g;}catch(e){}
+    var b=(navigator.languages&&navigator.languages[0])||navigator.language||'';
+    return b.toLowerCase().indexOf('de')===0?'de':'en';
+  }
+  function setze(l){html.classList.toggle('de',l==='de'); html.lang=l; try{localStorage.setItem(KEY,l);}catch(e){}}
+  setze(wahl());
+  document.getElementById('lang').addEventListener('click',function(){setze(html.classList.contains('de')?'en':'de');});
+})();
+</script>
+</body>
+</html>
