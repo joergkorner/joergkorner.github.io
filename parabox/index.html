@@ -67,11 +67,122 @@ html.de [data-lang="en"]{display:none!important}
 <span data-lang="en">Every year paraglider pilots die in Switzerland, and in most accidents nobody knows exactly what happened in the last seconds. Aircraft have the black box for this. Parabox wants the same for the paraglider: record the canopy, the hands and the altitude, so that an incident can be understood afterwards — by the pilot, by the instructor, and when it ends badly, by those who want to know why.</span>
 </p>
 <p>
-<span data-lang="de">Drei Anläufe bisher. Die ersten beiden sind an derselben Stelle gescheitert: nicht an der Technik, sondern daran, dass ein Gerät, das man vor jedem Flug einschalten muss, nicht eingeschaltet wird. Der dritte beginnt darum bei dieser Bedingung.</span>
-<span data-lang="en">Three attempts so far. The first two failed at the same point: not at the technology, but at the fact that a device you have to switch on before every flight does not get switched on. The third therefore starts from that condition.</span>
+<span data-lang="de">Die Idee: ein kleines Gerät im Cockpit des Gurtzeugs, das von selbst aufzeichnet, sobald geflogen wird, das niemand lädt, weil es seinen Strom von der Sonne holt, und das nur das Wichtige behält: Start und Landung sichert es von selbst, und drückt der Pilot nach einer Störung den roten Knopf, bleiben die letzten fünf Minuten Bilder. Nach dem Flug steckt man es ans Handy und sieht die Störung als Player: Kappe, Hände, Spur, Höhe, synchron; die Spur jedes Flugs ist als zweite Aufzeichnung gleich mit dabei, und nebenbei ist es ein Vario. Kamera und Linse gibt es heute als fertiges Modul, die Firmware ist die Arbeit, die eine KI übernimmt; was bleibt, ist Physik.</span>
+<span data-lang="en">The idea: a small device in the harness cockpit that records by itself whenever flying happens, that nobody charges because it takes its power from the sun, and that keeps only what matters: it saves launch and landing by itself, and when the pilot presses the red button after an incident, the last five minutes of images are kept. After the flight you plug it into your phone and see the incident as a player: canopy, hands, track, altitude, in sync; the track of every flight comes along as a second recording, and on the side it is a vario. Camera and lens now come as a ready-made module, the firmware is the work an AI does; what remains is physics.</span>
+</p>
+<p class="method">
+<span data-lang="de"><strong>Demo-Player.</strong> So sieht der Pilot eine Störung nach dem Flug: die Bilder der Box, Bild für Bild vor und zurück, daneben der Flug aus der IGC-Datei auf der Karte und in 3D, darunter Höhe, Geschwindigkeit und Sinken, alles synchron. <a href="demo/">Demo ansehen →</a></span>
+<span data-lang="en"><strong>Demo player.</strong> This is how the pilot sees an incident after the flight: the box's images, frame by frame back and forth, next to them the flight from the IGC file on the map and in 3D, below altitude, speed and sink, all in sync. <a href="demo/">See the demo →</a></span>
 </p>
 </div>
 
+<div class="plan">
+<h2><span data-lang="de">Der Plan</span><span data-lang="en">The plan</span></h2>
+
+<h3><span data-lang="de">Wo es sitzt</span><span data-lang="en">Where it sits</span></h3>
+<p>
+<span data-lang="de">Im Cockpit, nicht am Helm. Vom Cockpit aus liegt alles Interessante in derselben Halbkugel nach oben: Kappe, Leinen, Tragegurte und dazwischen die Hände mit den Bremsen. Der Helm dreht sich mit dem Kopf, und die Hände liegen unter seinem Horizont. Das Cockpit bewegt sich mit dem Körper, zeigt im Flug zur Sonne und ist immer dabei. Was man von dort nicht sieht, ist der Beschleuniger.</span>
+<span data-lang="en">In the cockpit, not on the helmet. From the cockpit everything of interest lies in the same upward hemisphere: canopy, lines, risers and, between them, the hands with the brakes. The helmet turns with the head, and the hands lie below its horizon. The cockpit moves with the body, faces the sun in flight and is always there. What you cannot see from there is the speed bar.</span>
+</p>
+
+<h3><span data-lang="de">Kamera, Linse und Rechner in einem Teil</span><span data-lang="en">Camera, lens and processor in one part</span></h3>
+<p>
+<span data-lang="de">Das Modul ISM01Q-03M00F9 aus Himax' WiseEye1-Serie: der Sensor HM0360 mit 640 × 480 Punkten, schwarzweiss, 7.8 mA bei 60 Bildern pro Sekunde und 0.14 mA bei 2 Bildern pro Sekunde, mit eigener Erkennung von Änderungen im Bild; dazu Himax' Stromspar-Prozessor WE1 und eine Weitwinkellinse mit 160 Grad horizontalem Bildwinkel, alles zusammen auf 20.5 × 21.5 × 5.5 mm mit einem Flachkabel-Anschluss. Damit entfällt, woran Anlauf 2 scheiterte: Es braucht keine eigene Linse, die auf den winzigen Sensor passt, und keinen zweiten Rechner.</span>
+<span data-lang="en">The module ISM01Q-03M00F9 from Himax' WiseEye1 series: the HM0360 sensor with 640 × 480 pixels, monochrome, 7.8 mA at 60 frames per second and 0.14 mA at 2 frames per second, with its own detection of changes in the image; plus Himax' low-power WE1 processor and a wide-angle lens with a 160-degree horizontal field of view, all on 20.5 × 21.5 × 5.5 mm with a flat-cable connector. That removes what attempt 2 failed on: no lens of one's own that has to fit the tiny sensor, and no second processor.</span>
+</p>
+<p>
+<span data-lang="de">160 Grad reichen: Die Kappe füllt rund 70 Grad, die Hände liegen 40 bis 60 Grad seitlich vom Zenit. Bei 640 Punkten über 160 Grad ist die Kappe knapp 300 Punkte breit, eine Hand in einem halben Meter Abstand etwa 40. Am Bildrand ist das Bild stark verzerrt; die Verzerrung rechnet der Player heraus.</span>
+<span data-lang="en">160 degrees are enough: the canopy fills about 70 degrees, the hands lie 40 to 60 degrees off the zenith. With 640 pixels across 160 degrees the canopy is close to 300 pixels wide, a hand half a metre away about 40. At the edge the image is strongly distorted; the player undoes the distortion.</span>
+</p>
+
+<h3><span data-lang="de">Was aufgezeichnet wird</span><span data-lang="en">What is recorded</span></h3>
+<p>
+<span data-lang="de">Die Box filmt, sobald sie bewegt wird und Licht sieht, und behält die letzten fünf Minuten, laufend überschrieben; im Rucksack und im Keller schläft sie. Gesichert wird dreimal: der Start, sobald die Geschwindigkeit über Grund die eines Flugs ist, mit einer Minute davor und anderthalb danach; die Landung, die letzten zweieinhalb Minuten vor dem Stillstand; und der grosse rote Knopf, die letzten fünf Minuten, für eine Störung, eine Fastkollision oder was der Pilot sonst festhalten will, auch erst nach der Erholung, wenn der Schirm wieder fliegt; gross genug für Handschuhe, und jeder Druck sichert, immer. Die Bildrate regelt die Kamera selbst: 10 bis 15 Bilder pro Sekunde, wenn das Bild unruhig ist oder die Batterie voll, 2 bis 3 in ruhiger Luft bei halber Batterie, 1 Bild pro Sekunde, wenn sie fast leer ist; lieber grobe Bilder als keine. In ruppiger Luft, wo Klapper passieren, läuft sie darum meist schon schnell. Der Speicher ist fest verbaut, 8 GB, Platz für 60 bis 80 Flüge mit je einem Knopfdruck in schneller Rate, das Fünffache in langsamer; ist er voll, fällt der älteste Flug weg. Gelöscht wird nie, bedient wird nichts ausser dem Knopf. Ein Beschleunigungssensor ist nicht dabei: Einen Klapper spürt er am Piloten schlecht, die Kamera sieht ihn.</span>
+<span data-lang="en">The box films as soon as it is moved and sees light, and keeps the last five minutes, continuously overwritten; in the rucksack and in the cellar it sleeps. It saves three times: the launch, as soon as the ground speed is that of a flight, with one minute before and one and a half after; the landing, the last two and a half minutes before the image stands still; and the big red button, the last five minutes, for an incident, a near collision or whatever the pilot wants to keep, even after recovering, once the wing flies again; big enough for gloves, and every press saves, always. The camera sets its own frame rate: 10 to 15 frames per second when the image is restless or the battery full, 2 to 3 in calm air at half battery, 1 frame per second when it is nearly empty; coarse images rather than none. In rough air, where collapses happen, it is therefore usually already running fast. The storage is built in, 8 GB, room for 60 to 80 flights with one button press each at the fast rate, five times that at the slow one; when full, the oldest flight drops out. Nothing is ever deleted, nothing is operated except the button. There is no accelerometer: it feels a collapse poorly at the pilot, the camera sees it.</span>
+</p>
+<p>
+<span data-lang="de">Dazu ein GPS und ein Barometer. Das GPS (u-blox, Thalwil) schreibt die Spur: eine Position pro Sekunde, solange die Batterie voll ist, eine alle fünf Sekunden bei halber, aus, wenn sie fast leer ist. Eine Position pro Sekunde braucht es, um eine Spirale oder einen Klapper in der Spur zu sehen; eine alle fünf Sekunden genügt XContest und FAI noch immer. Datum und Uhrzeit kommen aus dem Satellitensignal; eine Uhr, die man stellen müsste, gibt es nicht. Der Barometer liefert Höhe und Sinken: Er löst 0.1 m auf, und nur damit wird aus der Höhe ein Sinken auf 0.1 m/s genau, das neben den Bildern den Klapper zeigt; die GPS-Höhe zittert um zehn Meter und kann das nicht. Er misst immer, auch wenn das GPS schläft. Die Spur jedes Flugs liegt als IGC-Datei auf der Box, 1 MB pro Flug: eine zweite Aufzeichnung für den Piloten, falls Vario oder Handy ausfallen. Kein Sender, kein Funk. Einschalten muss niemand.</span>
+<span data-lang="en">Plus a GPS and a barometer. The GPS (u-blox, Thalwil) writes the track: one position per second while the battery is full, one every five seconds at half, off when it is nearly empty. One position per second is needed to see a spiral or a collapse in the track; one every five seconds still satisfies XContest and FAI. Date and time come from the satellite signal; there is no clock that would have to be set. The barometer gives altitude and sink: it resolves 0.1 m, and only that turns altitude into a sink rate good to 0.1 m/s, the one that shows the collapse next to the images; GPS altitude jitters by ten metres and cannot. It measures always, even when the GPS sleeps. The track of every flight lies on the box as an IGC file, 1 MB per flight: a second recording for the pilot in case vario or phone fail. No transmitter, no radio. Nobody has to switch anything on.</span>
+</p>
+
+<h3><span data-lang="de">Der Vario-Ton</span><span data-lang="en">The vario sound</span></h3>
+<p>
+<span data-lang="de">Ein Piezo-Summer hinter einer Membran im Gehäuse macht aus dem Barometer ein Vario: Steigton und Sinkton, nur im Flug, ab Werk stumm. Ein kleiner zweiter Knopf schaltet den Ton an oder aus, sonst nichts; Lautstärke und Schwellen stellt man einmal am Handy ein, die Box liest sie vom Stick. Der Ton kostet 2 bis 6 mW im Mittel, weil er nur beim Steigen läuft. Streckenpiloten haben ihr Vario und lassen ihn aus; für Schüler und Genusspiloten ist es das erste Vario. Der Grund, ihn einzubauen, ist ein anderer: Ein Gerät, das jeden Flug nützt, wird getragen.</span>
+<span data-lang="en">A piezo buzzer behind a membrane in the housing turns the barometer into a vario: climb tone and sink tone, in flight only, silent from the factory. A small second button switches the sound on or off, nothing else; volume and thresholds are set once on the phone, the box reads them from the stick. The sound costs 2 to 6 mW on average, because it runs only while climbing. XC pilots have their vario and leave it off; for students and leisure pilots it is their first vario. The reason to build it in is another one: a device that is useful on every flight gets carried.</span>
+</p>
+
+<h3><span data-lang="de">Auslesen am Handy</span><span data-lang="en">Reading it out on the phone</span></h3>
+<p>
+<span data-lang="de">Nach dem Flug steckt man die Box mit einem USB-C-Kabel ans Handy oder an den Computer; sie meldet sich wie ein USB-Stick. Eine Webseite zeigt die Flüge mit Datum, Dauer, Start, Landung und Knopfdrücken und baut aus der Box allein den Player: die Bilder, daneben die Spur auf der Karte und in 3D, darunter Höhe, Geschwindigkeit und Sinken. Keine App, kein Konto, kein Hochladen; die Bilder bleiben beim Piloten, der entscheidet, wem er sie zeigt. Das geht mit Android, mit iPhones ab dem 15er und mit jedem Computer.</span>
+<span data-lang="en">After the flight you plug the box into the phone or the computer with a USB-C cable; it shows up like a USB stick. A web page lists the flights with date, duration, launch, landing and button presses and builds the player from the box alone: the images, next to them the track on the map and in 3D, below altitude, speed and sink. No app, no account, no upload; the images stay with the pilot, who decides whom to show them to. This works with Android, with iPhones from the 15 on and with any computer.</span>
+</p>
+
+<h3><span data-lang="de">Das Watt-Budget</span><span data-lang="en">The power budget</span></h3>
+<div class="tbl"><table>
+<tr><th><span data-lang="de">Teil</span><span data-lang="en">Part</span></th><th class="num"><span data-lang="de">ruhig, 2–3 Bilder/s</span><span data-lang="en">calm, 2–3 frames/s</span></th><th class="num"><span data-lang="de">ruppig, 10–15 Bilder/s</span><span data-lang="en">rough, 10–15 frames/s</span></th></tr>
+<tr><td><span data-lang="de">Kamera HM0360</span><span data-lang="en">Camera HM0360</span></td><td class="num">1–2 mW</td><td class="num">4–6 mW</td></tr>
+<tr><td><span data-lang="de">Rechner WE1 im Kameramodul: Unruhe im Bild messen, Bilder ablegen</span><span data-lang="en">WE1 processor in the camera module: measure image unrest, store images</span></td><td class="num">3–8 mW</td><td class="num">5–10 mW</td></tr>
+<tr><td><span data-lang="de">Barometer, 1 Messung/s</span><span data-lang="en">Barometer, 1 reading/s</span></td><td class="num">&lt; 0.1 mW</td><td class="num">&lt; 0.1 mW</td></tr>
+<tr><td><span data-lang="de">Speicher, schreibt in kurzen Schüben, sonst stromlos</span><span data-lang="en">Storage, writes in short bursts, otherwise unpowered</span></td><td class="num">1–3 mW</td><td class="num">5–10 mW</td></tr>
+<tr><td><span data-lang="de">GPS u-blox, 1 Position/s (bei halber Batterie alle 5 s)</span><span data-lang="en">GPS u-blox, 1 position/s (every 5 s at half battery)</span></td><td class="num">10–15 mW</td><td class="num">10–15 mW</td></tr>
+<tr><td><span data-lang="de">Vario-Ton, nur beim Steigen, wenn eingeschaltet</span><span data-lang="en">Vario sound, only while climbing, if switched on</span></td><td class="num">2–6 mW</td><td class="num">2–6 mW</td></tr>
+<tr class="sum"><td><span data-lang="de">zusammen</span><span data-lang="en">total</span></td><td class="num">17–34 mW</td><td class="num">27–46 mW</td></tr>
+<tr><td><span data-lang="de">im Schlaf (Bewegungswächter der Kamera)</span><span data-lang="en">asleep (the camera’s motion watchdog)</span></td><td class="num">&lt; 0.1 mW</td><td class="num"></td></tr>
+<tr><td><span data-lang="de">zum Vergleich: WLAN zum Handy, das nicht dabei ist</span><span data-lang="en">for comparison: the Wi-Fi to the phone that is left out</span></td><td class="num">200–500 mW</td><td class="num"></td></tr>
+</table></div>
+<p>
+<span data-lang="de">Dagegen die Sonne: 25 cm² Solarzelle auf dem Cockpit liefern bei voller Sonne und gutem Winkel 0.4 W, im Flug, schräg und mit Wolken, im Mittel 70 bis 140 mW, an einem trüben Tag 15 bis 25 mW. An guten Tagen das Mehrfache des Verbrauchs auch mit GPS und schneller Bildrate; an trüben Tagen nehmen Kamera und GPS die Rate von selbst zurück. Als Vorrat eine Zelle von 200 mAh aus Lithium-Titanat, weil sie auch bei Minusgraden geladen werden darf und tausende Zyklen hält; das sind zwei Flugtage ohne Sonne in voller Rate, fünf in reduzierter. Ein Lade-Chip, der schon bei einigen Milliwatt arbeitet (TI BQ25570), erledigt das Laden ohne Zutun. Ein Gurtzeug im Keller lädt nicht; eines am Startplatz schon.</span>
+<span data-lang="en">Against that, the sun: 25 cm² of solar cell on the cockpit give 0.4 W in full sun at a good angle, in flight, oblique and with clouds, 70 to 140 mW on average, on a dull day 15 to 25 mW. On good days several times the consumption even with GPS and the fast frame rate; on dull days camera and GPS lower their rates by themselves. As a reserve a 200 mAh lithium-titanate cell, because it may be charged below freezing and lasts thousands of cycles; that is two flying days without sun at full rate, five at reduced rate. A charger chip that already works at a few milliwatts (TI BQ25570) does the charging unattended. A harness in the cellar does not charge; one at the launch site does.</span>
+</p>
+
+<h3><span data-lang="de">Was die Teile kosten</span><span data-lang="en">What the parts cost</span></h3>
+<p>
+<span data-lang="de">Grob, in Franken. Einzeln und zu hundert als Prototyp: fertige Module, auf eine Lochrasterplatte gelötet, in ein gedrucktes Gehäuse, mit Harz vergossen. Zu zehntausend aus einer Fertigung: eine eigene Platine, ein Spritzguss-Gehäuse. Der Preis des Kameramoduls ist geschätzt und bei Himax anzufragen; der Rest sind übliche Preise für solche Teile.</span>
+<span data-lang="en">Roughly, in Swiss francs. Single and by the hundred as prototypes: ready-made modules soldered onto a perfboard, in a 3D-printed housing, potted in resin. By the ten thousand from a manufacturer: a board of its own, an injection-moulded housing. The price of the camera module is an estimate, to be requested from Himax; the rest are usual prices for such parts.</span>
+</p>
+<div class="tbl"><table>
+<tr><th><span data-lang="de">Teil</span><span data-lang="en">Part</span></th><th class="num"><span data-lang="de">1 Stück</span><span data-lang="en">1 unit</span></th><th class="num"><span data-lang="de">100 Stück</span><span data-lang="en">100 units</span></th><th class="num"><span data-lang="de">10'000 Stück</span><span data-lang="en">10,000 units</span></th></tr>
+<tr><td><span data-lang="de">Kameramodul mit Linse und Rechner (geschätzt)</span><span data-lang="en">Camera module with lens and processor (estimate)</span></td><td class="num">35</td><td class="num">28</td><td class="num">10–15</td></tr>
+<tr><td><span data-lang="de">Trägerplatine mit Flachkabel-Anschluss und USB-C</span><span data-lang="en">Carrier board with flat-cable connector and USB-C</span></td><td class="num">5</td><td class="num">3</td><td class="num">1</td></tr>
+<tr><td><span data-lang="de">Speicher fest verbaut, 8 GB (SD-NAND-Chip, kein Schacht)</span><span data-lang="en">Storage built in, 8 GB (SD-NAND chip, no slot)</span></td><td class="num">3</td><td class="num">2</td><td class="num">1–2</td></tr>
+<tr><td><span data-lang="de">Barometer, für Höhe und Sinken</span><span data-lang="en">Barometer, for altitude and sink</span></td><td class="num">2</td><td class="num">1</td><td class="num">&lt; 1</td></tr>
+<tr><td><span data-lang="de">GPS u-blox MAX-M10 mit Antenne</span><span data-lang="en">GPS u-blox MAX-M10 with antenna</span></td><td class="num">14</td><td class="num">10</td><td class="num">4–6</td></tr>
+<tr><td><span data-lang="de">Solarzelle 25 cm²</span><span data-lang="en">Solar cell 25 cm²</span></td><td class="num">8</td><td class="num">5</td><td class="num">3–4</td></tr>
+<tr><td><span data-lang="de">Batterie 200 mAh und Lade-Chip</span><span data-lang="en">Battery 200 mAh and charger chip</span></td><td class="num">9</td><td class="num">7</td><td class="num">4–6</td></tr>
+<tr><td><span data-lang="de">Grosser roter Knopf, für Handschuhe (Magnetschalter, vergossen)</span><span data-lang="en">Big red button, for gloves (magnetic switch, potted)</span></td><td class="num">2</td><td class="num">1</td><td class="num">&lt; 1</td></tr>
+<tr><td><span data-lang="de">Kleiner Knopf Vario an/aus</span><span data-lang="en">Small button vario on/off</span></td><td class="num">1</td><td class="num">1</td><td class="num">&lt; 1</td></tr>
+<tr><td><span data-lang="de">Piezo-Summer mit Membran</span><span data-lang="en">Piezo buzzer with membrane</span></td><td class="num">2</td><td class="num">1</td><td class="num">&lt; 1</td></tr>
+<tr><td><span data-lang="de">Gehäuse, gedruckt und vergossen (Serie: Spritzguss)</span><span data-lang="en">Housing, printed and potted (series: injection moulded)</span></td><td class="num">4</td><td class="num">3</td><td class="num">1–2</td></tr>
+<tr><td><span data-lang="de">Kleinteile</span><span data-lang="en">Small parts</span></td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr>
+<tr class="sum"><td><span data-lang="de">zusammen</span><span data-lang="en">total</span></td><td class="num">≈ 90</td><td class="num">≈ 65</td><td class="num">25–40</td></tr>
+</table></div>
+<p>
+<span data-lang="de">Das GPS empfängt nur; ohne Sender braucht es keine Funk-Zulassung. Einmalig bleibt für die Serie die Spritzgussform, 10'000 bis 30'000 Franken.</span>
+<span data-lang="en">The GPS only receives; without a transmitter there is no radio certification. The one-off cost that remains for a series is the injection mould, 10'000 to 30'000 francs.</span>
+</p>
+
+<h3><span data-lang="de">Was man am Ende hat</span><span data-lang="en">What you get in the end</span></h3>
+<p>
+<span data-lang="de">Eine Webseite auf dem Handy, die aus der Box allein den Player baut: die Bildfolge, darunter die Höhe und die Spur auf der Karte, und die Markierungen für Start, Landung und Knopf. Man scrollt zur Störung und sieht, was die Kappe tat und was die Hände taten, Zehntelsekunde für Zehntelsekunde. Dieser Teil ist Software und ist als erstes gebaut, mit Aufnahmen, die es schon gibt: der <a href="demo/">Demo-Player</a>.</span>
+<span data-lang="en">A web page on the phone that builds the player from the box alone: the image sequence, below it the altitude and the track on the map, and the marks for launch, landing and button. You scroll to the incident and see what the canopy did and what the hands did, tenth of a second by tenth of a second. This part is software and has been built first, with recordings that already exist: the <a href="demo/">demo player</a>.</span>
+</p>
+<p>
+<span data-lang="de">Zum Player gehört die Nachbesprechung. Beim Freigeben beantwortet der Pilot fünf Fragen (Flugphase, was die Kappe tat, was er tat, was er heute anders machen würde, Bedingungen) und markiert im Player die Bilder, auf die es ankommt. Störungen mit Kontrollverlust bekommen innert einer Woche eine kurze Einordnung durch einen SIV-Lehrer, direkt im Player. Teilen kann der Pilot per Link, mit wem er will; öffentliche Kommentare gibt es nicht. Die Studie zählt Störungen pro hundert Flugstunden und ob sie beherrscht wurden; das sind Hunderte Ereignisse pro Saison, genug, um die Wirkung der Nachbesprechung zu messen: Piloten mit Einordnung durch den Lehrer gegen Piloten mit Selbst-Nachbesprechung, nach Zufall zugeteilt.</span>
+<span data-lang="en">The debrief belongs to the player. On release the pilot answers five questions (flight phase, what the canopy did, what he did, what he would do differently today, conditions) and marks in the player the images that matter. Incidents with loss of control get a short assessment by an SIV instructor within a week, right in the player. The pilot can share by link with whom he wants; there are no public comments. The study counts incidents per hundred flight hours and whether they were kept under control; that is hundreds of events per season, enough to measure the effect of the debrief: pilots with an instructor's assessment against pilots with a self-debrief, assigned at random.</span>
+</p>
+
+<h3><span data-lang="de">Was offen ist</span><span data-lang="en">What is open</span></h3>
+<p>
+<span data-lang="de">Preis und Lieferbarkeit des Kameramoduls. Das Gehäuse und die Befestigung im Cockpit, so dass die Zelle Sonne sieht und die Kamera nach oben schaut, ohne zu stören. Die Schwellen für die Bildrate: ab welcher Unruhe im Bild und welchem Ladezustand die Kamera hochschaltet, und wie sie Hände beim Bremsen, Wolkenschatten oder die Sonne, die beim Kreisen durchs Bild wandert, von echter Unruhe unterscheidet. Der GPS-Empfang im Cockpit unter der Kappe, der Stromhaushalt an trüben Tagen, und ob der Vario-Ton am Cockpit im Fahrtwind laut genug ist. Und der ehrliche Punkt aus Anlauf 1: ob ein Gerät, das niemand bedienen muss, auch getragen wird.</span>
+<span data-lang="en">Price and availability of the camera module. The housing and the mounting in the cockpit, so that the cell sees the sun and the camera looks up without being in the way. The thresholds for the frame rate: at what image unrest and what charge level the camera switches up, and how it tells hands on the brakes, cloud shadows or the sun wandering through the image while circling from real unrest. GPS reception in the cockpit under the canopy, the power budget on dull days, and whether the vario sound at the cockpit is loud enough in the airflow. And the honest point from attempt 1: whether a device nobody has to operate will actually be carried.</span>
+</p>
+</div>
+
+<h2><span data-lang="de">Die Anläufe davor</span><span data-lang="en">The attempts before</span></h2>
+<p class="prose">
+<span data-lang="de">Zwei Anläufe sind an derselben Stelle gescheitert: nicht an der Technik, sondern daran, dass ein Gerät, das man vor jedem Flug einschalten muss, nicht eingeschaltet wird. Der dritte beginnt darum bei dieser Bedingung.</span>
+<span data-lang="en">Two attempts failed at the same point: not at the technology, but at the fact that a device you have to switch on before every flight does not get switched on. The third therefore starts from that condition.</span>
+</p>
 <div class="steps">
   <div class="step">
     <div class="n">1</div>
@@ -105,106 +216,6 @@ html.de [data-lang="en"]{display:none!important}
       </p>
     </div>
   </div>
-
-  <div class="step">
-    <div class="n">3</div>
-    <div>
-      <div class="chips"><span class="chip">2026</span><span class="chip idea"><span data-lang="de">Idee</span><span data-lang="en">Idea</span></span></div>
-      <h3><span data-lang="de">Montieren und vergessen</span><span data-lang="en">Install and forget</span></h3>
-      <p>
-      <span data-lang="de">Ein kleines Gerät im Cockpit des Gurtzeugs, das von selbst aufzeichnet, sobald geflogen wird, das niemand lädt, weil es seinen Strom von der Sonne holt, und das nur die Störungen behält: ein paar Minuten Bilder, jedes Mal, wenn die Kappe etwas tat. Nach dem Flug steckt man es ans Handy und sieht die Störung als Player: Kappe, Hände, Höhe, synchron. Der Plan dazu steht unten. Die beiden Hürden von 2024 sind weg: Kamera und Linse gibt es heute als fertiges Modul, und die Firmware ist die Arbeit, die eine KI übernimmt; was bleibt, ist Physik.</span>
-      <span data-lang="en">A small device in the harness cockpit that records by itself whenever flying happens, that nobody charges because it takes its power from the sun, and that keeps only the incidents: a few minutes of images each time the canopy did something. After the flight you plug it into your phone and see the incident as a player: canopy, hands, altitude, in sync. The plan is below. Both hurdles of 2024 are gone: camera and lens now come as a ready-made module, and the firmware is the work an AI does; what remains is physics.</span>
-      </p>
-    </div>
-  </div>
-</div>
-
-<div class="plan">
-<h2><span data-lang="de">Der Plan für Anlauf 3</span><span data-lang="en">The plan for attempt 3</span></h2>
-
-<h3><span data-lang="de">Wo es sitzt</span><span data-lang="en">Where it sits</span></h3>
-<p>
-<span data-lang="de">Im Cockpit, nicht am Helm. Vom Cockpit aus liegt alles Interessante in derselben Halbkugel nach oben: Kappe, Leinen, Tragegurte und dazwischen die Hände mit den Bremsen. Der Helm dreht sich mit dem Kopf, und die Hände liegen unter seinem Horizont. Das Cockpit bewegt sich mit dem Körper, zeigt im Flug zur Sonne und ist immer dabei. Was man von dort nicht sieht, ist der Beschleuniger.</span>
-<span data-lang="en">In the cockpit, not on the helmet. From the cockpit everything of interest lies in the same upward hemisphere: canopy, lines, risers and, between them, the hands with the brakes. The helmet turns with the head, and the hands lie below its horizon. The cockpit moves with the body, faces the sun in flight and is always there. What you cannot see from there is the speed bar.</span>
-</p>
-
-<h3><span data-lang="de">Kamera, Linse und Rechner in einem Teil</span><span data-lang="en">Camera, lens and processor in one part</span></h3>
-<p>
-<span data-lang="de">Das Modul ISM01Q-03M00F9 aus Himax' WiseEye1-Serie: der Sensor HM0360 mit 640 × 480 Punkten, schwarzweiss, 7.8 mA bei 60 Bildern pro Sekunde und 0.14 mA bei 2 Bildern pro Sekunde, mit eigener Erkennung von Änderungen im Bild; dazu Himax' Stromspar-Prozessor WE1 und eine Weitwinkellinse mit 160 Grad horizontalem Bildwinkel, alles zusammen auf 20.5 × 21.5 × 5.5 mm mit einem Flachkabel-Anschluss. Damit entfällt, woran Anlauf 2 scheiterte: Es braucht keine eigene Linse, die auf den winzigen Sensor passt, und keinen zweiten Rechner.</span>
-<span data-lang="en">The module ISM01Q-03M00F9 from Himax' WiseEye1 series: the HM0360 sensor with 640 × 480 pixels, monochrome, 7.8 mA at 60 frames per second and 0.14 mA at 2 frames per second, with its own detection of changes in the image; plus Himax' low-power WE1 processor and a wide-angle lens with a 160-degree horizontal field of view, all on 20.5 × 21.5 × 5.5 mm with a flat-cable connector. That removes what attempt 2 failed on: no lens of one's own that has to fit the tiny sensor, and no second processor.</span>
-</p>
-<p>
-<span data-lang="de">160 Grad reichen: Die Kappe füllt rund 70 Grad, die Hände liegen 40 bis 60 Grad seitlich vom Zenit. Bei 640 Punkten über 160 Grad ist die Kappe knapp 300 Punkte breit, eine Hand in einem halben Meter Abstand etwa 40. Am Bildrand ist das Bild stark verzerrt; die Verzerrung rechnet der Player heraus.</span>
-<span data-lang="en">160 degrees are enough: the canopy fills about 70 degrees, the hands lie 40 to 60 degrees off the zenith. With 640 pixels across 160 degrees the canopy is close to 300 pixels wide, a hand half a metre away about 40. At the edge the image is strongly distorted; the player undoes the distortion.</span>
-</p>
-
-<h3><span data-lang="de">Was aufgezeichnet wird</span><span data-lang="en">What is recorded</span></h3>
-<p>
-<span data-lang="de">Nur Störungen. Die Box behält die letzten zwei Minuten mit 2 bis 3 Bildern pro Sekunde und die letzten acht Sekunden mit 10 bis 15 Bildern pro Sekunde, laufend überschrieben. Gesichert wird in drei Fällen: wenn die Kamera selbst eine Änderung im Bild erkennt, weil die Kappe ihre Form ändert; wenn der Pilot den Knopf drückt, auch erst eine Minute nach der Störung, wenn der Schirm wieder fliegt; und wenn das Bild stillsteht, was das Ende jedes Flugs ist, auch eines Unfalls. Eine Störung sind wenige Megabyte. So sind die Hände in dem Fenster, in dem es zählt, in Zehntelsekunden festgehalten, und der Rest des Flugs ist gar nicht da. Ein Beschleunigungssensor ist nicht dabei: Einen Klapper spürt er am Piloten schlecht, die Kamera sieht ihn sofort.</span>
-<span data-lang="en">Incidents only. The box keeps the last two minutes at 2 to 3 frames per second and the last eight seconds at 10 to 15 frames per second, continuously overwritten. It saves in three cases: when the camera itself detects a change in the image, because the canopy changes its shape; when the pilot presses the button, even a minute after the incident, once the wing flies again; and when the image stands still, which is the end of every flight, an accident included. One incident is a few megabytes. So the hands are captured in tenths of a second in the window that matters, and the rest of the flight is not there at all. There is no accelerometer: it feels a collapse poorly at the pilot, the camera sees it at once.</span>
-</p>
-<p>
-<span data-lang="de">Dazu die Druckhöhe, einmal pro Sekunde, über den ganzen Flug; das sind 36 kB für fünf Stunden. Sie dient nicht der Störung, sondern der Zuordnung: Beim Auswerten legt die Webseite die Höhenkurve der Box über die Höhenkurve der IGC-Datei, bis sie passt, dann ist jedes Bild auf die Sekunde verortet. Über zwei Minuten ist eine Höhenkurve meist noch eine Gerade, die überall im Flug gleich aussieht; über den ganzen Flug ist sie einmalig. Darum keine Uhr, die man stellen müsste, kein GPS, kein Funk. Der Barometer gibt auch Start und Ende vor: Aufzeichnen, sobald die Höhe steigt, aufhören nach zehn Minuten Ruhe. Einschalten muss niemand; der Knopf dient nur dem Sichern.</span>
-<span data-lang="en">Plus the pressure altitude, once per second, over the whole flight; that is 36 kB for five hours. It serves not the incident but the matching: when analysing, the web page lays the box’s altitude curve over the altitude curve of the IGC file until they fit, and then every image is placed to the second. Over two minutes an altitude curve is usually still a straight line that looks the same anywhere in the flight; over the whole flight it is unique. Hence no clock that would have to be set, no GPS, no radio. The barometer also sets start and end: record as soon as the altitude rises, stop after ten minutes of rest. Nobody has to switch anything on; the button only saves.</span>
-</p>
-
-<h3><span data-lang="de">Auslesen am Handy</span><span data-lang="en">Reading it out on the phone</span></h3>
-<p>
-<span data-lang="de">Nach dem Flug steckt man die Box mit einem USB-C-Kabel ans Handy; sie meldet sich wie ein USB-Stick. Eine Webseite liest die Störungen, der Pilot wählt die IGC-Datei des Flugs, und die Seite baut den Player. Keine App, kein Konto, kein Hochladen; die Bilder bleiben beim Piloten, der entscheidet, wem er sie zeigt. Das geht mit Android und mit iPhones ab dem 15er.</span>
-<span data-lang="en">After the flight you plug the box into the phone with a USB-C cable; it shows up like a USB stick. A web page reads the incidents, the pilot picks the IGC file of the flight, and the page builds the player. No app, no account, no upload; the images stay with the pilot, who decides whom to show them to. This works with Android and with iPhones from the 15 on.</span>
-</p>
-
-<h3><span data-lang="de">Das Watt-Budget</span><span data-lang="en">The power budget</span></h3>
-<div class="tbl"><table>
-<tr><th><span data-lang="de">Teil</span><span data-lang="en">Part</span></th><th class="num"><span data-lang="de">im Flug</span><span data-lang="en">in flight</span></th></tr>
-<tr><td><span data-lang="de">Kamera HM0360, 2–3 Bilder/s</span><span data-lang="en">Camera HM0360, 2–3 frames/s</span></td><td class="num">1–2 mW</td></tr>
-<tr><td><span data-lang="de">Rechner WE1 im Kameramodul: Bildänderung erkennen, Bilder ablegen</span><span data-lang="en">WE1 processor in the camera module: detect image change, store images</span></td><td class="num">3–8 mW</td></tr>
-<tr><td><span data-lang="de">Barometer, 1 Messung/s</span><span data-lang="en">Barometer, 1 reading/s</span></td><td class="num">&lt; 0.1 mW</td></tr>
-<tr><td><span data-lang="de">Speicher, in Schüben: Speicherkarte kurz ein, sonst stromlos, oder Flash-Chip</span><span data-lang="en">Storage in bursts: memory card on briefly, otherwise unpowered, or flash chip</span></td><td class="num">1–3 mW</td></tr>
-<tr class="sum"><td><span data-lang="de">zusammen</span><span data-lang="en">total</span></td><td class="num">5–15 mW</td></tr>
-<tr><td><span data-lang="de">im Schlaf (Bewegungswächter der Kamera)</span><span data-lang="en">asleep (the camera’s motion watchdog)</span></td><td class="num">&lt; 0.1 mW</td></tr>
-<tr><td><span data-lang="de">zum Vergleich: GPS, das nicht dabei ist</span><span data-lang="en">for comparison: the GPS that is left out</span></td><td class="num">15–40 mW</td></tr>
-<tr><td><span data-lang="de">zum Vergleich: WLAN zum Handy, das nicht dabei ist</span><span data-lang="en">for comparison: the Wi-Fi to the phone that is left out</span></td><td class="num">200–500 mW</td></tr>
-</table></div>
-<p>
-<span data-lang="de">Dagegen die Sonne: 15 bis 20 cm² Solarzelle auf dem Cockpit liefern bei voller Sonne und gutem Winkel 0.3 W, im Flug, schräg und mit Wolken, im Mittel 50 bis 100 mW, an einem trüben Tag 10 bis 20 mW. Das Fünffache des Verbrauchs an guten Tagen, die Deckung an schlechten. Als Vorrat eine Zelle von 100 bis 200 mAh aus Lithium-Titanat, weil sie auch bei Minusgraden geladen werden darf und tausende Zyklen hält; das sind fünf bis zehn Flugtage ohne Sonne. Ein Lade-Chip, der schon bei einigen Milliwatt arbeitet (TI BQ25570), erledigt das Laden ohne Zutun. Ein Gurtzeug im Keller lädt nicht; eines am Startplatz schon.</span>
-<span data-lang="en">Against that, the sun: 15 to 20 cm² of solar cell on the cockpit give 0.3 W in full sun at a good angle, in flight, oblique and with clouds, 50 to 100 mW on average, on a dull day 10 to 20 mW. Five times the consumption on good days, break-even on bad ones. As a reserve a 100 to 200 mAh lithium-titanate cell, because it may be charged below freezing and lasts thousands of cycles; that is five to ten flying days without sun. A charger chip that already works at a few milliwatts (TI BQ25570) does the charging unattended. A harness in the cellar does not charge; one at the launch site does.</span>
-</p>
-
-<h3><span data-lang="de">Was die Teile kosten</span><span data-lang="en">What the parts cost</span></h3>
-<p>
-<span data-lang="de">Grob, in Franken. Einzeln und zu hundert als Prototyp: fertige Module, auf eine Lochrasterplatte gelötet, in ein gedrucktes Gehäuse, mit Harz vergossen. Zu zehntausend aus einer Fertigung: eine eigene Platine, ein Spritzguss-Gehäuse. Der Preis des Kameramoduls ist geschätzt und bei Himax anzufragen; der Rest sind übliche Preise für solche Teile.</span>
-<span data-lang="en">Roughly, in Swiss francs. Single and by the hundred as prototypes: ready-made modules soldered onto a perfboard, in a 3D-printed housing, potted in resin. By the ten thousand from a manufacturer: a board of its own, an injection-moulded housing. The price of the camera module is an estimate, to be requested from Himax; the rest are usual prices for such parts.</span>
-</p>
-<div class="tbl"><table>
-<tr><th><span data-lang="de">Teil</span><span data-lang="en">Part</span></th><th class="num"><span data-lang="de">1 Stück</span><span data-lang="en">1 unit</span></th><th class="num"><span data-lang="de">100 Stück</span><span data-lang="en">100 units</span></th><th class="num"><span data-lang="de">10 000 Stück</span><span data-lang="en">10,000 units</span></th></tr>
-<tr><td><span data-lang="de">Kameramodul mit Linse und Rechner (geschätzt)</span><span data-lang="en">Camera module with lens and processor (estimate)</span></td><td class="num">35</td><td class="num">28</td><td class="num">10–15</td></tr>
-<tr><td><span data-lang="de">Trägerplatine mit Flachkabel-Anschluss und USB-C</span><span data-lang="en">Carrier board with flat-cable connector and USB-C</span></td><td class="num">5</td><td class="num">3</td><td class="num">1</td></tr>
-<tr><td><span data-lang="de">Speicherkarte mit Halter (Serie: Flash-Chip)</span><span data-lang="en">Memory card with holder (series: flash chip)</span></td><td class="num">4</td><td class="num">3</td><td class="num">1–2</td></tr>
-<tr><td><span data-lang="de">Barometer, nur für die Zuordnung</span><span data-lang="en">Barometer, for the matching only</span></td><td class="num">2</td><td class="num">1</td><td class="num">&lt; 1</td></tr>
-<tr><td><span data-lang="de">Solarzelle 15–20 cm²</span><span data-lang="en">Solar cell 15–20 cm²</span></td><td class="num">6</td><td class="num">4</td><td class="num">2–3</td></tr>
-<tr><td><span data-lang="de">Batterie 150 mAh und Lade-Chip</span><span data-lang="en">Battery 150 mAh and charger chip</span></td><td class="num">6</td><td class="num">5</td><td class="num">3–5</td></tr>
-<tr><td><span data-lang="de">Knopf oder Magnetschalter</span><span data-lang="en">Button or magnetic switch</span></td><td class="num">1</td><td class="num">1</td><td class="num">&lt; 1</td></tr>
-<tr><td><span data-lang="de">Gehäuse, gedruckt und vergossen (Serie: Spritzguss)</span><span data-lang="en">Housing, printed and potted (series: injection moulded)</span></td><td class="num">4</td><td class="num">3</td><td class="num">1–2</td></tr>
-<tr><td><span data-lang="de">Kleinteile</span><span data-lang="en">Small parts</span></td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr>
-<tr class="sum"><td><span data-lang="de">zusammen</span><span data-lang="en">total</span></td><td class="num">≈ 65</td><td class="num">≈ 50</td><td class="num">20–30</td></tr>
-</table></div>
-<p>
-<span data-lang="de">Ohne Funk braucht es keine Funk-Zulassung. Einmalig bleibt für die Serie die Spritzgussform, 10 000 bis 30 000 Franken.</span>
-<span data-lang="en">Without radio there is no radio certification. The one-off cost that remains for a series is the injection mould, 10,000 to 30,000 francs.</span>
-</p>
-
-<h3><span data-lang="de">Was man am Ende hat</span><span data-lang="en">What you get in the end</span></h3>
-<p>
-<span data-lang="de">Eine Webseite auf dem Handy, die aus der Box und der IGC-Datei des Flugs den Player baut: die Bildfolge, darunter die Höhe und die Spur auf der Karte, und die Markierungen, wo die Box eine Störung gesichert hat. Man scrollt zur Störung und sieht, was die Kappe tat und was die Hände taten, Zehntelsekunde für Zehntelsekunde. Dieser Teil ist Software und wird als erstes gebaut, mit Aufnahmen, die es schon gibt, damit der Wert sichtbar ist, bevor ein Bauteil bestellt wird.</span>
-<span data-lang="en">A web page on the phone that builds the player from the box and the IGC file of the flight: the image sequence, below it the altitude and the track on the map, and the marks where the box saved an incident. You scroll to the incident and see what the canopy did and what the hands did, tenth of a second by tenth of a second. This part is software and gets built first, with recordings that already exist, so that the value is visible before a single part is ordered.</span>
-</p>
-
-<h3><span data-lang="de">Was offen ist</span><span data-lang="en">What is open</span></h3>
-<p>
-<span data-lang="de">Preis und Lieferbarkeit des Kameramoduls. Das Gehäuse und die Befestigung im Cockpit, so dass die Zelle Sonne sieht und die Kamera nach oben schaut, ohne zu stören. Wie oft die Bildänderung fälschlich auslöst, durch Hände beim Bremsen, Wolkenschatten oder die Sonne, die beim Kreisen durchs Bild wandert; falsche Auslöser kosten nur Speicher, aber die Schwelle muss stimmen, sonst sucht der Pilot die echte Störung zwischen vielen falschen. Ob 3 Bilder pro Sekunde ausserhalb des Störungsfensters genügen oder ob die Sonne mehr erlaubt. Und der ehrliche Punkt aus Anlauf 1: ob ein Gerät, das niemand bedienen muss, auch getragen wird.</span>
-<span data-lang="en">Price and availability of the camera module. The housing and the mounting in the cockpit, so that the cell sees the sun and the camera looks up without being in the way. How often the image-change detection triggers falsely, through hands on the brakes, cloud shadows or the sun wandering through the image while circling; false triggers only cost storage, but the threshold has to be right, or the pilot searches for the real incident among many false ones. Whether 3 frames per second outside the incident window are enough or whether the sun allows more. And the honest point from attempt 1: whether a device nobody has to operate will actually be carried.</span>
-</p>
 </div>
 
 <p class="end"><span data-lang="de">Anlauf 1 mit Innosuisse, FHNW Hochschule für Technik und Flugschule Aerosport, 2018–2020.</span><span data-lang="en">Attempt 1 with Innosuisse, FHNW School of Engineering and the flight school Aerosport, 2018–2020.</span><br><a href="https://joerxc.org/">← joerxc.org</a></p>
