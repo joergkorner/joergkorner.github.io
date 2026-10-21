@@ -92,7 +92,30 @@ a:hover{text-decoration:underline}
 }
 
 /* ---------- hero ---------- */
-.hero{padding:96px 0 40px; text-align:center}
+/* ---------- stream: Aktuell ---------- */
+.stream{max-width:760px; margin:34px auto 0; padding:0 22px}
+.stream .box{background:var(--card); border:1px solid var(--card-line); border-radius:16px; box-shadow:var(--shadow); padding:12px 16px 8px}
+.stream .head{display:flex; align-items:baseline; gap:10px; margin:0 0 4px}
+.stream .head .kicker{margin:0}
+.stream .head .more{margin-left:auto; font-size:12.5px; color:var(--text-3); background:none; border:0; cursor:pointer; font:inherit; font-size:12.5px; padding:0}
+.stream .head .more:hover{color:var(--blue)}
+.stream a.row{display:grid; grid-template-columns:52px auto 1fr auto; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--line); color:var(--text); text-decoration:none; font-size:15px; line-height:1.3; letter-spacing:-.01em}
+.stream a.row:first-of-type{border-top:0}
+.stream a.row:hover .t{color:var(--blue)}
+.stream a.row:hover .arr{transform:translateX(3px)}
+.stream .d{font-size:12.5px; color:var(--text-3); font-variant-numeric:tabular-nums; white-space:nowrap}
+.stream .chip{white-space:nowrap; min-width:104px; text-align:center}
+.stream .t{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.stream .arr{color:var(--text-3); transition:transform .15s}
+.stream a.row.hid{display:none}
+.stream.open a.row.hid{display:grid}
+@media (max-width:600px){
+  .stream{margin-top:22px}
+  .stream a.row{grid-template-columns:auto 1fr auto; grid-template-areas:"d chip arr" "t t t"; row-gap:3px}
+  .stream .d{grid-area:d} .stream .chip{grid-area:chip; justify-self:start} .stream .arr{grid-area:arr}
+  .stream .t{grid-area:t; white-space:normal}
+}
+.hero{padding:56px 0 40px; text-align:center}
 .eyebrow{
   font-size:13px; font-weight:600; letter-spacing:.02em; color:var(--text-3);
   text-transform:none; margin:0 0 16px;
@@ -259,6 +282,19 @@ html.de [data-lang="en"]{display:none !important}
 </nav>
 
 <main id="top">
+
+<!-- STREAM: Aktuell — eine Zeile pro Neuigkeit, neueste zuoberst; die sechste und folgende tragen class="row hid" -->
+<section class="stream" id="aktuell">
+  <div class="box">
+    <div class="head"><p class="kicker"><span data-lang="de">Aktuell</span><span data-lang="en">What's new</span></p>
+      <button class="more" id="stream-more" type="button" hidden><span data-lang="de">alle</span><span data-lang="en">all</span></button></div>
+    <a class="row" href="https://joerxc.org/parabox/"><span class="d">21.10.</span><span class="chip idea">Parabox</span><span class="t"><span data-lang="de">Demo-Player und neuer Plan: GPS, Vario, roter Knopf</span><span data-lang="en">Demo player and new plan: GPS, vario, red button</span></span><span class="arr">→</span></a>
+    <a class="row" href="https://joerxc.org/ausentwickelt/"><span class="d">17.10.</span><span class="chip"><span data-lang="de">Texte</span><span data-lang="en">Writing</span></span><span class="t"><span data-lang="de">Sind die Gleitschirme ausentwickelt? 73 Typen im Vergleich</span><span data-lang="en">Have paragliders stopped getting better? 73 types compared</span></span><span class="arr">→</span></a>
+    <a class="row" href="#writing"><span class="d">16.10.</span><span class="chip">Paper</span><span class="t"><span data-lang="de">Polaren-Paper: Endfassung und die Daten als CSV</span><span data-lang="en">Polars paper: final version and the data as CSV</span></span><span class="arr">→</span></a>
+    <a class="row" href="https://joerxc.org/xcmag_268_invisible_railway.pdf"><span class="d">13.10.</span><span class="chip">Cross Country</span><span class="t"><span data-lang="de">Vier Seiten über die Invisible Railway in Heft 268</span><span data-lang="en">Four pages on the invisible railway in issue 268</span></span><span class="arr">→</span></a>
+    <a class="row" href="https://joerxc.org/alpen-player/"><span class="d">10.10.</span><span class="chip live">Live</span><span class="t"><span data-lang="de">Alpen-Player: erstes Strömungsfeld der ganzen Alpen</span><span data-lang="en">Alps player: a first flow field for the whole Alps</span></span><span class="arr">→</span></a>
+  </div>
+</section>
 
 <header class="hero">
   <div class="wrap">
@@ -806,5 +842,11 @@ html.de [data-lang="en"]{display:none !important}
 })();
 </script>
 
+<script>
+(function(){
+  var st=document.getElementById('aktuell'), b=document.getElementById('stream-more');
+  if(st&&b&&st.querySelector('a.row.hid')){ b.hidden=false; b.addEventListener('click',function(){ st.classList.toggle('open'); b.innerHTML=st.classList.contains('open')?'<span data-lang="de">weniger</span><span data-lang="en">fewer</span>':'<span data-lang="de">alle</span><span data-lang="en">all</span>'; }); }
+})();
+</script>
 </body>
 </html>
