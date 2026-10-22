@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Parabox — joerxc</title>
-<meta name="description" content="Parabox: eine Blackbox für den Gleitschirm, die Kappe, Hände und Höhe aufzeichnet, damit eine Störung nachträglich verstanden werden kann. Drei Anläufe seit 2018.">
+<meta name="description" content="Parabox: Piloten zeigen Starts, Landungen und Störungen ihrer Flüge, aufgezeichnet von einer kleinen Kamera im Cockpit. Eine Einladung, mitzumachen.">
 <style>
-:root{--bg:#ffffff;--bg2:#f5f5f7;--text:#1d1d1f;--text2:#55555a;--text3:#86868b;--line:rgba(0,0,0,.10);--accent:#1f6fd1;--idea:#5b4bb8;--idea-bg:rgba(110,90,230,.14);--chip:rgba(0,0,0,.055)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);color-scheme:dark}
+:root{--bg:#ffffff;--bg2:#f5f5f7;--text:#1d1d1f;--text2:#55555a;--text3:#86868b;--line:rgba(0,0,0,.10);--accent:#1f6fd1;--idea:#5b4bb8;--idea-bg:rgba(110,90,230,.14);--chip:rgba(0,0,0,.055);--red:#d0342c;--sun:#e3a600;--wedge:rgba(31,111,209,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
 a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
@@ -17,13 +17,55 @@ a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
 .langbtn{margin-left:auto;font:inherit;font-size:13px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer}
 main{max-width:980px;margin:0 auto;padding:40px 20px 80px}
 .kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 10px}
-h1{font-size:clamp(30px,5vw,46px);line-height:1.1;margin:0 0 18px;letter-spacing:-.02em;text-wrap:balance}
-h2{font-size:22px;margin:46px 0 10px;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:0 0 18px;letter-spacing:-.025em;text-wrap:balance}
+h2{font-size:24px;margin:52px 0 12px;letter-spacing:-.015em;text-wrap:balance}
+h3{font-size:18px;margin:26px 0 8px;letter-spacing:-.01em}
 .prose{max-width:68ch}
-.lead{font-size:20px;color:var(--text2)}
+.prose p{margin:0 0 14px}
+.lead{font-size:21px;color:var(--text2);line-height:1.45}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:34px 0 10px}
+@media (max-width:760px){.figs{grid-template-columns:1fr;gap:28px}}
+.figs figure{margin:0;min-width:0}
+.figs svg{display:block;width:100%;height:auto;background:var(--bg2);border-radius:14px;border:1px solid var(--line)}
+.figs figcaption{font-size:14.5px;color:var(--text2);margin-top:10px;line-height:1.45}
+.figs figcaption b{color:var(--text);font-weight:600}
+.legend{list-style:none;padding:0;margin:8px 0 0;font-size:13.5px;color:var(--text2)}
+.legend li{display:flex;gap:8px;align-items:baseline;margin:2px 0}
+.legend .n{display:inline-block;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:18px}
+.sv-line{stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sv-thin{stroke:var(--text3);fill:none;stroke-width:1.2;stroke-linecap:round}
+.sv-dash{stroke:var(--accent);fill:none;stroke-width:1.5;stroke-dasharray:4 4}
+.sv-fill{fill:var(--bg);stroke:var(--text);stroke-width:2}
+.sv-soft{fill:var(--chip)}
+.sv-acc{fill:var(--accent)}
+.sv-red{fill:var(--red)}
+.sv-sun{fill:var(--sun)}
+.sv-sunray{stroke:var(--sun);stroke-width:2;stroke-linecap:round}
+.sv-wedge{fill:var(--wedge)}
+.sv-t{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text)}
+.sv-t2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text3)}
+.sv-tw{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:#fff}
+.sv-num{fill:var(--accent)}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:14px 0 0}
+@media (max-width:760px){.steps3{grid-template-columns:1fr}}
+.steps3 div{min-width:0}
+.steps3 .k{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+.steps3 h3{margin:0 0 6px;font-size:19px}
+.steps3 p{margin:0;color:var(--text2);font-size:16px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:10px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.two>div{min-width:0}
+.two h3{margin-top:0}
+.two p{color:var(--text2);margin:0 0 10px}
+.join{margin-top:40px;padding:28px 26px;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}
+.join h2{margin:0 0 10px}
+.join p{margin:0 0 14px;color:var(--text2);max-width:62ch}
+.btn{display:inline-block;font:inherit;font-weight:600;font-size:18px;color:#fff;background:var(--accent);padding:12px 22px;border-radius:999px;border:0;cursor:pointer}
+.btn:hover{text-decoration:none;filter:brightness(1.08)}
+.addr{display:inline-block;margin:12px 0 0 2px;font-size:15px;color:var(--text2)}
+.addr code{font-size:15px;color:var(--text);background:var(--chip);padding:3px 8px;border-radius:6px;user-select:all}
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
 .chip{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--text2);background:var(--chip);padding:4px 9px;border-radius:980px;line-height:1.4}
-.chip.idea{color:var(--idea);background:var(--idea-bg)}
 .chip.dropped{color:#9a4a1f;background:rgba(200,110,40,.14)}
 @media (prefers-color-scheme:dark){.chip.dropped{color:#f0a468}}
 .steps{margin:26px 0 0;max-width:72ch}
@@ -49,6 +91,13 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 tr.sum td{font-weight:600;color:var(--text)}
 .tbl{overflow-x:auto}
 .method{font-size:15px;color:var(--text2);background:var(--bg2);border-radius:10px;padding:14px 18px;max-width:72ch;margin:14px 0}
+details{border-top:1px solid var(--line);padding:6px 0 10px}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-size:20px;font-weight:600;letter-spacing:-.01em;padding:14px 0;list-style:none;display:flex;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"";width:9px;height:9px;border-right:2px solid var(--text3);border-bottom:2px solid var(--text3);transform:rotate(-45deg);transition:transform .15s;flex:none}
+details[open] summary::before{transform:rotate(45deg)}
+summary small{font-size:14px;font-weight:400;color:var(--text3)}
 .end{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);font-size:15px;color:var(--text2)}
 html:not(.de) [data-lang="de"]{display:none!important}
 html.de [data-lang="en"]{display:none!important}
@@ -58,9 +107,157 @@ html.de [data-lang="en"]{display:none!important}
 <div class="top"><a class="brand" href="https://joerxc.org/">joerxc</a>
 <button class="langbtn" id="lang" type="button" aria-label="Sprache / language"><span data-lang="de">EN</span><span data-lang="en">DE</span></button></div>
 <main>
-<p class="kicker"><span data-lang="de">Langzeitprojekt · seit 2018</span><span data-lang="en">Long-term project · since 2018</span></p>
-<h1><span data-lang="de">Parabox — die Blackbox für den Gleitschirm</span><span data-lang="en">Parabox — a black box for the paraglider</span></h1>
+<p class="kicker"><span data-lang="de">Parabox · Einladung an Piloten</span><span data-lang="en">Parabox · an invitation to pilots</span></p>
+<h1><span data-lang="de">Zeig deine Flüge. Alle.</span><span data-lang="en">Show your flights. All of them.</span></h1>
 
+<div class="prose">
+<p class="lead">
+<span data-lang="de">Mit Gleitschirm, Speedflyer und Delta sterben in der Schweiz mehr Menschen als in der ganzen übrigen Leichtaviatik: 17 im Jahr 2025, 13 davon am Gleitschirm. Und von keinem dieser Unfälle gibt es ein Bild der letzten Sekunden. Die übrige Luftfahrt macht es anders: Was geschieht, wird aufgezeichnet, gezeigt und besprochen. Diese Kultur bringen wir in den Gleitschirmsport, Pilot um Pilot, freiwillig und mit Vorbild.</span>
+<span data-lang="en">Paragliders, speedflyers and hang gliders kill more people in Switzerland than all the rest of light aviation: 17 in 2025, 13 of them paragliding. And of none of these accidents is there a picture of the last seconds. The rest of aviation does it differently: what happens is recorded, shown and discussed. We bring this culture into paragliding, pilot by pilot, voluntarily and by example.</span>
+</p>
+<p>
+<span data-lang="de">Die Parabox macht es ohne Aufwand: ein kleines Gerät im Cockpit filmt Kappe und Hände, du fliegst, der Rest geschieht von selbst. Starts, Landungen und Störungen deiner Flüge erscheinen mit dem Log auf dieser Seite, für dich zum Nachschauen, für die anderen zum Lernen.</span>
+<span data-lang="en">The Parabox makes it effortless: a small device in the cockpit films canopy and hands, you fly, the rest happens by itself. Launches, landings and incidents of your flights appear with the log on this site, for you to look back at, for the others to learn from.</span>
+</p>
+</div>
+
+<div class="figs">
+<figure>
+<svg viewBox="0 0 320 240" role="img" aria-label="Parabox im Gurtzeug">
+  <polygon class="sv-wedge" points="176,148 10,160 10,0 320,0 320,92"/>
+  <line class="sv-dash" x1="176" y1="148" x2="10" y2="160"/>
+  <line class="sv-dash" x1="176" y1="148" x2="320" y2="92"/>
+  <circle class="sv-sun" cx="292" cy="30" r="12"/>
+  <g class="sv-sunray"><line x1="292" y1="8" x2="292" y2="13"/><line x1="292" y1="47" x2="292" y2="52"/><line x1="270" y1="30" x2="275" y2="30"/><line x1="309" y1="30" x2="314" y2="30"/><line x1="276" y1="14" x2="280" y2="18"/><line x1="304" y1="42" x2="308" y2="46"/><line x1="276" y1="46" x2="280" y2="42"/><line x1="304" y1="18" x2="308" y2="14"/></g>
+  <path class="sv-fill" d="M66 66 C 104 40, 196 26, 258 44 C 270 48, 268 56, 250 57 C 200 60, 126 64, 66 66 Z" stroke-width="2.5"/>
+  <g class="sv-thin" opacity=".7">
+    <line x1="226" y1="56" x2="152" y2="166"/><line x1="192" y1="59" x2="152" y2="166"/><line x1="158" y1="61" x2="152" y2="166"/><line x1="124" y1="63" x2="152" y2="166"/>
+  </g>
+  <line class="sv-thin" x1="76" y1="66" x2="126" y2="110"/>
+  <rect class="sv-fill" x="104" y="166" width="118" height="32" rx="16"/>
+  <path class="sv-line" d="M128 156 L140 170" stroke-width="6"/>
+  <circle class="sv-fill" cx="122" cy="146" r="10"/>
+  <path class="sv-line" d="M138 162 L134 116"/><path class="sv-line" d="M136 162 L126 112"/>
+  <circle class="sv-fill" cx="134" cy="114" r="4.5"/><circle class="sv-fill" cx="126" cy="110" r="4.5"/>
+  <rect x="164" y="162" width="46" height="5" rx="2" fill="var(--text3)"/>
+  <rect class="sv-fill" x="170" y="148" width="30" height="14" rx="4"/>
+  <circle class="sv-acc" cx="176" cy="148" r="3.5"/>
+  <rect class="sv-acc" x="182" y="150" width="14" height="5" rx="1" opacity=".55"/>
+  <line x1="189" y1="150" x2="189" y2="155" stroke="var(--bg)" stroke-width="1"/>
+  <circle class="sv-red" cx="193" cy="158" r="2.8"/>
+  <g font-size="11" font-weight="700" text-anchor="middle">
+    <line class="sv-thin" x1="178" y1="144" x2="264" y2="128"/><circle class="sv-num" cx="272" cy="128" r="8"/><text class="sv-tw" x="272" y="132">1</text>
+    <line class="sv-thin" x1="196" y1="152" x2="264" y2="152"/><circle class="sv-num" cx="272" cy="152" r="8"/><text class="sv-tw" x="272" y="156">2</text>
+    <line class="sv-thin" x1="196" y1="159" x2="264" y2="176"/><circle class="sv-num" cx="272" cy="176" r="8"/><text class="sv-tw" x="272" y="180">3</text>
+  </g>
+</svg>
+<figcaption><b><span data-lang="de">Im Gurtzeug.</span><span data-lang="en">In the harness.</span></b> <span data-lang="de">Vorn auf dem Cockpit, mit Klett, einmal angebracht. Kein Startknopf, kein Laden, kein Handy im Flug.</span><span data-lang="en">At the front of the cockpit, on velcro, fitted once. No start button, no charging, no phone in flight.</span>
+<ul class="legend">
+<li><span class="n">1</span><span data-lang="de">Kamera: sieht die ganze Kappe und deine Hände an den Bremsen</span><span data-lang="en">Camera: sees the whole canopy and your hands on the brakes</span></li>
+<li><span class="n">2</span><span data-lang="de">Solarzelle: lädt im Flug</span><span data-lang="en">Solar cell: charges in flight</span></li>
+<li><span class="n">3</span><span data-lang="de">Roter Knopf: setzt eine Marke, wenn etwas war</span><span data-lang="en">Red button: puts a mark when something happened</span></li>
+</ul>
+</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 320 240" role="img" aria-label="Drei Schritte">
+  <g font-size="12" font-weight="700" text-anchor="middle">
+    <circle class="sv-num" cx="52" cy="22" r="10"/><text class="sv-tw" x="52" y="26">1</text>
+    <circle class="sv-num" cx="160" cy="22" r="10"/><text class="sv-tw" x="160" y="26">2</text>
+    <circle class="sv-num" cx="268" cy="22" r="10"/><text class="sv-tw" x="268" y="26">3</text>
+  </g>
+  <rect x="22" y="126" width="60" height="7" rx="2" fill="var(--text3)"/>
+  <rect class="sv-fill" x="30" y="100" width="44" height="22" rx="5"/>
+  <circle class="sv-acc" cx="41" cy="100" r="4.5"/>
+  <rect class="sv-acc" x="50" y="104" width="18" height="6" rx="1.5" opacity=".55"/>
+  <circle class="sv-red" cx="64" cy="116" r="3.8"/>
+  <g class="sv-thin" stroke-dasharray="2 3"><line x1="28" y1="124" x2="76" y2="124"/></g>
+  <path class="sv-line" d="M36 80 l6 6 l12 -14" stroke="var(--accent)"/>
+  <path class="sv-line" d="M118 72 Q160 44 202 72" stroke-width="4"/>
+  <g class="sv-thin"><line x1="126" y1="70" x2="160" y2="122"/><line x1="143" y1="58" x2="160" y2="122"/><line x1="177" y1="58" x2="160" y2="122"/><line x1="194" y1="70" x2="160" y2="122"/></g>
+  <circle class="sv-fill" cx="160" cy="118" r="5"/>
+  <rect class="sv-fill" x="160" y="122" width="16" height="12" rx="6" transform="rotate(20 160 122)"/>
+  <rect class="sv-fill" x="226" y="74" width="30" height="52" rx="6"/>
+  <rect class="sv-soft" x="230" y="80" width="22" height="36" rx="2"/>
+  <path class="sv-line" d="M256 100 C270 100 268 78 282 78" stroke="var(--accent)"/>
+  <rect class="sv-fill" x="280" y="70" width="26" height="14" rx="4"/>
+  <circle class="sv-acc" cx="287" cy="70" r="3"/>
+  <path class="sv-line" d="M241 136 L241 158 M235 152 L241 159 L247 152" stroke="var(--accent)"/>
+  <rect class="sv-fill" x="218" y="164" width="46" height="34" rx="4"/>
+  <line class="sv-thin" x1="218" y1="172" x2="264" y2="172"/>
+  <rect class="sv-soft" x="223" y="177" width="14" height="10" rx="1"/><rect class="sv-soft" x="240" y="177" width="14" height="10" rx="1"/>
+  <line class="sv-thin" x1="223" y1="192" x2="258" y2="192"/>
+  <g class="sv-t" font-size="11" font-weight="600" text-anchor="middle">
+    <text x="52" y="160"><tspan data-lang="de">anbringen</tspan><tspan data-lang="en">fit it</tspan></text>
+    <text x="52" y="174"><tspan data-lang="de">und vergessen</tspan><tspan data-lang="en">and forget it</tspan></text>
+    <text x="160" y="160"><tspan data-lang="de">fliegen</tspan><tspan data-lang="en">fly</tspan></text>
+    <text x="160" y="174"><tspan data-lang="de">wie immer</tspan><tspan data-lang="en">as always</tspan></text>
+    <text x="260" y="216"><tspan data-lang="de">Kabel ans Handy,</tspan><tspan data-lang="en">cable to the phone,</tspan></text>
+    <text x="260" y="230"><tspan data-lang="de">fertig</tspan><tspan data-lang="en">done</tspan></text>
+  </g>
+</svg>
+<figcaption><b><span data-lang="de">So einfach.</span><span data-lang="en">That simple.</span></b> <span data-lang="de">Die Box wacht beim Start auf und schläft nach der Landung ein. Zu Hause kommt sie ans Handykabel; die App lädt den Flug auf die Seite, der Akku lädt mit. Mehr musst du nie tun.</span><span data-lang="en">The box wakes up at launch and goes to sleep after landing. At home it goes on the phone cable; the app uploads the flight to the site and the battery charges along. You never have to do more.</span></figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 320 240" role="img" aria-label="Die Seite">
+  <rect class="sv-fill" x="4" y="4" width="312" height="232" rx="8"/>
+  <line class="sv-thin" x1="4" y1="24" x2="316" y2="24"/>
+  <g fill="var(--text3)"><circle cx="15" cy="14" r="2.5"/><circle cx="23" cy="14" r="2.5"/><circle cx="31" cy="14" r="2.5"/></g>
+  <g class="sv-t2" font-size="9">
+    <rect class="sv-soft" x="12" y="32" width="90" height="18" rx="9"/><text x="22" y="44"><tspan data-lang="de">Gebiet ▾</tspan><tspan data-lang="en">Region ▾</tspan></text>
+    <rect class="sv-soft" x="108" y="32" width="90" height="18" rx="9"/><text x="118" y="44"><tspan data-lang="de">Schirm ▾</tspan><tspan data-lang="en">Wing ▾</tspan></text>
+    <rect class="sv-soft" x="204" y="32" width="100" height="18" rx="9"/><text x="214" y="44"><tspan data-lang="de">Störung ▾</tspan><tspan data-lang="en">Incident ▾</tspan></text>
+  </g>
+  <text class="sv-t" x="12" y="70" font-size="11" font-weight="700"><tspan data-lang="de">Heute · 22 Flüge</tspan><tspan data-lang="en">Today · 22 flights</tspan></text>
+  <g>
+    <rect class="sv-soft" x="12" y="80" width="56" height="38" rx="4"/><path class="sv-thin" d="M22 96 Q40 84 58 96"/><line class="sv-thin" x1="18" y1="112" x2="62" y2="112"/>
+    <rect class="sv-soft" x="74" y="80" width="56" height="38" rx="4"/><path class="sv-thin" d="M86 104 Q102 94 118 104"/><line class="sv-thin" x1="78" y1="114" x2="126" y2="114"/>
+    <text class="sv-t" x="140" y="94" font-size="10" font-weight="600">Fiesch → Münster · 112 km</text>
+    <text class="sv-t2" x="140" y="108" font-size="9">M. B. · EN D · 4 h 20</text>
+  </g>
+  <g>
+    <rect class="sv-soft" x="12" y="130" width="56" height="38" rx="4"/><path class="sv-thin" d="M22 146 Q40 134 58 146"/><line class="sv-thin" x1="18" y1="162" x2="62" y2="162"/>
+    <rect class="sv-soft" x="74" y="130" width="56" height="38" rx="4"/><path class="sv-thin" d="M86 154 Q102 144 118 154"/><line class="sv-thin" x1="78" y1="164" x2="126" y2="164"/>
+    <text class="sv-t" x="140" y="144" font-size="10" font-weight="600">Niesen · 3 h 05</text>
+    <text class="sv-t2" x="140" y="158" font-size="9">S. K. · EN B</text>
+    <rect class="sv-red" x="226" y="135" width="78" height="15" rx="7.5" opacity=".9"/><text class="sv-tw" x="265" y="146" font-size="9" font-weight="700" text-anchor="middle"><tspan data-lang="de">Klapper 14:32</tspan><tspan data-lang="en">Collapse 14:32</tspan></text>
+  </g>
+  <g>
+    <rect class="sv-soft" x="12" y="180" width="56" height="38" rx="4"/><path class="sv-thin" d="M22 196 Q40 184 58 196"/><line class="sv-thin" x1="18" y1="212" x2="62" y2="212"/>
+    <rect class="sv-soft" x="74" y="180" width="56" height="38" rx="4"/><path class="sv-thin" d="M86 204 Q102 194 118 204"/><line class="sv-thin" x1="78" y1="214" x2="126" y2="214"/>
+    <text class="sv-t" x="140" y="194" font-size="10" font-weight="600">Grindelwald First · 48 km</text>
+    <text class="sv-t2" x="140" y="208" font-size="9">A. R. · EN C · 2 h 40</text>
+  </g>
+  <text class="sv-t2" x="12" y="231" font-size="8"><tspan data-lang="de">Start · Landung, je als Bild; Störungen markiert</tspan><tspan data-lang="en">launch · landing, each as a picture; incidents marked</tspan></text>
+</svg>
+<figcaption><b><span data-lang="de">Die Seite.</span><span data-lang="en">The site.</span></b> <span data-lang="de">Jeder Tag eine Übersicht: alle Flüge mit Start und Landung als Bild, Störungen markiert, Suche nach Gebiet, Schirm und Art der Störung. Jeder Flug eine eigene Seite mit Karte, Höhe und dem Film. So wird sie gebaut; der <a href="demo/">Demo-Player</a> zeigt schon heute, wie eine Störung aussieht.</span><span data-lang="en">Every day one overview: all flights with launch and landing as a picture, incidents marked, search by region, wing and kind of incident. Every flight its own page with map, altitude and the film. This is how it will be built; the <a href="demo/">demo player</a> already shows what an incident looks like.</span></figcaption>
+</figure>
+</div>
+
+<h2><span data-lang="de">Was du zusagst, was du bekommst</span><span data-lang="en">What you commit to, what you get</span></h2>
+<div class="two">
+<div>
+<h3><span data-lang="de">Du zusagst</span><span data-lang="en">You commit</span></h3>
+<p><span data-lang="de">Du bringst die Parabox im Cockpit an und veröffentlichst Starts, Landungen und Störungen deiner Flüge mit dem Log hier auf der Seite. Grundsätzlich alle: Das Vorbild wirkt nur, wenn auch die unschönen Landungen dabei sind.</span><span data-lang="en">You fit the Parabox in the cockpit and publish launches, landings and incidents of your flights with the log here on the site. As a rule all of them: the example only works if the ugly landings are in it too.</span></p>
+<p><span data-lang="de">Du entscheidest bei jedem Flug selbst; Ausnahmen sind möglich. Was du nicht freigibst, sieht niemand, und der Rest des Films bleibt immer bei dir.</span><span data-lang="en">You decide for every flight yourself; exceptions are possible. What you do not release, nobody sees, and the rest of the film always stays with you.</span></p>
+</div>
+<div>
+<h3><span data-lang="de">Du bekommst</span><span data-lang="en">You get</span></h3>
+<p><span data-lang="de">Ein Gerät aus der ersten Serie, bevor es sie zu kaufen gibt. Deine eigenen Störungen im Player, Bild für Bild, mit Höhe und Sinken, und bei einem Kontrollverlust eine Einordnung durch einen SIV-Lehrer.</span><span data-lang="en">A device from the first series, before they can be bought. Your own incidents in the player, frame by frame, with altitude and sink, and after a loss of control an assessment by an SIV instructor.</span></p>
+<p><span data-lang="de">Die Starts, Landungen und Störungen der anderen zum Lernen. Eine zweite Spur deines Flugs als IGC-Datei und ein Vario-Ton, falls du einen willst. Und du gehörst zu denen, die angefangen haben.</span><span data-lang="en">The launches, landings and incidents of the others to learn from. A second track of your flight as an IGC file and a vario tone, if you want one. And you are one of those who started it.</span></p>
+</div>
+</div>
+
+<div class="join" id="mitmachen">
+<h2><span data-lang="de">Ich mache mit</span><span data-lang="en">Count me in</span></h2>
+<p><span data-lang="de">Schreib mir eine Mail. Der Knopf füllt sie vor; du ergänzst Name, Wohnort, Klub, Schirm und wie viel du fliegst. Ich melde mich bei dir.</span><span data-lang="en">Send me an email. The button fills it in; you add your name, where you live, club, wing and how much you fly. I will get back to you.</span></p>
+<a class="btn" id="mail" href="mailto:joergkorner@gmail.com?subject=Parabox"><span data-lang="de">Ich mache mit →</span><span data-lang="en">Count me in →</span></a>
+<br><span class="addr"><span data-lang="de">Oder von Hand an</span><span data-lang="en">Or by hand to</span> <code>joergkorner@gmail.com</code></span>
+</div>
+
+<h2><span data-lang="de">Warum</span><span data-lang="en">Why</span></h2>
 <div class="prose">
 <h3 style="margin-top:6px"><span data-lang="de">Tödliche Unfälle in der Schweizer Luftfahrt, nach Jahr</span><span data-lang="en">Fatal accidents in Swiss aviation, by year</span></h3>
 <div class="tbl"><table>
@@ -77,26 +274,21 @@ html.de [data-lang="en"]{display:none!important}
 <span data-lang="de">Hängegleiter: Unfälle mit Todesfolge gemäss den Unfallanalysen des Schweizerischen Hängegleiter-Verbands (2021 ohne Jahresanalyse; 2024: vier Schweizer Piloten und zwei Gastpiloten; 2025: 13 Gleitschirm, 2 Delta, 2 Speedflying, Stand Oktober). Übrige Luftfahrt: Unfälle mit Todesfolge gemäss SUST und BAZL, Motorflugzeuge, Helikopter, Segelflugzeuge, Ballone, Ecolight; Hängegleiter sind darin nicht enthalten, weil die SUST sie nicht untersucht. Linienverkehr: kein tödlicher Unfall in der Schweiz seit 2001.</span>
 <span data-lang="en">Hang gliders: accidents with fatal outcome according to the accident analyses of the Swiss Hang Gliding Association (no annual analysis for 2021; 2024: four Swiss pilots and two guest pilots; 2025: 13 paraglider, 2 hang glider, 2 speedflying, as of October). Other aviation: accidents with fatal outcome according to STSB and FOCA, powered aircraft, helicopters, sailplanes, balloons, ecolight; hang gliders are not included because the STSB does not investigate them. Airline traffic: no fatal accident in Switzerland since 2001.</span>
 </p>
-<p class="lead">
-<span data-lang="de">Gleitschirmfliegen ist in der Schweiz die Luftfahrt mit den meisten Toten, Jahr für Jahr mehr als alle Motorflugzeuge, Helikopter, Segelflugzeuge und Ballone zusammen, und in keinem dieser Fälle untersucht eine Behörde, was in den letzten Sekunden geschah. Diese Zahl muss sinken. Dazu müssen wir besser verstehen, was zu Unfällen und zu gefährlichen Situationen führt.</span>
-<span data-lang="en">Paragliding is the branch of Swiss aviation with the most deaths, year after year more than all powered aircraft, helicopters, sailplanes and balloons together, and in none of these cases does an authority investigate what happened in the last seconds. This number has to come down. For that we have to understand better what leads to accidents and to dangerous situations.</span>
+<p>
+<span data-lang="de">Gleitschirmfliegen fordert Jahr für Jahr mehr Tote als alle Motorflugzeuge, Helikopter, Segelflugzeuge und Ballone zusammen, und in keinem dieser Fälle untersucht eine Behörde, was in den letzten Sekunden geschah. Die Luftfahrt hat vorgemacht, wie diese Zahl sinkt, mit zwei Strategien: einer Sicherheitskultur, in der Fehler gemeldet und besprochen werden, statt verschwiegen; und Technik, die festhält, was geschah, damit man aus jedem Zwischenfall lernen kann. Für das Zweite haben Verkehrsflugzeuge die Blackbox.</span>
+<span data-lang="en">Paragliding claims more deaths year after year than all powered aircraft, helicopters, sailplanes and balloons together, and in none of these cases does an authority investigate what happened in the last seconds. Aviation has shown how this number comes down, with two strategies: a safety culture in which errors are reported and discussed rather than hidden; and technology that records what happened, so that every incident can be learned from. For the second, airliners have the black box.</span>
 </p>
 <p>
-<span data-lang="de">Die Luftfahrt hat das vorgemacht, mit zwei Strategien: einer Sicherheitskultur, in der Fehler gemeldet und besprochen werden, statt verschwiegen; und Technik, die festhält, was geschah, damit man aus jedem Zwischenfall lernen kann. Für das Zweite haben Verkehrsflugzeuge die Blackbox. Parabox ist dasselbe für den Gleitschirm: ein Gerät, das Kappe, Hände, Spur und Höhe aufzeichnet, und eine Umgebung, in der der Pilot eine schwierige Situation Bild für Bild studiert, anonym und unter seiner alleinigen Kontrolle, und sie teilt, wenn er will, mit einzelnen oder mit allen. Das Gerät wird einmal im Cockpit angebracht und läuft von selbst, mit Sonne, ohne Startknopf: anbringen und vergessen. Nach dem Flug kommt es ans Handykabel, und der Flug ist auf der Seite.</span>
-<span data-lang="en">Aviation has shown how, with two strategies: a safety culture in which errors are reported and discussed rather than hidden; and technology that records what happened, so that every incident can be learned from. For the second, airliners have the black box. Parabox is the same for the paraglider: a device that records canopy, hands, track and altitude, and an environment in which the pilot studies a difficult situation frame by frame, anonymously and under his sole control, and shares it if he wants, with some or with all. The device is fitted once in the cockpit and runs by itself, on sunlight, with no start button: fit and forget. After the flight it goes on the phone cable, and the flight is on the site.</span>
-</p>
-<p>
-<span data-lang="de">Ein Prototyp der Auswertung steht: der <a href="demo/">Demo-Player</a>. Der Prototyp des Geräts ist in Entwicklung; seine Spezifikation steht unten im Plan. Ziel ist ein kleines, leichtes, günstiges, autonomes, solarbetriebenes Gerät, das zur besseren Akzeptanz zugleich als Flugaufzeichner und als Vario dient.</span>
-<span data-lang="en">A prototype of the analysis exists: the <a href="demo/">demo player</a>. The prototype of the device is in development; its specification is in the plan below. The aim is a small, light, inexpensive, autonomous, solar-powered device that, for better acceptance, also serves as a flight logger and a vario.</span>
-</p>
-<p class="method">
-<span data-lang="de"><strong>Demo-Player.</strong> So sieht der Pilot eine Störung nach dem Flug: die Bilder der Box, Bild für Bild vor und zurück, daneben der Flug aus der IGC-Datei auf der Karte und in 3D, darunter Höhe, Geschwindigkeit und Sinken, alles synchron. <a href="demo/">Demo ansehen →</a></span>
-<span data-lang="en"><strong>Demo player.</strong> This is how the pilot sees an incident after the flight: the box's images, frame by frame back and forth, next to them the flight from the IGC file on the map and in 3D, below altitude, speed and sink, all in sync. <a href="demo/">See the demo →</a></span>
+<span data-lang="de">Parabox ist beides für den Gleitschirm: ein Gerät, das Kappe, Hände, Spur und Höhe aufzeichnet, und Piloten, die zeigen, was sie aufgezeichnet haben. Nicht weil es jemand verlangt, sondern weil es die ersten vormachen und die nächsten nachziehen. So ist in der Luftfahrt jede Sicherheitskultur entstanden.</span>
+<span data-lang="en">Parabox is both for the paraglider: a device that records canopy, hands, track and altitude, and pilots who show what they recorded. Not because anyone demands it, but because the first ones lead and the next ones follow. That is how every safety culture in aviation came about.</span>
 </p>
 </div>
 
+<h2><span data-lang="de">Für die, die es genau wissen wollen</span><span data-lang="en">For those who want the details</span></h2>
+
+<details>
+<summary><span data-lang="de">Das Gerät: der Plan</span><span data-lang="en">The device: the plan</span> <small><span data-lang="de">Kamera, Strom, Teile, Kosten</span><span data-lang="en">camera, power, parts, costs</span></small></summary>
 <div class="plan">
-<h2><span data-lang="de">Der Plan</span><span data-lang="en">The plan</span></h2>
 
 <h3><span data-lang="de">Wo es sitzt</span><span data-lang="en">Where it sits</span></h3>
 <p>
@@ -143,6 +335,10 @@ html.de [data-lang="en"]{display:none!important}
 <span data-lang="de">Auf der Seite wird jeder Flug eine Seite: Karte, Höhe, Geschwindigkeit, Sinken, und der Flug als Film. Start und Landung sind mit dem Einreichen öffentlich; das ist die Regel der Seite, und ein Flug mit Start- und Landevideo ist belegt, Pilot, Startplatz, Wetter und Schirm sind zu sehen. Der Rest des Films bleibt verschlossen, bis der Pilot ihn freigibt, ganz oder nur die Störung, für einzelne oder für alle. Was er nicht freigibt, sieht niemand.</span>
 <span data-lang="en">On the site every flight becomes a page: map, altitude, speed, sink, and the flight as a film. Launch and landing are public on submission; that is the rule of the site, and a flight with launch and landing video is proven, pilot, launch site, weather and wing are there to see. The rest of the film stays locked until the pilot releases it, all of it or only the incident, to some or to all. What he does not release, nobody sees.</span>
 </p>
+<p>
+<span data-lang="de">Zum Player gehört die Nachbesprechung. Beim Freigeben beantwortet der Pilot fünf Fragen (Flugphase, was die Kappe tat, was er tat, was er heute anders machen würde, Bedingungen) und markiert im Player die Bilder, auf die es ankommt. Störungen mit Kontrollverlust bekommen innert einer Woche eine kurze Einordnung durch einen SIV-Lehrer, direkt im Player. Teilen kann der Pilot per Link, mit wem er will; öffentliche Kommentare gibt es nicht. Die Studie zählt Störungen pro hundert Flugstunden und ob sie beherrscht wurden; das sind Hunderte Ereignisse pro Saison, genug, um die Wirkung der Nachbesprechung zu messen: Piloten mit Einordnung durch den Lehrer gegen Piloten mit Selbst-Nachbesprechung, nach Zufall zugeteilt.</span>
+<span data-lang="en">The debrief belongs to the player. On release the pilot answers five questions (flight phase, what the canopy did, what he did, what he would do differently today, conditions) and marks in the player the images that matter. Incidents with loss of control get a short assessment by an SIV instructor within a week, right in the player. The pilot can share by link with whom he wants; there are no public comments. The study counts incidents per hundred flight hours and whether they were kept under control; that is hundreds of events per season, enough to measure the effect of the debrief: pilots with an instructor's assessment against pilots with a self-debrief, assigned at random.</span>
+</p>
 
 <h3><span data-lang="de">Das Watt-Budget</span><span data-lang="en">The power budget</span></h3>
 <div class="tbl"><table>
@@ -185,18 +381,8 @@ html.de [data-lang="en"]{display:none!important}
 <tr class="sum"><td><span data-lang="de">zusammen</span><span data-lang="en">total</span></td><td class="num">≈ 127</td><td class="num">≈ 74</td><td class="num">≈ 38</td></tr>
 </table></div>
 <p>
-<span data-lang="de">Das GPS empfängt nur; ohne Sender braucht es keine Funk-Zulassung. Einmalig bleiben für die Serie die Spritzgussform, 15'000 bis 25'000 Franken, und die CE-Prüfung, 5'000 bis 10'000. Die ersten Geräte gehen zum Selbstkostenpreis an Piloten, die jeden Flug offen dokumentieren.</span>
-<span data-lang="en">The GPS only receives; without a transmitter there is no radio certification. The one-off costs that remain for a series are the injection mould, 15,000 to 25,000 francs, and CE testing, 5,000 to 10,000. The first devices go at cost to pilots who document every flight openly.</span>
-</p>
-
-<h3><span data-lang="de">Was man am Ende hat</span><span data-lang="en">What you get in the end</span></h3>
-<p>
-<span data-lang="de">Jeden Flug als Seite: die Bildfolge, darunter die Höhe und die Spur auf der Karte, und die Marken für Start, Landung und Knopf. Man scrollt zur Störung und sieht, was die Kappe tat und was die Hände taten, Zehntelsekunde für Zehntelsekunde. Dieser Teil ist Software und ist als erstes gebaut, mit Aufnahmen, die es schon gibt: der <a href="demo/">Demo-Player</a>.</span>
-<span data-lang="en">Every flight as a page: the image sequence, below it the altitude and the track on the map, and the marks for launch, landing and button. You scroll to the incident and see what the canopy did and what the hands did, tenth of a second by tenth of a second. This part is software and has been built first, with recordings that already exist: the <a href="demo/">demo player</a>.</span>
-</p>
-<p>
-<span data-lang="de">Zum Player gehört die Nachbesprechung. Beim Freigeben beantwortet der Pilot fünf Fragen (Flugphase, was die Kappe tat, was er tat, was er heute anders machen würde, Bedingungen) und markiert im Player die Bilder, auf die es ankommt. Störungen mit Kontrollverlust bekommen innert einer Woche eine kurze Einordnung durch einen SIV-Lehrer, direkt im Player. Teilen kann der Pilot per Link, mit wem er will; öffentliche Kommentare gibt es nicht. Die Studie zählt Störungen pro hundert Flugstunden und ob sie beherrscht wurden; das sind Hunderte Ereignisse pro Saison, genug, um die Wirkung der Nachbesprechung zu messen: Piloten mit Einordnung durch den Lehrer gegen Piloten mit Selbst-Nachbesprechung, nach Zufall zugeteilt.</span>
-<span data-lang="en">The debrief belongs to the player. On release the pilot answers five questions (flight phase, what the canopy did, what he did, what he would do differently today, conditions) and marks in the player the images that matter. Incidents with loss of control get a short assessment by an SIV instructor within a week, right in the player. The pilot can share by link with whom he wants; there are no public comments. The study counts incidents per hundred flight hours and whether they were kept under control; that is hundreds of events per season, enough to measure the effect of the debrief: pilots with an instructor's assessment against pilots with a self-debrief, assigned at random.</span>
+<span data-lang="de">Das GPS empfängt nur; ohne Sender braucht es keine Funk-Zulassung. Einmalig bleiben für die Serie die Spritzgussform, 15'000 bis 25'000 Franken, und die CE-Prüfung, 5'000 bis 10'000.</span>
+<span data-lang="en">The GPS only receives; without a transmitter there is no radio certification. The one-off costs that remain for a series are the injection mould, 15,000 to 25,000 francs, and CE testing, 5,000 to 10,000.</span>
 </p>
 
 <h3><span data-lang="de">Was offen ist</span><span data-lang="en">What is open</span></h3>
@@ -205,8 +391,18 @@ html.de [data-lang="en"]{display:none!important}
 <span data-lang="en">The housing and the mounting in the cockpit, so that the cell sees the sun and the camera looks up without being in the way. GPS reception in the cockpit under the canopy, and whether the vario sound at the cockpit is loud enough in the airflow. The image at dusk and in the shade of a north face, where a colour sensor with small pixels reaches its limit. The firmware, the biggest piece of work: capture and store images, read GPS and write IGC, barometer and sound, buttons, USB, sleeping and saving power. And the honest point from attempt 1: whether a device nobody has to operate will actually be carried.</span>
 </p>
 </div>
+</details>
 
-<h2><span data-lang="de">Die Anläufe davor</span><span data-lang="en">The attempts before</span></h2>
+<details>
+<summary><span data-lang="de">Der Demo-Player</span><span data-lang="en">The demo player</span> <small><span data-lang="de">eine Störung Bild für Bild</span><span data-lang="en">an incident frame by frame</span></small></summary>
+<p class="method">
+<span data-lang="de">So sieht der Pilot eine Störung nach dem Flug: die Bilder der Box, Bild für Bild vor und zurück, daneben der Flug aus der IGC-Datei auf der Karte und in 3D, darunter Höhe, Geschwindigkeit und Sinken, alles synchron. Gebaut mit Aufnahmen, die es schon gibt. <a href="demo/">Demo ansehen →</a></span>
+<span data-lang="en">This is how the pilot sees an incident after the flight: the box's images, frame by frame back and forth, next to them the flight from the IGC file on the map and in 3D, below altitude, speed and sink, all in sync. Built with recordings that already exist. <a href="demo/">See the demo →</a></span>
+</p>
+</details>
+
+<details>
+<summary><span data-lang="de">Die Anläufe davor</span><span data-lang="en">The attempts before</span> <small>2018–2024</small></summary>
 <p class="prose">
 <span data-lang="de">Zwei Anläufe sind an derselben Stelle gescheitert: nicht an der Technik, sondern daran, dass ein Gerät, das man vor jedem Flug einschalten muss, nicht eingeschaltet wird. Der dritte beginnt darum bei dieser Bedingung.</span>
 <span data-lang="en">Two attempts failed at the same point: not at the technology, but at the fact that a device you have to switch on before every flight does not get switched on. The third therefore starts from that condition.</span>
@@ -245,19 +441,30 @@ html.de [data-lang="en"]{display:none!important}
     </div>
   </div>
 </div>
+</details>
 
-<p class="end"><span data-lang="de">Anlauf 1 mit Innosuisse, FHNW Hochschule für Technik und Flugschule Aerosport, 2018–2020.</span><span data-lang="en">Attempt 1 with Innosuisse, FHNW School of Engineering and the flight school Aerosport, 2018–2020.</span><br><a href="https://joerxc.org/">← joerxc.org</a></p>
+<p class="end"><span data-lang="de">Parabox ist ein Projekt von Jörg Korner, Streckenpilot, Basel. Anlauf 1 mit Innosuisse, FHNW Hochschule für Technik und Flugschule Aerosport, 2018–2020.</span><span data-lang="en">Parabox is a project of Jörg Korner, XC pilot, Basel. Attempt 1 with Innosuisse, FHNW School of Engineering and the flight school Aerosport, 2018–2020.</span><br><a href="https://joerxc.org/">← joerxc.org</a></p>
 </main>
 <script>
 (function(){
   var KEY='joerxc_lang', html=document.documentElement;
+  var MAIL={
+    de:{s:'Parabox: ich mache mit',
+        b:'Hallo Jörg\r\n\r\nIch mache mit und veröffentliche Starts, Landungen und Störungen meiner Flüge mit dem Log auf der Parabox-Seite.\r\n\r\nName:\r\nWohnort:\r\nKlub / Liga:\r\nSchirm:\r\nGurtzeug:\r\nFlugstunden pro Jahr:\r\nBemerkung:\r\n'},
+    en:{s:'Parabox: count me in',
+        b:'Hello Jörg\r\n\r\nCount me in: I will publish launches, landings and incidents of my flights with the log on the Parabox site.\r\n\r\nName:\r\nPlace:\r\nClub / league:\r\nWing:\r\nHarness:\r\nFlight hours per year:\r\nRemarks:\r\n'}
+  };
   function wahl(){
     var m=location.search.match(/[?&]lang=([a-z]{2})/i); if(m) return m[1].toLowerCase();
     try{var g=localStorage.getItem(KEY); if(g) return g;}catch(e){}
     var b=(navigator.languages&&navigator.languages[0])||navigator.language||'';
     return b.toLowerCase().indexOf('de')===0?'de':'en';
   }
-  function setze(l){html.classList.toggle('de',l==='de'); html.lang=l; try{localStorage.setItem(KEY,l);}catch(e){}}
+  function setze(l){
+    html.classList.toggle('de',l==='de'); html.lang=l; try{localStorage.setItem(KEY,l);}catch(e){}
+    var m=MAIL[l==='de'?'de':'en'];
+    document.getElementById('mail').href='mailto:joergkorner@gmail.com?subject='+encodeURIComponent(m.s)+'&body='+encodeURIComponent(m.b);
+  }
   setze(wahl());
   document.getElementById('lang').addEventListener('click',function(){setze(html.classList.contains('de')?'en':'de');});
 })();
