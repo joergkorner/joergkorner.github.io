@@ -1,851 +1,300 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="de" class="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Jörg Korner — joerxc</title>
-<meta name="description" content="Paragliding, and software built to understand it. Flight analysis, route planning, meteorology.">
-<meta property="og:title" content="Jörg Korner — joerxc">
-<meta property="og:description" content="Paragliding, and software built to understand it.">
-<meta name="robots" content="index, follow">
-<meta property="og:url" content="https://joerxc.org/">
-<meta property="og:image" content="https://joerxc.org/assets/joerg-pod.jpg">
-<link rel="canonical" href="https://joerxc.org/">
-<meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪂</text></svg>">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parabox — joerxc</title>
+<meta name="description" content="Parabox: automatische Flugaufzeichnung und gemeinsame Auswertung. Entwicklungspartner gesucht.">
 <style>
-:root{
-  --bg:#ffffff;
-  --bg-alt:#f5f5f7;
-  --text:#1d1d1f;
-  --text-2:#6e6e73;
-  --text-3:#86868b;
-  --line:rgba(0,0,0,.10);
-  --card:#ffffff;
-  --card-line:rgba(0,0,0,.08);
-  --blue:#0066cc;
-  --nav:rgba(255,255,255,.72);
-  --shadow:0 2px 10px rgba(0,0,0,.045);
-  --shadow-hi:0 12px 34px rgba(0,0,0,.10);
-  --chip:rgba(0,0,0,.055);
-}
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg:#000000;
-    --bg-alt:#101012;
-    --text:#f5f5f7;
-    --text-2:#a1a1a6;
-    --text-3:#86868b;
-    --line:rgba(255,255,255,.14);
-    --card:#151517;
-    --card-line:rgba(255,255,255,.10);
-    --blue:#2997ff;
-    --nav:rgba(0,0,0,.72);
-    --shadow:0 2px 10px rgba(0,0,0,.4);
-    --shadow-hi:0 12px 34px rgba(0,0,0,.55);
-    --chip:rgba(255,255,255,.09);
-  }
-}
+:root{--bg:#ffffff;--bg2:#f5f5f7;--text:#1d1d1f;--text2:#55555a;--text3:#86868b;--line:rgba(0,0,0,.10);--accent:#1f6fd1;--idea:#5b4bb8;--idea-bg:rgba(110,90,230,.14);--chip:rgba(0,0,0,.055);--red:#d0342c;--sun:#e3a600;--wedge:rgba(31,111,209,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
-body{
-  margin:0; background:var(--bg); color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;
-  font-size:17px; line-height:1.47; letter-spacing:-.01em;
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-}
-.wrap{max-width:980px; margin:0 auto; padding:0 22px}
-a{color:var(--blue); text-decoration:none}
-a:hover{text-decoration:underline}
-
-/* ---------- nav ---------- */
-.nav{
-  position:sticky; top:0; z-index:50; height:48px;
-  background:var(--nav); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-bottom:1px solid var(--line);
-}
-.nav .wrap{height:48px; display:flex; align-items:center; gap:28px}
-.brand{font-size:15px; font-weight:600; color:var(--text); letter-spacing:-.015em}
-.brand:hover{text-decoration:none; opacity:.7}
-.navlinks{display:flex; gap:26px; margin-left:auto; align-items:center}
-.navlinks a{font-size:12.5px; color:var(--text-2); letter-spacing:-.005em}
-.navlinks a:hover{color:var(--text); text-decoration:none}
-.langbtn{
-  border:1px solid var(--line); background:transparent; color:var(--text-2);
-  font:inherit; font-size:11.5px; font-weight:500; letter-spacing:.04em;
-  padding:3px 9px; border-radius:980px; cursor:pointer; line-height:1.5;
-}
-.langbtn:hover{color:var(--text); border-color:var(--text-3)}
-.navscroll{display:flex; gap:26px; align-items:center}
-@media (max-width:720px){
-  .nav .wrap{gap:12px; padding:0 16px}
-  .brand{flex:0 0 auto}
-  .navlinks{gap:12px; min-width:0}
-  .navscroll{
-    gap:16px; overflow-x:auto; min-width:0;
-    scrollbar-width:none; -ms-overflow-style:none;
-    -webkit-overflow-scrolling:touch;
-  }
-  .navscroll::-webkit-scrollbar{display:none}
-  .navscroll a{font-size:12.5px; white-space:nowrap}
-  .langbtn{flex:0 0 auto}
-}
-
-/* ---------- hero ---------- */
-/* ---------- stream: Aktuell ---------- */
-.stream{max-width:760px; margin:34px auto 0; padding:0 22px}
-.stream .box{background:var(--card); border:1px solid var(--card-line); border-radius:16px; box-shadow:var(--shadow); padding:12px 16px 8px}
-.stream .head{display:flex; align-items:baseline; gap:10px; margin:0 0 4px}
-.stream .head .kicker{margin:0}
-.stream .head .more{margin-left:auto; font-size:12.5px; color:var(--text-3); background:none; border:0; cursor:pointer; font:inherit; font-size:12.5px; padding:0}
-.stream .head .more:hover{color:var(--blue)}
-.stream a.row{display:grid; grid-template-columns:52px auto 1fr auto; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--line); color:var(--text); text-decoration:none; font-size:15px; line-height:1.3; letter-spacing:-.01em}
-.stream a.row:first-of-type{border-top:0}
-.stream a.row:hover .t{color:var(--blue)}
-.stream a.row:hover .arr{transform:translateX(3px)}
-.stream .d{font-size:12.5px; color:var(--text-3); font-variant-numeric:tabular-nums; white-space:nowrap}
-.stream .chip{white-space:nowrap; min-width:104px; text-align:center}
-.stream .t{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.stream .arr{color:var(--text-3); transition:transform .15s}
-.stream a.row.hid{display:none}
-.stream.open a.row.hid{display:grid}
-@media (max-width:600px){
-  .stream{margin-top:22px}
-  .stream a.row{grid-template-columns:auto 1fr auto; grid-template-areas:"d chip arr" "t t t"; row-gap:3px}
-  .stream .d{grid-area:d} .stream .chip{grid-area:chip; justify-self:start} .stream .arr{grid-area:arr}
-  .stream .t{grid-area:t; white-space:normal}
-}
-.hero{padding:56px 0 40px; text-align:center}
-.eyebrow{
-  font-size:13px; font-weight:600; letter-spacing:.02em; color:var(--text-3);
-  text-transform:none; margin:0 0 16px;
-}
-h1{
-  margin:0; font-size:clamp(38px,6.6vw,72px); line-height:1.05;
-  font-weight:600; letter-spacing:-.028em; max-width:19ch; margin-inline:auto;
-}
-.aside{
-  display:block; margin-top:16px; font-size:.42em; font-weight:400;
-  letter-spacing:-.012em; color:var(--text-2); line-height:1.35;
-}
-.lede{
-  margin:22px auto 0; max-width:38ch; font-size:clamp(18px,2.1vw,22px);
-  line-height:1.42; color:var(--text-2); letter-spacing:-.012em;
-}
-.photo{margin:56px 0 0}
-.photo figure{margin:0}
-.photo img{
-  display:block; width:100%; height:auto; border-radius:22px;
-  box-shadow:var(--shadow-hi);
-}
-.photo figcaption{
-  margin-top:14px; text-align:center; font-size:13px; color:var(--text-3);
-}
-
-/* ---------- hero: plötzliche Höhenverluste ---------- */
-.spur{margin:44px auto 0; max-width:860px; position:relative}
-.spur svg{display:block; width:100%; height:auto}
-.an-grund{fill:var(--bg-alt)}
-.an-linie{fill:none; stroke:var(--text-3); stroke-width:1.4; stroke-linejoin:round; stroke-linecap:round; opacity:.7}
-.an-ring{fill:none; stroke:crimson; stroke-width:3}
-.an-ringtext,.an-falltext{fill:crimson; font-size:19px; font-weight:600; paint-order:stroke; stroke:var(--bg-alt); stroke-width:6px; stroke-linejoin:round}
-.an-mass line{stroke:var(--text-2); stroke-width:2}
-.an-mass text,.an-achse{fill:var(--text-3); font-size:15px}
-.spur figcaption{margin-top:12px; text-align:center; font-size:13px; color:var(--text-3); letter-spacing:-.005em}
-.an-trenn{stroke:var(--line); stroke-width:1}
-.an-hoehe{fill:none; stroke:var(--text-2); stroke-width:2.2; stroke-linejoin:round; stroke-linecap:round}
-.an-fall{fill:none; stroke:crimson; stroke-width:4; stroke-linejoin:round; stroke-linecap:round}
-@media (max-width:600px){ .spur{margin-top:30px} .an-mass text,.an-achse{font-size:24px} .an-ringtext,.an-falltext{font-size:28px} }
-
-/* ---------- sections ---------- */
-section.band{padding:88px 0}
-section.band.alt{background:var(--bg-alt)}
-.sec-head{max-width:760px; margin:0 0 40px}
-.kicker{
-  font-size:13px; font-weight:600; color:var(--text-3); letter-spacing:.01em; margin:0 0 10px;
-}
-h2{
-  margin:0; font-size:clamp(28px,4vw,44px); font-weight:600;
-  letter-spacing:-.024em; line-height:1.1;
-}
-.sec-sub{margin:14px 0 0; font-size:18px; color:var(--text-2); line-height:1.45; max-width:60ch}
-
-/* ---------- cards ---------- */
-.grid{display:grid; gap:20px; grid-template-columns:repeat(2,1fr)}
-
-.grid.one{grid-template-columns:1fr}
-#tools .card.weit{grid-column:1 / -1}
-@media (max-width:760px){ .grid{grid-template-columns:1fr} }
-.card{
-  position:relative; background:var(--card); border:1px solid var(--card-line);
-  border-radius:20px; padding:30px 30px 26px; box-shadow:var(--shadow);
-  transition:transform .25s cubic-bezier(.28,.11,.32,1), box-shadow .25s cubic-bezier(.28,.11,.32,1);
-  display:flex; flex-direction:column;
-}
-.card:hover{transform:translateY(-3px); box-shadow:var(--shadow-hi)}
-.card h3{
-  margin:0 0 10px; font-size:23px; font-weight:600; letter-spacing:-.019em; line-height:1.2;
-}
-.card p{margin:0; color:var(--text-2); font-size:16px; line-height:1.5}
-.card p + p{margin-top:10px}
-.card .links{margin-top:auto; padding-top:20px; display:flex; flex-wrap:wrap; gap:18px}
-.card .links a{font-size:16px; font-weight:400}
-.card .links a::after{content:" ›"; letter-spacing:0}
-.chips{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 14px}
-.chip{
-  font-size:11.5px; font-weight:600; letter-spacing:.02em; color:var(--text-2);
-  background:var(--chip); padding:4px 9px; border-radius:980px; line-height:1.4;
-}
-.chip.live{color:#1d7a3e; background:rgba(40,167,80,.13)}
-.chip.dropped{color:#9a4a1f; background:rgba(200,110,40,.14)}
-.chip.private{color:#5b4bb8; background:rgba(110,90,230,.14)}
-.chip.idea{color:#1f5fa8; background:rgba(31,111,209,.13)}
-@media (prefers-color-scheme: dark){
-  .chip.live{color:#5ddb8a}
-  .chip.dropped{color:#f0a468}
-  .chip.private{color:#b0a4ff}
-  .chip.idea{color:#7fb6ff}
-}
-.card.feature{grid-column:1 / -1}
-.card.feature h3{font-size:clamp(25px,3.2vw,32px); letter-spacing:-.022em}
-.card.feature p{font-size:17.5px; max-width:62ch}
-
-/* screenshot card */
-.card.shots{grid-column:1 / -1}
-.card.shots p{max-width:64ch}
-.shots{display:grid; gap:22px; margin-top:26px}
-.shots figure{margin:0}
-.shots img{
-  display:block; width:100%; height:auto; border-radius:12px;
-  border:1px solid var(--card-line); background:#fff;
-}
-.card p.note{
-  margin-top:16px; padding-left:16px; border-left:2px solid var(--card-line);
-  font-size:15.5px; color:var(--text-3);
-}
-.shots figcaption{margin-top:9px; font-size:13px; color:var(--text-3); line-height:1.45}
-
-/* ---------- attempts / timeline ---------- */
-.steps{display:flex; flex-direction:column; gap:0; margin-top:8px}
-.step{
-  display:grid; grid-template-columns:56px 1fr; gap:22px;
-  padding:26px 0; border-top:1px solid var(--line);
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.top{max-width:980px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line)}
+.top .brand{font-weight:600;color:var(--text);font-size:15px}
+.langbtn{margin-left:auto;font:inherit;font-size:13px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer}
+main{max-width:980px;margin:0 auto;padding:40px 20px 80px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 10px}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:0 0 18px;letter-spacing:-.025em;text-wrap:balance}
+h2{font-size:24px;margin:52px 0 12px;letter-spacing:-.015em;text-wrap:balance}
+h3{font-size:18px;margin:26px 0 8px;letter-spacing:-.01em}
+.prose{max-width:68ch}
+.prose p{margin:0 0 14px}
+.lead{font-size:21px;color:var(--text2);line-height:1.45}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:34px 0 10px}.figs figure{margin:0}
+@media (max-width:760px){.figs{grid-template-columns:1fr;gap:28px}}
+.product-concept{box-sizing:border-box;max-width:620px;margin:8px auto 24px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(0,0,0,.08)}.product-concept img{display:block;width:100%;height:auto;border-radius:14px}.product-concept figcaption,.mounting-note{font-size:14.5px;color:var(--text2);line-height:1.5}.product-concept figcaption{margin-top:12px}
+.figs figure{margin:0;min-width:0}
+.figs svg{display:block;width:100%;height:auto;background:var(--bg2);border-radius:14px;border:1px solid var(--line)}
+.figs figcaption{font-size:14.5px;color:var(--text2);margin-top:10px;line-height:1.45}
+.figs figcaption b{color:var(--text);font-weight:600}
+.legend{list-style:none;padding:0;margin:8px 0 0;font-size:13.5px;color:var(--text2)}
+.legend li{display:flex;gap:8px;align-items:baseline;margin:2px 0}
+.legend .n{display:inline-block;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:18px}
+.sv-line{stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sv-thin{stroke:var(--text3);fill:none;stroke-width:1.2;stroke-linecap:round}
+.sv-dash{stroke:var(--accent);fill:none;stroke-width:1.5;stroke-dasharray:4 4}
+.sv-fill{fill:var(--bg);stroke:var(--text);stroke-width:2}
+.sv-soft{fill:var(--chip)}
+.sv-acc{fill:var(--accent)}
+.sv-red{fill:var(--red)}
+.sv-sun{fill:var(--sun)}
+.sv-sunray{stroke:var(--sun);stroke-width:2;stroke-linecap:round}
+.sv-wedge{fill:var(--wedge)}
+.sv-t{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text)}
+.sv-t2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text3)}
+.sv-tw{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:#fff}
+.sv-num{fill:var(--accent)}
+.steps3{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:14px 0 0}
+@media (max-width:760px){.steps3{grid-template-columns:1fr}}
+.steps3 div{min-width:0}
+.steps3 .k{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+.steps3 h3{margin:0 0 6px;font-size:19px}
+.steps3 p{margin:0;color:var(--text2);font-size:16px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:10px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.two>div{min-width:0}
+.two h3{margin-top:0}
+.two p{color:var(--text2);margin:0 0 10px}
+.join{margin-top:40px;padding:28px 26px;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}
+.join li{margin:0 0 14px;max-width:62ch}.join li small{display:block;color:var(--text2);font-size:14px;margin-top:4px}.join ol{padding-left:24px;margin:22px 0}.join h2{margin:0 0 10px}
+.join p{margin:0 0 14px;color:var(--text2);max-width:62ch}
+.btn{display:inline-block;font:inherit;font-weight:600;font-size:18px;color:#fff;background:var(--accent);padding:12px 22px;border-radius:999px;border:0;cursor:pointer}
+.btn:hover{text-decoration:none;filter:brightness(1.08)}
+.addr{display:inline-block;margin:12px 0 0 2px;font-size:15px;color:var(--text2)}
+.addr code{font-size:15px;color:var(--text);background:var(--chip);padding:3px 8px;border-radius:6px;user-select:all}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+.chip{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--text2);background:var(--chip);padding:4px 9px;border-radius:980px;line-height:1.4}
+.chip.dropped{color:#9a4a1f;background:rgba(200,110,40,.14)}
+@media (prefers-color-scheme:dark){.chip.dropped{color:#f0a468}}
+.steps{margin:26px 0 0;max-width:72ch}
+.step{display:grid;grid-template-columns:56px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
 .step:last-child{border-bottom:1px solid var(--line)}
-.step .n{
-  font-size:15px; font-weight:600; color:var(--text-3); letter-spacing:-.01em;
-  padding-top:2px;
-}
-.step h3{margin:0 0 8px; font-size:20px; font-weight:600; letter-spacing:-.017em}
-.step p{margin:0; color:var(--text-2); font-size:16px; line-height:1.5}
-.step .links{margin-top:14px; display:flex; flex-wrap:wrap; gap:18px}
-.step .links a::after{content:" ›"}
-@media (max-width:600px){ .step{grid-template-columns:1fr; gap:8px} }
+.step .n{font-size:15px;font-weight:600;color:var(--text3);padding-top:4px}
+.step h3{margin:0 0 8px;font-size:21px;font-weight:600;letter-spacing:-.017em;line-height:1.2}
+.step p{margin:0;color:var(--text2);font-size:16.5px;line-height:1.55}
+.step p+p{margin-top:10px}
+.shot{float:right;width:210px;margin:4px 0 12px 24px}
+.shot img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+.shot figcaption{font-size:12.5px;color:var(--text3);margin-top:6px;line-height:1.4}
+@media (max-width:600px){.shot{float:none;width:200px;margin:0 0 14px}}
+.step .clear{clear:both}
+@media (max-width:600px){.step{grid-template-columns:1fr;gap:8px}}
+.plan{max-width:72ch}
+.plan h3{font-size:18px;margin:30px 0 8px;letter-spacing:-.01em}
+.plan p{margin:0 0 10px;color:var(--text2)}
+table{border-collapse:collapse;width:100%;max-width:72ch;margin:12px 0 6px;font-size:15.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--text3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.sum td{font-weight:600;color:var(--text)}
+.tbl{overflow-x:auto}
+.method{font-size:15px;color:var(--text2);background:var(--bg2);border-radius:10px;padding:14px 18px;max-width:72ch;margin:14px 0}
+details{border-top:1px solid var(--line);padding:6px 0 10px}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-size:20px;font-weight:600;letter-spacing:-.01em;padding:14px 0;list-style:none;display:flex;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"";width:9px;height:9px;border-right:2px solid var(--text3);border-bottom:2px solid var(--text3);transform:rotate(-45deg);transition:transform .15s;flex:none}
+details[open] summary::before{transform:rotate(45deg)}
+summary small{font-size:14px;font-weight:400;color:var(--text3)}
+.end{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);font-size:15px;color:var(--text2)}
+[data-lang]{display:none!important}
+html[lang="de"] [data-lang="de"],html[lang="fr"] [data-lang="fr"],html[lang="en"] [data-lang="en"]{display:revert!important}
+.languages{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.languages button{font:inherit;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--text2);cursor:pointer}
+.languages button[aria-pressed="true"]{background:var(--bg2);border-color:var(--line);color:var(--text);font-weight:600}
+.languages button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.survey-intro{max-width:740px;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);line-height:1.5}
 
-/* ---------- about + footer ---------- */
-.about-grid{display:grid; grid-template-columns:300px 1fr; gap:44px; align-items:start}
-.about-grid .kicker{margin-top:4px}
-.portrait{margin:0}
-.portrait img{display:block; width:100%; height:auto; border-radius:16px; box-shadow:var(--shadow)}
-.portrait figcaption{margin-top:10px; font-size:13px; color:var(--text-3)}
-@media (max-width:760px){
-  .about-grid{grid-template-columns:1fr; gap:26px}
-  .portrait{max-width:300px}
-}
-.about p{font-size:19px; line-height:1.55; color:var(--text-2); max-width:62ch}
-.about p strong{color:var(--text); font-weight:600}
-footer{padding:44px 0 60px; border-top:1px solid var(--line); background:var(--bg)}
-footer .wrap{display:flex; flex-wrap:wrap; gap:10px 26px; align-items:center}
-footer p{margin:0; font-size:13px; color:var(--text-3)}
-footer a{font-size:13px; color:var(--text-2)}
-footer .sp{margin-left:auto}
-
-/* ---------- language ---------- */
-html:not(.de) [data-lang="de"]{display:none !important}
-html.de [data-lang="en"]{display:none !important}
-</style></head>
+.business-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0 30px}.business-grid article{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:22px}.business-grid h3{margin:0 0 10px;font-size:19px}.business-grid p{margin:0;color:var(--text2);font-size:16px;line-height:1.55}@media(max-width:640px){.business-grid{grid-template-columns:1fr}}
+</style>
+</head>
 <body>
+<div class="top"><a class="brand" href="https://joerxc.org/">joerxc</a>
+<nav class="languages" aria-label="Language"><button type="button" data-choice="de" lang="de">Deutsch</button><button type="button" data-choice="fr" lang="fr">Français</button><button type="button" data-choice="en" lang="en">English</button></nav></div>
+<main>
+<figure class="product-concept">
+<a href="parabox-formstudie-en-fisheye.png" target="_blank" rel="noopener"><img src="parabox-formstudie-en-fisheye.png" width="1312" height="1184" alt="Parabox concept: solar cells, upward-facing fisheye camera, red spring-return slider and ribbed finger support" fetchpriority="high"></a>
 
-<nav class="nav">
-  <div class="wrap">
-    <a class="brand" href="#top">joerxc</a>
-    <div class="navlinks">
-      <div class="navscroll">
-      <a href="#writing"><span data-lang="en">Writing</span><span data-lang="de">Texte</span></a>
-      <a href="#tools"><span data-lang="en">Tools</span><span data-lang="de">Tools</span></a>
-      <a href="#planner"><span data-lang="en">Projects</span><span data-lang="de">Projekte</span></a>
-      <a href="#labs"><span data-lang="en">Experiments</span><span data-lang="de">Experimente</span></a>
-      </div>
-      <button class="langbtn" id="lang" type="button" aria-label="Language"><span data-lang="en">DE</span><span data-lang="de">EN</span></button>
-    </div>
-  </div>
-</nav>
+<figcaption><span data-lang="de">Zielgewicht: ca. 80 g inkl. Akku.</span><span data-lang="en">Target weight: approx. 80 g including battery.</span><span data-lang="fr">Poids visé : env. 80 g, batterie comprise.</span></figcaption>
+</figure>
+<p class="kicker"><span data-lang="de">Parabox · Entwicklungspartner gesucht</span><span data-lang="en">Parabox · Seeking a development partner</span><span data-lang="fr">Parabox · Recherche de partenaire de développement</span></p>
+<h1><span data-lang="de">Die Blackbox als Teil der Flugausrüstung.</span><span data-lang="en">The black box as part of flying equipment.</span><span data-lang="fr">La boîte noire intégrée à l’équipement de vol.</span></h1>
+<p class="lead"><span data-lang="de">Automatisch aufzeichnen. Flüge verstehen. Gemeinsam lernen. Eine Produktidee für Gleitschirm- und Speedflying-Piloten — und für Hersteller, die ihre Ausrüstung weiterdenken möchten.</span><span data-lang="en">Record automatically. Understand flights. Learn together. A product concept for paragliding and speedflying pilots — and for manufacturers exploring what their equipment could offer next.</span><span data-lang="fr">Enregistrer automatiquement. Comprendre ses vols. Apprendre ensemble. Un concept pour les pilotes de parapente et de speedflying — et pour les fabricants qui souhaitent faire évoluer leur équipement.</span></p>
+<div class="prose">
+<h2><span data-lang="de">Aus Flügen lernen — auch wenn etwas schiefgeht.</span><span data-lang="en">Learn from flights — including when things go wrong.</span><span data-lang="fr">Apprendre de ses vols — même quand tout ne se passe pas comme prévu.</span></h2>
+<p><span data-lang="de">Unfälle zeigen, wie wichtig es ist, aus Ereignissen zu lernen. Berichte von Piloten sind wertvoll, doch Bilder und Messdaten fehlen oft. Parabox soll festhalten, was sonst verloren geht: den Ablauf einer Störung, die Reaktion des Piloten und den Verlauf des Fluges. Das Ziel ist, Training und Entscheidungen zu verbessern und langfristig zur Unfallprävention beizutragen.</span><span data-lang="en">Accidents underline the need to learn from events. Pilot reports are valuable, but images and measurements are often missing. Parabox aims to preserve what would otherwise be lost: how an incident unfolded, how the pilot reacted and how the flight developed. The goal is to improve training and decisions and, over time, contribute to accident prevention.</span><span data-lang="fr">Les accidents rappellent l’importance de tirer les leçons des événements. Les récits des pilotes sont précieux, mais images et mesures manquent souvent. Parabox veut conserver ce qui serait autrement perdu : le déroulement d’un incident, la réaction du pilote et l’évolution du vol. L’objectif est d’améliorer la formation et les décisions et, à terme, de contribuer à la prévention des accidents.</span></p>
+<h2><span data-lang="de">Piloten fliegen. Parabox zeichnet auf.</span><span data-lang="en">Pilots fly. Parabox records.</span><span data-lang="fr">Les pilotes volent. Parabox enregistre.</span></h2>
+<p><span data-lang="de">Eine nach oben gerichtete Fisheye-Kamera erfasst Kappe und Hände; GPS und Barometer ergänzen die Bilder. Das Blackbox-Prinzip: automatisch im Hintergrund, ohne Startknopf und ohne Ein- oder Ausschalten. Solarversorgung und Akku sollen routinemässiges Laden vermeiden. Die Flugspur dient zugleich als IGC-Backup. Der Speicher hält mehrere Flüge vor; ist er voll, wird das älteste Material überschrieben.</span><span data-lang="en">An upward-facing fisheye camera captures the canopy and hands; GPS and barometric measurements complement the images. The black-box principle: automatic recording in the background, with no start button or switching on and off. Solar power and a battery are intended to avoid routine charging. The flight track also provides an IGC backup. Storage holds several flights, overwriting the oldest material when full.</span><span data-lang="fr">Une caméra fisheye orientée vers le haut filme la voile et les mains ; le GPS et le baromètre complètent les images. Le principe de la boîte noire : un enregistrement automatique en arrière-plan, sans bouton de démarrage ni mise en marche ou arrêt. L’alimentation solaire et la batterie doivent éviter les recharges habituelles. La trace fournit aussi une sauvegarde IGC. La mémoire conserve plusieurs vols puis remplace les enregistrements les plus anciens.</span></p>
+<p><span data-lang="de">Mit dem roten Schieber können Piloten einen Moment markieren, sobald sie wieder sicher fliegen. Auf Wunsch schlägt die Software auffällige Abschnitte im Fluglog zur Durchsicht vor. Bilder und Flugdaten werden synchron angezeigt — ohne dass Piloten Aufnahmen und Messwerte selbst zusammenführen müssen. Kamerablick, Energieversorgung und zuverlässiger Betrieb sind mit Prototypen zu erproben.</span><span data-lang="en">Once flying safely again, pilots can use the red slider to mark a moment. Optionally, software suggests unusual sections of the flight log for review. Images and flight data are displayed in sync, without pilots having to align recordings and measurements themselves. Camera coverage, power supply and reliable operation need to be tested with prototypes.</span><span data-lang="fr">Une fois le vol à nouveau maîtrisé, les pilotes peuvent marquer un moment avec le curseur rouge. Sur demande, le logiciel propose des passages inhabituels de la trace à examiner. Images et données s’affichent de manière synchronisée, sans devoir les recaler soi-même. Le champ de vision, l’alimentation et la fiabilité doivent être vérifiés sur des prototypes.</span></p>
+</div><div class="prose"><p><span data-lang="de">Piloten entscheiden selbst, welche Ausschnitte sie teilen.</span><span data-lang="en">Pilots decide which clips they share.</span><span data-lang="fr">Les pilotes choisissent eux-mêmes les extraits à partager.</span></p></div><details><summary><span data-lang="de">So funktioniert Parabox</span><span data-lang="en">How Parabox works</span><span data-lang="fr">Comment fonctionne Parabox</span></summary><div class="figs">
+<figure>
+<svg viewBox="0 0 320 240" role="img" aria-label="Parabox camera coverage">
+  <polygon class="sv-wedge" points="176,148 10,160 10,0 320,0 320,92"/>
+  <line class="sv-dash" x1="176" y1="148" x2="10" y2="160"/>
+  <line class="sv-dash" x1="176" y1="148" x2="320" y2="92"/>
+  <circle class="sv-sun" cx="292" cy="30" r="12"/>
+  <g class="sv-sunray"><line x1="292" y1="8" x2="292" y2="13"/><line x1="292" y1="47" x2="292" y2="52"/><line x1="270" y1="30" x2="275" y2="30"/><line x1="309" y1="30" x2="314" y2="30"/><line x1="276" y1="14" x2="280" y2="18"/><line x1="304" y1="42" x2="308" y2="46"/><line x1="276" y1="46" x2="280" y2="42"/><line x1="304" y1="18" x2="308" y2="14"/></g>
+  <path class="sv-fill" d="M66 66 C 104 40, 196 26, 258 44 C 270 48, 268 56, 250 57 C 200 60, 126 64, 66 66 Z" stroke-width="2.5"/>
+  <g class="sv-thin" opacity=".7">
+    <line x1="226" y1="56" x2="152" y2="166"/><line x1="192" y1="59" x2="152" y2="166"/><line x1="158" y1="61" x2="152" y2="166"/><line x1="124" y1="63" x2="152" y2="166"/>
+  </g>
+  <line class="sv-thin" x1="76" y1="66" x2="126" y2="110"/>
+  <rect class="sv-fill" x="104" y="166" width="118" height="32" rx="16"/>
+  <path class="sv-line" d="M128 156 L140 170" stroke-width="6"/>
+  <circle class="sv-fill" cx="122" cy="146" r="10"/>
+  <path class="sv-line" d="M138 162 L134 116"/><path class="sv-line" d="M136 162 L126 112"/>
+  <circle class="sv-fill" cx="134" cy="114" r="4.5"/><circle class="sv-fill" cx="126" cy="110" r="4.5"/>
+  <rect x="164" y="162" width="46" height="5" rx="2" fill="var(--text3)"/>
+  <rect class="sv-fill" x="170" y="148" width="30" height="14" rx="4"/>
+  <circle class="sv-acc" cx="176" cy="148" r="3.5"/>
+  <rect class="sv-acc" x="182" y="150" width="14" height="5" rx="1" opacity=".55"/>
+  <line x1="189" y1="150" x2="189" y2="155" stroke="var(--bg)" stroke-width="1"/>
+  <rect class="sv-red" x="187" y="156" width="10" height="4" rx="1.5"/>
+  <g font-size="11" font-weight="700" text-anchor="middle">
+    <line class="sv-thin" x1="178" y1="144" x2="264" y2="128"/><circle class="sv-num" cx="272" cy="128" r="8"/><text class="sv-tw" x="272" y="132">1</text>
+    <line class="sv-thin" x1="196" y1="152" x2="264" y2="152"/><circle class="sv-num" cx="272" cy="152" r="8"/><text class="sv-tw" x="272" y="156">2</text>
+    <line class="sv-thin" x1="196" y1="159" x2="264" y2="176"/><circle class="sv-num" cx="272" cy="176" r="8"/><text class="sv-tw" x="272" y="180">3</text>
+  </g>
+</svg>
+<figcaption><b><span data-lang="de">Was die Kamera sieht.</span><span data-lang="en">What the camera sees.</span><span data-lang="fr">Ce que voit la caméra.</span></b> <span data-lang="de">Die Seitenansicht zeigt schematisch den Blick nach oben auf Kappe und Hände.</span><span data-lang="en">The side view illustrates the upward view of the canopy and hands.</span><span data-lang="fr">Cette vue de profil illustre le champ de vision vers le haut, sur la voile et les mains.</span>
+<ul class="legend">
+<li><span class="n">1</span><span data-lang="de">Fisheye-Kamera</span><span data-lang="en">Fisheye camera</span><span data-lang="fr">Caméra fisheye</span></li>
+<li><span class="n">2</span><span data-lang="de">Solarzellen</span><span data-lang="en">Solar cells</span><span data-lang="fr">Cellules solaires</span></li>
+<li><span class="n">3</span><span data-lang="de">Roter Schieber zum Markieren</span><span data-lang="en">Red slider for marking moments</span><span data-lang="fr">Curseur rouge pour marquer un moment</span></li>
+</ul></figcaption></figure>
+<figure>
+<svg viewBox="0 0 320 240" role="img" aria-label="Three steps">
+  <g font-size="12" font-weight="700" text-anchor="middle">
+    <circle class="sv-num" cx="52" cy="22" r="10"/><text class="sv-tw" x="52" y="26">1</text>
+    <circle class="sv-num" cx="160" cy="22" r="10"/><text class="sv-tw" x="160" y="26">2</text>
+    <circle class="sv-num" cx="268" cy="22" r="10"/><text class="sv-tw" x="268" y="26">3</text>
+  </g>
+  <rect x="22" y="126" width="60" height="7" rx="2" fill="var(--text3)"/>
+  <rect class="sv-fill" x="30" y="100" width="44" height="22" rx="5"/>
+  <circle class="sv-acc" cx="41" cy="100" r="4.5"/>
+  <rect class="sv-acc" x="50" y="104" width="18" height="6" rx="1.5" opacity=".55"/>
+  <circle class="sv-red" cx="64" cy="116" r="3.8"/>
+  <g class="sv-thin" stroke-dasharray="2 3"><line x1="28" y1="124" x2="76" y2="124"/></g>
+  <path class="sv-line" d="M36 80 l6 6 l12 -14" stroke="var(--accent)"/>
+  <path class="sv-line" d="M118 72 Q160 44 202 72" stroke-width="4"/>
+  <g class="sv-thin"><line x1="126" y1="70" x2="160" y2="122"/><line x1="143" y1="58" x2="160" y2="122"/><line x1="177" y1="58" x2="160" y2="122"/><line x1="194" y1="70" x2="160" y2="122"/></g>
+  <circle class="sv-fill" cx="160" cy="118" r="5"/>
+  <rect class="sv-fill" x="160" y="122" width="16" height="12" rx="6" transform="rotate(20 160 122)"/>
+  <rect class="sv-fill" x="226" y="74" width="30" height="52" rx="6"/>
+  <rect class="sv-soft" x="230" y="80" width="22" height="36" rx="2"/>
+  <path class="sv-line" d="M256 100 C270 100 268 78 282 78" stroke="var(--accent)"/>
+  <rect class="sv-fill" x="280" y="70" width="26" height="14" rx="4"/>
+  <circle class="sv-acc" cx="287" cy="70" r="3"/>
+  <path class="sv-line" d="M241 136 L241 158 M235 152 L241 159 L247 152" stroke="var(--accent)"/>
+  <rect class="sv-fill" x="218" y="164" width="46" height="34" rx="4"/>
+  <line class="sv-thin" x1="218" y1="172" x2="264" y2="172"/>
+  <rect class="sv-soft" x="223" y="177" width="14" height="10" rx="1"/><rect class="sv-soft" x="240" y="177" width="14" height="10" rx="1"/>
+  <line class="sv-thin" x1="223" y1="192" x2="258" y2="192"/>
+  <g class="sv-t" font-size="11" font-weight="600" text-anchor="middle">
+    <text x="52" y="160"><tspan>fit it</tspan></text>
+    <text x="52" y="174"><tspan>and forget it</tspan></text>
+    <text x="160" y="160"><tspan>fly</tspan></text>
+    <text x="160" y="174"><tspan>as always</tspan></text>
+    <text x="260" y="216"><tspan>cable to the phone,</tspan></text>
+    <text x="260" y="230"><tspan>done</tspan></text>
+  </g>
+</svg>
+<figcaption><b><span data-lang="de">So einfach.</span><span data-lang="en">That simple.</span><span data-lang="fr">C’est aussi simple.</span></b> <span data-lang="de">Die Box soll automatisch aufzeichnen. Nach dem Flug übertragen Piloten die Aufnahmen per Kabel aufs Handy.</span><span data-lang="en">The box is designed to record automatically. After flying, pilots transfer recordings to their phone by cable.</span><span data-lang="fr">Le boîtier doit enregistrer automatiquement. Après le vol, les pilotes transfèrent les images par câble sur leur téléphone.</span></figcaption>
+</figure>
 
-<main id="top">
+<figure>
+<svg viewBox="0 0 320 240" role="img" aria-label="Review platform">
+  <rect class="sv-fill" x="4" y="4" width="312" height="232" rx="8"/>
+  <line class="sv-thin" x1="4" y1="24" x2="316" y2="24"/>
+  <g fill="var(--text3)"><circle cx="15" cy="14" r="2.5"/><circle cx="23" cy="14" r="2.5"/><circle cx="31" cy="14" r="2.5"/></g>
+  <g class="sv-t2" font-size="9">
+    <rect class="sv-soft" x="12" y="32" width="90" height="18" rx="9"/><text x="22" y="44"><tspan>Region ▾</tspan></text>
+    <rect class="sv-soft" x="108" y="32" width="90" height="18" rx="9"/><text x="118" y="44"><tspan>Wing ▾</tspan></text>
+    <rect class="sv-soft" x="204" y="32" width="100" height="18" rx="9"/><text x="214" y="44"><tspan>Incident ▾</tspan></text>
+  </g>
+  <text class="sv-t" x="12" y="70" font-size="11" font-weight="700"><tspan>Today · 22 flights</tspan></text>
+  <g>
+    <rect class="sv-soft" x="12" y="80" width="56" height="38" rx="4"/><path class="sv-thin" d="M22 96 Q40 84 58 96"/><line class="sv-thin" x1="18" y1="112" x2="62" y2="112"/>
+    <rect class="sv-soft" x="74" y="80" width="56" height="38" rx="4"/><path class="sv-thin" d="M86 104 Q102 94 118 104"/><line class="sv-thin" x1="78" y1="114" x2="126" y2="114"/>
+    <text class="sv-t" x="140" y="94" font-size="10" font-weight="600">Fiesch → Münster · 112 km</text>
+    <text class="sv-t2" x="140" y="108" font-size="9">M. B. · EN D · 4 h 20</text>
+  </g>
+  <g>
+    <rect class="sv-soft" x="12" y="130" width="56" height="38" rx="4"/><path class="sv-thin" d="M22 146 Q40 134 58 146"/><line class="sv-thin" x1="18" y1="162" x2="62" y2="162"/>
+    <rect class="sv-soft" x="74" y="130" width="56" height="38" rx="4"/><path class="sv-thin" d="M86 154 Q102 144 118 154"/><line class="sv-thin" x1="78" y1="164" x2="126" y2="164"/>
+    <text class="sv-t" x="140" y="144" font-size="10" font-weight="600">Niesen · 3 h 05</text>
+    <text class="sv-t2" x="140" y="158" font-size="9">S. K. · EN B</text>
+    <rect class="sv-red" x="226" y="135" width="78" height="15" rx="7.5" opacity=".9"/><text class="sv-tw" x="265" y="146" font-size="9" font-weight="700" text-anchor="middle"><tspan>Collapse 14:32</tspan></text>
+  </g>
+  <g>
+    <rect class="sv-soft" x="12" y="180" width="56" height="38" rx="4"/><path class="sv-thin" d="M22 196 Q40 184 58 196"/><line class="sv-thin" x1="18" y1="212" x2="62" y2="212"/>
+    <rect class="sv-soft" x="74" y="180" width="56" height="38" rx="4"/><path class="sv-thin" d="M86 204 Q102 194 118 204"/><line class="sv-thin" x1="78" y1="214" x2="126" y2="214"/>
+    <text class="sv-t" x="140" y="194" font-size="10" font-weight="600">Grindelwald First · 48 km</text>
+    <text class="sv-t2" x="140" y="208" font-size="9">A. R. · EN C · 2 h 40</text>
+  </g>
+  <text class="sv-t2" x="12" y="231" font-size="8"><tspan>launch and landing thumbnails; incidents marked</tspan></text>
+</svg>
+<figcaption><b><span data-lang="de">Die Seite.</span><span data-lang="en">The site.</span><span data-lang="fr">Le site.</span></b> <span data-lang="de">Geplant: freigegebene Ausschnitte mit Karte und Flugdaten, durchsuchbar nach Gebiet, Schirm und Situation. <a href="https://joerxc.org/parabox/demo/">Demo-Player</a> ausprobieren →</span><span data-lang="en">Planned: shared clips with maps and flight data, searchable by region, wing and situation. Try the <a href="https://joerxc.org/parabox/demo/">demo player</a> →</span><span data-lang="fr">Au programme : des extraits partagés avec carte et données de vol, à retrouver par région, voile et type de situation. Découvrir le <a href="https://joerxc.org/parabox/demo/">lecteur de démonstration</a> →</span></figcaption>
+</figure>
+</div></details>
+<details id="technik"><summary><span data-lang="de">Technik, Komponenten und Watt-Budget</span><span data-lang="en">Technology, components and power budget</span><span data-lang="fr">Technique, composants et bilan énergétique</span></summary><div class="prose"><p><span data-lang="de">Installieren und vergessen ist das Entwicklungsziel. Dafür werden Kamera, Rechner, Speicher, Firmware und Solarversorgung gemeinsam auf niedrigen Verbrauch ausgelegt. Die Angaben beschreiben einen technischen Entwurf; Bauteilauswahl und Energiebilanz werden im ersten Meilenstein überprüft.</span><span data-lang="en">Install and forget is the development goal. Camera, processor, storage, firmware and solar power will be designed together for low consumption. These specifications describe a technical concept; component selection and the energy balance will be verified in the first milestone.</span><span data-lang="fr">Installer et oublier : tel est l’objectif. Caméra, processeur, mémoire, logiciel embarqué et alimentation solaire seront conçus ensemble pour limiter la consommation. Ces indications décrivent un projet technique ; le choix des composants et le bilan énergétique seront vérifiés lors du premier jalon.</span></p><div class="tbl">
+<table><thead><tr><th><span data-lang="de">Baustein</span><span data-lang="en">Component</span><span data-lang="fr">Élément</span></th><th><span data-lang="de">Auslegung</span><span data-lang="en">Design approach</span><span data-lang="fr">Conception envisagée</span></th></tr></thead><tbody><tr><td><span data-lang="de">Kamera</span><span data-lang="en">Camera</span><span data-lang="fr">Caméra</span></td><td><span data-lang="de">Nach oben gerichtete Fisheye-Kamera mit ca. 170° Bildwinkel. Sensor Himax HM0360 in der Farbausführung, 1/6 Zoll, rückseitig belichtet, einer der sparsamsten Bildsensoren; genutzt wird ein mittiges Quadrat von 480 × 480 Pixeln bei 10 Bildern/s, durchgehend. Die Optik gibt es für diesen kleinen Sensor nicht von der Stange: Sensor, Linse und Halterung als montierte Baugruppe, angefragt bei Schweizer Mikrooptik-Herstellern (Machbarkeitsstudie). Die Schwarzweissausführung desselben Sensors ist bei wenig Licht dreimal empfindlicher und bleibt Rückfalloption.</span><span data-lang="en">Upward-facing fisheye camera with a field of view of about 170°. Sensor Himax HM0360 in the colour version, 1/6 inch, back-side illuminated, one of the most frugal image sensors; a central square of 480 × 480 pixels is used at 10 frames/s, continuously. There is no off-the-shelf optic for a sensor this small: sensor, lens and mount as an assembled module, requested from Swiss micro-optics manufacturers (feasibility study). The monochrome version of the same sensor is three times more sensitive in low light and remains the fallback.</span><span data-lang="fr">Caméra fisheye orientée vers le haut, angle d’environ 170°. Capteur Himax HM0360 en version couleur, 1/6 pouce, rétro-éclairé, l’un des capteurs d’image les plus économes ; on utilise un carré central de 480 × 480 pixels à 10 images/s, en continu. Il n’existe pas d’optique sur étagère pour un capteur aussi petit : capteur, lentille et monture en module assemblé, demandé à des fabricants suisses de micro-optique (étude de faisabilité). La version monochrome du même capteur, trois fois plus sensible en faible lumière, reste l’option de repli.</span></td></tr><tr><td><span data-lang="de">Rechner</span><span data-lang="en">Processor</span><span data-lang="fr">Processeur</span></td><td><span data-lang="de">Stromsparender Mikrocontroller STM32U5 mit eigenem Kameraeingang. Er schneidet das Quadrat aus dem Sensorbild, komprimiert die Bilder auf rund 30 KB (die Farbberechnung übernimmt erst der Server), schreibt sie in den Speicher, liest GNSS und Barometer, erzeugt den Vario-Ton und meldet sich am Handy als Laufwerk; Takt und Ruhephasen passend zur Aufzeichnung.</span><span data-lang="en">Low-power STM32U5 microcontroller with its own camera input. It cuts the square out of the sensor image, compresses the images to about 30 KB (colour processing is left to the server), writes them to storage, reads GNSS and barometer, generates the vario sound and shows up on the phone as a drive; clock speed and idle periods matched to recording.</span><span data-lang="fr">Microcontrôleur basse consommation STM32U5 avec entrée caméra intégrée. Il découpe le carré dans l’image du capteur, compresse les images à environ 30 Ko (le traitement couleur est laissé au serveur), les écrit en mémoire, lit le GNSS et le baromètre, génère le son du vario et se présente au téléphone comme un lecteur ; fréquence et phases de repos adaptées à l’enregistrement.</span></td></tr><tr><td><span data-lang="de">Speicher</span><span data-lang="en">Storage</span><span data-lang="fr">Mémoire</span></td><td><span data-lang="de">Fest verbauter SD-NAND-Speicher, 32 GB, kein Kartenschacht. Bei rund 30 KB pro Bild 1,1 GB pro Flugstunde, Platz für rund 30 Flugstunden als Ringspeicher; der älteste Flug fällt weg. Gepufferte Blockschreibvorgänge; Schreib- und Ruheenergie werden gemessen.</span><span data-lang="en">Built-in SD-NAND storage, 32 GB, no card slot. At about 30 KB per image, 1.1 GB per flight hour, room for about 30 flight hours as loop recording; the oldest flight drops out. Buffered block writes; write and idle energy will be measured.</span><span data-lang="fr">Mémoire SD-NAND intégrée, 32 Go, sans fente pour carte. À environ 30 Ko par image, 1,1 Go par heure de vol, soit environ 30 heures de vol en boucle ; le vol le plus ancien est effacé. Écriture par blocs avec mémoire tampon ; énergie d’écriture et de repos à mesurer.</span></td></tr><tr><td><span data-lang="de">Flugdaten</span><span data-lang="en">Flight data</span><span data-lang="fr">Données de vol</span></td><td><span data-lang="de">Energieoptimiertes GNSS-Modul, u-blox MAX-M10S im Stromsparmodus; eine Position pro Sekunde. Barometer mit angestrebten 20 Messungen/s. Gemeinsame Zeitbasis für Bilder und Messdaten, Flugspur als IGC-Datei.</span><span data-lang="en">Energy-efficient GNSS module, u-blox MAX-M10S in power-save mode; one position per second. Barometer targeting 20 readings/s. Shared time base for images and measurements; flight track as an IGC file.</span><span data-lang="fr">Module GNSS économe, u-blox MAX-M10S en mode économie d’énergie ; une position par seconde. Baromètre visant 20 mesures/s. Base de temps commune pour les images et les mesures ; trace au format IGC.</span></td></tr><tr><td><span data-lang="de">Energie und Bedienung</span><span data-lang="en">Power and controls</span><span data-lang="fr">Alimentation et commande</span></td><td><span data-lang="de">Ca. 25 cm² Solarfläche; flache Lithium-Titanat-Zelle, 200 mAh (0,48 Wh), weil sie auch bei Minusgraden geladen werden darf und tausende Zyklen hält. Effiziente Solar-Ladeelektronik mit Temperaturüberwachung; das Handy lädt die Box zusätzlich bei jeder Übertragung. Automatischer Aufzeichnungsbeginn und sparsamer Ruhezustand ausserhalb des Flugs. Markierschieber, kleiner Knopf für den Vario-Ton, USB-C; keine Funkübertragung vorgesehen.</span><span data-lang="en">Approx. 25 cm² of solar cells; flat lithium-titanate cell, 200 mAh (0.48 Wh), because it may be charged below freezing and lasts thousands of cycles. Efficient solar charging with temperature monitoring; the phone also charges the box at every transfer. Automatic recording start and low-power standby outside flight. Event slider, small button for the vario sound, USB-C; no wireless transmission planned.</span><span data-lang="fr">Environ 25 cm² de cellules solaires ; cellule plate lithium-titanate, 200 mAh (0,48 Wh), car elle se recharge même sous zéro et supporte des milliers de cycles. Charge solaire efficace avec surveillance de température ; le téléphone recharge aussi le boîtier à chaque transfert. Démarrage automatique de l’enregistrement et veille économe hors vol. Curseur de marquage, petit bouton pour le son du vario, USB-C ; aucune transmission sans fil prévue.</span></td></tr><tr><td><span data-lang="de">Übertragung</span><span data-lang="en">Transfer</span><span data-lang="fr">Transfert</span></td><td><span data-lang="de">Nach dem Flug kommt die Box per USB-C ans Handy. Die App zeigt den Flug mit seinen Marken; der Pilot wählt. Übertragen werden die ganze Spur als IGC-Datei, Start und Landung mit je 2,5 Minuten Bildern und zu jeder gewählten Marke die 3 Minuten davor, als Einzelbilder; rund 150 MB je Flug mit einer Marke. Der ganze Flug bleibt 30 Stunden auf der Box, weitere Ausschnitte lassen sich nachholen.</span><span data-lang="en">After the flight the box goes on USB-C to the phone. The app shows the flight with its marks; the pilot chooses. Transferred are the whole track as an IGC file, launch and landing with 2.5 minutes of images each, and for every chosen mark the 3 minutes before it, as single images; about 150 MB per flight with one mark. The whole flight stays on the box for 30 hours; further sections can be fetched later.</span><span data-lang="fr">Après le vol, le boîtier se connecte au téléphone par USB-C. L’application affiche le vol avec ses marques ; le pilote choisit. Sont transférés la trace complète en IGC, le décollage et l’atterrissage avec 2,5 minutes d’images chacun, et pour chaque marque choisie les 3 minutes précédentes, en images individuelles ; environ 150 Mo par vol avec une marque. Le vol complet reste 30 heures sur le boîtier ; d’autres extraits peuvent être récupérés ensuite.</span></td></tr><tr><td><span data-lang="de">Gehäuseziel</span><span data-lang="en">Housing target</span><span data-lang="fr">Objectif de boîtier</span></td><td><span data-lang="de">Ca. 5,5 × 5,5 cm, 10–12 mm Grundhöhe zuzüglich Kameraausbuchtung; ca. 80 g inkl. Akku. Endgültige Abmessungen und Akkugrösse folgen aus dem Energienachweis.</span><span data-lang="en">Approx. 5.5 × 5.5 cm, 10–12 mm base height plus camera protrusion; approx. 80 g including battery. Final dimensions and battery size depend on energy validation.</span><span data-lang="fr">Environ 5,5 × 5,5 cm, hauteur de base de 10–12 mm hors saillie de la caméra ; env. 80 g, batterie comprise. Les dimensions définitives et la batterie dépendront de la validation énergétique.</span></td></tr></tbody></table>
+</div>
+<h3><span data-lang="de">Verbrauch: Planungswert rund 45 mW</span><span data-lang="en">Power consumption: planning value around 45 mW</span><span data-lang="fr">Consommation : valeur de travail d’environ 45 mW</span></h3><p><span data-lang="de">Engineering-Schätzung für eine energieoptimierte Platine bei kontinuierlicher Aufzeichnung mit 10 Bildern/s, GNSS und Druck, ohne Funk; Vario-Ton nur beim Steigen. Die Werte sind mittlere Leistungen, keine Messwerte oder garantierten Grenzen. Schreib- und Einschaltspitzen werden separat ausgelegt.</span><span data-lang="en">Engineering estimate for an energy-efficient board recording continuously at 10 frames/s, with GNSS and pressure sensing, without wireless transmission; vario sound only while climbing. Figures are average power estimates, not measurements or guaranteed limits. Write and startup peaks will be addressed separately.</span><span data-lang="fr">Estimation d’ingénierie pour une carte optimisée, enregistrant en continu à 10 images/s avec GNSS et pression, sans transmission radio ; son du vario uniquement en montée. Il s’agit de puissances moyennes estimées, non de mesures ou de limites garanties. Les pointes d’écriture et de démarrage seront traitées séparément.</span></p>
+<div class="tbl">
+<table><thead><tr><th><span data-lang="de">Teil</span><span data-lang="en">Component</span><span data-lang="fr">Composant</span></th><th><span data-lang="de">Geschätzte mittlere Leistung</span><span data-lang="en">Estimated average power</span><span data-lang="fr">Puissance moyenne estimée</span></th></tr></thead><tbody><tr><td><span data-lang="de">Sensor HM0360, 480 × 480, 10 Bilder/s</span><span data-lang="en">HM0360 sensor, 480 × 480, 10 frames/s</span><span data-lang="fr">Capteur HM0360, 480 × 480, 10 images/s</span></td><td><span data-lang="de">3–6 mW</span><span data-lang="en">3–6 mW</span><span data-lang="fr">3–6 mW</span></td></tr><tr><td><span data-lang="de">Mikrocontroller, Bildübernahme und Kompression</span><span data-lang="en">Microcontroller, image capture and compression</span><span data-lang="fr">Microcontrôleur, acquisition et compression</span></td><td><span data-lang="de">8–15 mW</span><span data-lang="en">8–15 mW</span><span data-lang="fr">8–15 mW</span></td></tr><tr><td><span data-lang="de">GNSS, Stromsparmodus bis Dauerbetrieb</span><span data-lang="en">GNSS, power-save to continuous mode</span><span data-lang="fr">GNSS, mode économie à mode continu</span></td><td><span data-lang="de">15–30 mW</span><span data-lang="en">15–30 mW</span><span data-lang="fr">15–30 mW</span></td></tr><tr><td><span data-lang="de">Speicher, Schreiben und Bereitschaft</span><span data-lang="en">Storage, writes and idle</span><span data-lang="fr">Mémoire, écriture et repos</span></td><td><span data-lang="de">3–6 mW</span><span data-lang="en">3–6 mW</span><span data-lang="fr">3–6 mW</span></td></tr><tr><td><span data-lang="de">Barometer und Kleinfunktionen</span><span data-lang="en">Barometer and auxiliary functions</span><span data-lang="fr">Baromètre et fonctions auxiliaires</span></td><td><span data-lang="de">1–2 mW</span><span data-lang="en">1–2 mW</span><span data-lang="fr">1–2 mW</span></td></tr><tr><td><span data-lang="de">Vario-Ton, nur beim Steigen</span><span data-lang="en">Vario sound, only while climbing</span><span data-lang="fr">Son du vario, uniquement en montée</span></td><td><span data-lang="de">2–6 mW</span><span data-lang="en">2–6 mW</span><span data-lang="fr">2–6 mW</span></td></tr><tr><td><span data-lang="de">Spannungswandlung und Versorgung</span><span data-lang="en">Voltage conversion and power management</span><span data-lang="fr">Conversion de tension et alimentation</span></td><td><span data-lang="de">3–5 mW</span><span data-lang="en">3–5 mW</span><span data-lang="fr">3–5 mW</span></td></tr><tr><td><span data-lang="de">Gesamt, gerundet</span><span data-lang="en">Total, rounded</span><span data-lang="fr">Total arrondi</span></td><td><span data-lang="de">35–70 mW</span><span data-lang="en">35–70 mW</span><span data-lang="fr">35–70 mW</span></td></tr></tbody></table>
+</div><p><span data-lang="de">Arbeitswert: 45 mW ab Akku; vorläufiger Auslegungswert mit Reserve: 60 mW. Im Flug liefern 25 cm² Solarzelle an sonnigen Tagen 70–140 mW, das Anderthalb- bis Dreifache des Verbrauchs; die 200-mAh-Zelle trägt die Box ohne Sonne 6 bis 12 Stunden, typisch 9. GNSS ist der grösste Posten, der Rechner der zweitgrösste, weil er bei durchgehender Aufzeichnung nicht schlafen kann. Eine Umschaltung der Bildrate nach Barometer-Unruhe wurde an 45’839 Flügen aus dem Wallis geprüft und verworfen: Jede vierte Störung beginnt in Luft, die das Barometer bis zwei Sekunden davor ruhig fand.</span><span data-lang="en">Working estimate: 45 mW drawn from the battery; provisional design allowance: 60 mW. In flight, 25 cm² of solar cells deliver 70–140 mW on sunny days, one and a half to three times the consumption; the 200 mAh cell carries the box for 6 to 12 hours without sun, typically 9. GNSS is the largest item, the processor the second largest, because it cannot sleep during continuous recording. Switching the frame rate on barometric unrest was tested on 45,839 flights from the Valais and rejected: every fourth incident begins in air the barometer found calm up to two seconds before.</span><span data-lang="fr">Valeur de travail : 45 mW prélevés sur la batterie ; valeur provisoire de dimensionnement avec marge : 60 mW. En vol, 25 cm² de cellules solaires fournissent 70–140 mW par temps ensoleillé, soit une fois et demie à trois fois la consommation ; la cellule de 200 mAh alimente le boîtier 6 à 12 heures sans soleil, typiquement 9. Le GNSS est le poste principal, le processeur le second, car il ne peut pas se mettre en veille pendant un enregistrement continu. Une commutation de la cadence selon l’agitation barométrique a été testée sur 45 839 vols du Valais et écartée : un incident sur quatre commence dans un air que le baromètre jugeait calme jusqu’à deux secondes avant.</span></p>
+<p><span data-lang="de">Datenblatt-Anhaltspunkte: Der <a href="https://www.welectron.com/mediafiles/productimg/arducam/Datasheet/HM0360-image-sensor-datasheet.pdf">HM0360</a> nennt 7 mA bei VGA und 60 Bildern/s, bei 10 Bildern/s entsprechend weniger; der <a href="https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf">MAX-M10S</a> 25 mW im Dauerbetrieb und rund 15 mW im Stromsparmodus bei 1,8 V. Die Tabelle ist daraus abgeleitete Projektplanung, keine Herstellerspezifikation des Gesamtsystems.</span><span data-lang="en">Datasheet reference points: the <a href="https://www.welectron.com/mediafiles/productimg/arducam/Datasheet/HM0360-image-sensor-datasheet.pdf">HM0360</a> specifies 7 mA at VGA and 60 frames/s, correspondingly less at 10 frames/s; the <a href="https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf">MAX-M10S</a> 25 mW in continuous mode and about 15 mW in power-save mode at 1.8 V. The table is a project planning estimate informed by these references, not a manufacturer specification for the complete system.</span><span data-lang="fr">Repères issus des fiches techniques : le <a href="https://www.welectron.com/mediafiles/productimg/arducam/Datasheet/HM0360-image-sensor-datasheet.pdf">HM0360</a> indique 7 mA en VGA à 60 images/s, proportionnellement moins à 10 images/s ; le <a href="https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf">MAX-M10S</a> 25 mW en mode continu et environ 15 mW en mode économie à 1,8 V. Le tableau constitue une estimation de projet éclairée par ces références, et non une spécification fabricant du système complet.</span></p>
+<h3><span data-lang="de">Erster Meilenstein: Energie- und Aufzeichnungsnachweis</span><span data-lang="en">First milestone: energy and recording validation</span><span data-lang="fr">Premier jalon : validation énergétique et de l’enregistrement</span></h3><p><span data-lang="de">Zunächst wird die Aufzeichnung auf einem Entwicklerboard geprüft, danach der Verbrauch mit einer energieoptimierten Testschaltung oder eigenen Platine. Nachzuweisen sind nutzbare, synchronisierte Bilder und Flugdaten sowie eine gemessene Energiebilanz aus Verbrauch, Solarertrag und Akkureserve. Flugprofil, Lichtbedingungen und Abnahmekriterien werden vor Beginn vereinbart. Erst auf dieser Grundlage werden Vorserie und endgültige Bauform festgelegt.</span><span data-lang="en">Recording will first be tested on a development board, followed by power measurements on an energy-efficient test circuit or custom board. Required evidence comprises usable, synchronised images and flight data, plus a measured energy balance covering consumption, solar yield and battery reserve. Flight profiles, lighting conditions and acceptance criteria will be agreed before work begins. Pre-production and the final form factor will be defined on that basis.</span><span data-lang="fr">L’enregistrement sera d’abord testé sur une carte de développement, puis la consommation sur un circuit d’essai économe ou une carte dédiée. Il faudra démontrer la disponibilité d’images et de données de vol exploitables et synchronisées, ainsi qu’un bilan mesuré entre consommation, apport solaire et réserve de batterie. Profils de vol, conditions lumineuses et critères d’acceptation seront convenus avant les travaux. La présérie et la forme définitive seront définies sur cette base.</span></p><p><span data-lang="de">Für «installieren und vergessen» muss der Solarertrag über das vereinbarte Nutzungsprofil den Verbrauch decken; der Akku überbrückt Zeiten mit wenig Sonne. Abschattung am Gurtzeug und Lagerung im Packsack gehören zur Prüfung. Ein grösserer Akku erhöht die Reserve, ersetzt aber keine ausgeglichene Energiebilanz.</span><span data-lang="en">For “install and forget”, solar yield must cover consumption over the agreed usage profile; the battery bridges periods of low sunlight. Harness shading and storage inside a packed harness are part of the assessment. A larger battery increases the reserve but cannot replace a balanced energy budget.</span><span data-lang="fr">Pour « installer et oublier », l’apport solaire doit couvrir la consommation sur le profil d’utilisation convenu ; la batterie compense les périodes peu ensoleillées. L’ombre de la sellette et le rangement dans le sac font partie des essais. Une batterie plus grande augmente la réserve, mais ne remplace pas un bilan énergétique équilibré.</span></p></div></details>
+<details id="erprobung"><summary><span data-lang="de">Erprobung und Sicherheitsnutzen</span><span data-lang="en">Trials and safety benefits</span><span data-lang="fr">Essais et bénéfices pour la sécurité</span></summary><div class="prose"><p><span data-lang="de">Zwei Wege können sich ergänzen: Hersteller erproben Integration, Form und Bedienung für ein Serienprodukt. Eine betreute Pilotstudie untersucht den Nutzen der Aufnahmen für Nachbesprechung, Ausbildung und Erfahrungsaustausch. Hardware und Auswertungssoftware bilden eine gemeinsame Basis.</span><span data-lang="en">Two approaches can complement each other: manufacturers test integration, shape and controls for a production device, while a supervised pilot study examines how recordings support debriefing, training and shared learning. Hardware and review software form a common foundation.</span><span data-lang="fr">Deux démarches peuvent se compléter : les fabricants testent l’intégration, la forme et la commande d’un produit de série ; une étude pilote accompagnée examine l’utilité des enregistrements pour le débriefing, la formation et le partage d’expériences. Le matériel et le logiciel d’analyse constituent une base commune.</span></p><p><span data-lang="de">Für eine Schweizer Erprobung ist eine Zusammenarbeit mit rund zehn Praxispartnern und mindestens 100 teilnehmenden Piloten vorgesehen — etwa aus Liga, Streckenflug, Flugschulen und Flugreisen. Jörg Korner soll die Erprobung eng begleiten. Umfang und Durchführung hängen von Finanzierung und Zusagen der Partner ab.</span><span data-lang="en">A Swiss trial is envisaged with around ten field partners and at least 100 participating pilots, including competition and cross-country pilots, flight schools and flying holiday providers. Jörg Korner would closely supervise the trial. Its scope and implementation depend on funding and partner commitments.</span><span data-lang="fr">Une expérimentation en Suisse est envisagée avec une dizaine de partenaires de terrain et au moins 100 pilotes participants, issus notamment de la compétition, du vol de distance, des écoles et des voyages de parapente. Jörg Korner en assurerait un accompagnement étroit. L’ampleur et la réalisation dépendent du financement et de l’engagement des partenaires.</span></p><p><span data-lang="de">Erfasst werden technische Zuverlässigkeit, tatsächlich nutzbare Aufnahmen, Bedienaufwand und Erkenntnisse aus strukturierten Nachbesprechungen. Teilnahme und Freigabe von Ausschnitten bleiben freiwillig. Eine solche Erprobung kann den praktischen Nutzen untersuchen; eine sinkende Unfallrate lässt sich damit allein noch nicht nachweisen.</span><span data-lang="en">The trial will assess technical reliability, usable recordings, user effort and findings from structured debriefings. Participation and clip sharing remain voluntary. Such a trial can examine practical usefulness; it cannot on its own demonstrate a reduction in accident rates.</span><span data-lang="fr">L’évaluation portera sur la fiabilité, les enregistrements exploitables, les contraintes d’utilisation et les enseignements de débriefings structurés. La participation et le partage d’extraits restent volontaires. Ces essais peuvent étudier l’utilité pratique, mais ne suffisent pas à démontrer une baisse du taux d’accidents.</span></p></div></details>
+<div class="prose"><h2><span data-lang="de">Bereit für die gemeinsame Prototypenphase.</span><span data-lang="en">Ready for joint prototype development.</span><span data-lang="fr">Prêt pour une phase commune de prototypage.</span></h2><p><span data-lang="de">Die Komponentenliste liegt vor. Ein <a href="https://joerxc.org/parabox/demo/">Demo-Player</a> zeigt bereits die synchronisierte Auswertung vorhandener Aufnahmen. Für die Hardwareentwicklung steht eine Zusammenarbeit mit einer Hardwarefirma bereit, die von einem PWC-Piloten geführt wird. Damit kommt auch auf der Elektronikseite Flugpraxis hinzu.</span><span data-lang="en">The component list is in place. A <a href="https://joerxc.org/parabox/demo/">demo player</a> already demonstrates synchronised review of existing recordings. A collaboration with a hardware company led by a Paragliding World Cup pilot is ready to support hardware development, bringing flying experience to the electronics side too.</span><span data-lang="fr">La liste des composants est établie. Un <a href="https://joerxc.org/parabox/demo/">lecteur de démonstration</a> permet déjà d’analyser des enregistrements existants de manière synchronisée. Une collaboration avec une entreprise spécialisée dans le matériel électronique, dirigée par un pilote de la Coupe du monde de parapente, est prête à accompagner le développement. L’électronique bénéficie ainsi elle aussi d’une expérience du vol.</span></p><p><span data-lang="de">Als nächster Schritt ist ein Funktionsprototyp auf einem Entwicklerboard vorgesehen. Auf dieser gemeinsamen technischen Grundlage können eine herstellerspezifische Produktentwicklung und eine betreute Erprobung mit Piloten aufbauen.</span><span data-lang="en">The next planned step is a functional prototype on a development board. This shared technical foundation can support both manufacturer-specific product development and supervised trials with pilots.</span><span data-lang="fr">La prochaine étape prévue est un prototype fonctionnel sur carte de développement. Cette base technique commune pourra servir au développement d’un produit adapté à un fabricant et à des essais accompagnés avec des pilotes.</span></p>
+<h2><span data-lang="de">Warum ein Gurtzeughersteller?</span><span data-lang="en">Why a harness manufacturer?</span><span data-lang="fr">Pourquoi un fabricant de sellettes ?</span></h2><p><span data-lang="de">Parabox beginnt beim Gurtzeug: Eine geeignete Aufnahme schafft die Voraussetzungen für zuverlässige Befestigung, freie Kamerasicht, Solarbelichtung und einfache Bedienung. Ein «Parabox-ready»-Gurtzeug bildet damit die Grundlage für das Gerät und die digitale Auswertung. Elektronik und Software können spezialisierte Partner beitragen; bewährte Navigationsinstrumente und Apps werden ergänzt.</span><span data-lang="en">Parabox starts with the harness: a suitable mounting provision enables secure attachment, a clear camera view, solar exposure and easy access to the controls. A “Parabox-ready” harness thus provides the foundation for the recorder and digital review platform. Specialist partners can contribute electronics and software, complementing established navigation instruments and apps.</span><span data-lang="fr">Parabox commence par la sellette : un emplacement adapté permet une fixation fiable, un champ de vision dégagé, une bonne exposition solaire et un accès facile à la commande. Une sellette « Parabox-ready » constitue ainsi la base du boîtier et de la plateforme d’analyse. Des partenaires spécialisés peuvent apporter l’électronique et le logiciel, en complément des instruments et applications de navigation éprouvés.</span></p><p><span data-lang="de">Eine überzeugende Integration kann die Wahl eines Gurtzeugs beeinflussen und einen zusätzlichen Anlass zum Wechsel schaffen. Der zusätzliche Deckungsbeitrag durch gewonnene Kunden oder zusätzliche Gurtzeugverkäufe könnte für den Hersteller sogar bedeutender sein als der Ertrag aus dem Gerät selbst. Diese wirtschaftliche Chance gilt es mit Piloten zu prüfen.</span><span data-lang="en">Convincing integration can influence harness choice and give pilots an additional reason to upgrade or switch brands. The additional contribution margin from winning customers or generating extra harness sales could be more significant for the manufacturer than earnings from the recorder itself. This commercial opportunity needs to be explored with pilots.</span><span data-lang="fr">Une intégration convaincante peut influencer le choix d’une sellette et donner aux pilotes une raison supplémentaire d’en changer. La marge contributive liée à de nouveaux clients ou à des ventes supplémentaires de sellettes pourrait être plus importante pour le fabricant que le bénéfice tiré du boîtier lui-même. Ce potentiel commercial doit être exploré avec les pilotes.</span></p><h2><span data-lang="de">Warum jetzt?</span><span data-lang="en">Why now?</span><span data-lang="fr">Pourquoi maintenant ?</span></h2><p><span data-lang="de">KI verändert Entwicklung, Wartung und Betrieb von Elektronik und Software. Sie erleichtert damit nicht nur den Einstieg, sondern kann auch den langfristigen Aufwand für ein solches Produkt senken. Meine Arbeit an Parabox hat sie bereits stark vorangebracht. Flugerprobung und technische Prüfung müssen zeigen, ob das Gesamtsystem im Alltag überzeugt.</span><span data-lang="en">AI is changing how electronics and software are developed, maintained and operated. It not only lowers the barrier to entry but can also reduce the ongoing effort required to support such a product. It has already substantially accelerated my work on Parabox. Flight testing and technical verification must establish whether the complete system delivers in everyday use.</span><span data-lang="fr">L’IA transforme le développement, la maintenance et l’exploitation des systèmes électroniques et des logiciels. Elle facilite ainsi l’accès à ces domaines et peut aussi réduire les moyens nécessaires pour faire vivre un tel produit dans la durée. Elle a déjà fortement accéléré mon travail sur Parabox. Les essais en vol et les vérifications techniques devront confirmer l’utilité et la fiabilité du système au quotidien.</span></p><h2><span data-lang="de">Wer dahintersteht.</span><span data-lang="en">Who is behind Parabox.</span><span data-lang="fr">Qui porte Parabox.</span></h2><p><span data-lang="de">Ich bin Jörg Korner, Unternehmer, Streckenpilot und früherer Start-up-Coach der KTI, der Vorgängerorganisation von Innosuisse. Forschung und Entwicklung prägen mein Berufsleben. Ich verantwortete auch einen Serverbetrieb mit rund einer Million Besuchern pro Jahr.</span><span data-lang="en">I am Jörg Korner, entrepreneur, cross-country pilot and former start-up coach for CTI, the predecessor of Innosuisse. Research and development have shaped my career. I have also been responsible for server operations serving around one million visitors per year.</span><span data-lang="fr">Je suis Jörg Korner, entrepreneur, pilote de distance et ancien coach de start-up pour la CTI, qui a précédé Innosuisse. La recherche et le développement ont marqué ma carrière. J’ai également été responsable de l’exploitation de serveurs accueillant environ un million de visiteurs par an.</span></p></div><section class="join" id="kontakt">
+<h2><span data-lang="de">Wer entwickelt Parabox mit mir weiter?</span><span data-lang="en">Who will develop Parabox with me?</span><span data-lang="fr">Qui souhaite développer Parabox avec moi ?</span></h2>
+<p><span data-lang="de">Gesucht ist ein Gurtzeughersteller, der die Integration gemeinsam mit mir entwickeln und die Umsetzung von Parabox finanziell mittragen möchte. Ob Parabox ein eigenes Herstellerprodukt wird oder als eigenständiges Produkt mit ihm als Integrationspartner entsteht, ist offen. Elektronikentwicklung, Plattformbetrieb und Betreuung können mit spezialisierten Partnern organisiert werden. Ich bringe Vorarbeit, Forschung und meine Mitarbeit in die Entwicklung ein. Rollen, Meilensteine und Finanzierung klären wir im Gespräch.</span><span data-lang="en">I am looking for a harness manufacturer to develop this integration with me and help fund Parabox’s development and launch. Parabox could become the manufacturer’s own product or remain a separate product with the manufacturer as its integration partner. Electronics development, platform operations and support can be organised with specialist partners. I bring prior work, research and my active involvement in development. Roles, milestones and funding are matters for discussion.</span><span data-lang="fr">Je recherche un fabricant de sellettes souhaitant développer cette intégration avec moi et contribuer au financement du développement et du lancement de Parabox. Parabox pourrait devenir son propre produit ou rester un produit indépendant, avec le fabricant comme partenaire d’intégration. Le développement électronique, l’exploitation de la plateforme et l’assistance peuvent être organisés avec des partenaires spécialisés. J’apporte le travail préparatoire, mes recherches et ma participation au développement. Les rôles, les étapes et le financement sont à définir ensemble.</span></p>
+<a class="btn" href="mailto:joergkorner@gmail.com?subject=Parabox%20%E2%80%93%20Development%20partnership"><span data-lang="de">Entwicklungspartnerschaft besprechen →</span><span data-lang="en">Discuss a development partnership →</span><span data-lang="fr">Discuter d’un partenariat →</span></a>
+<p class="addr">joergkorner@gmail.com</p></section><details><summary><span data-lang="de">Entwicklung und Geschäftsmodell</span><span data-lang="en">Development and business model</span><span data-lang="fr">Développement et modèle économique</span></summary><section class="business"><div class="business-grid"><article><h3><span data-lang="de">Ein eigenes Produkt mit Perspektive</span><span data-lang="en">A product with room to grow</span><span data-lang="fr">Un produit avec des perspectives</span></h3><p><span data-lang="de">Persönliche Flugauswertung, Training und Erfahrungsaustausch können die Kundenbeziehung über den Kauf hinaus verlängern. Zusätzliche digitale Leistungen könnten Abo-Erlöse ermöglichen. Zahlungsbereitschaft und Betriebskosten werden in der Erprobung geprüft.</span><span data-lang="en">Personal flight review, training and shared experience can extend the customer relationship beyond purchase. Additional digital services could generate subscription revenue. Trials will assess willingness to pay and operating costs.</span><span data-lang="fr">Analyse personnelle des vols, entraînement et partage d’expériences peuvent prolonger la relation client au-delà de l’achat. Des services numériques supplémentaires pourraient générer des revenus d’abonnement. Les essais évalueront la disposition à payer et les coûts d’exploitation.</span></p></article><article><h3><span data-lang="de">Investitionen an Nachweise knüpfen</span><span data-lang="en">Tie investment to evidence</span><span data-lang="fr">Lier les investissements à des résultats</span></h3><p><span data-lang="de">Zuerst ein funktionsfähiges Gesamtsystem erproben, dann Nutzung und Nutzen im Flugalltag untersuchen. Vereinbarte Meilensteine schaffen Entscheidungsgrundlagen für weitere Investitionen und die Serienentwicklung.</span><span data-lang="en">First test a working system, then assess usage and usefulness in everyday flying. Agreed milestones provide a basis for decisions on further investment and production development.</span><span data-lang="fr">Tester d’abord un système fonctionnel, puis son utilisation et son utilité en conditions réelles. Des jalons convenus permettent de décider des investissements suivants et du développement en série.</span></p></article><article><h3><span data-lang="de">Weitere Anbieter ermöglichen</span><span data-lang="en">Enable other suppliers to participate</span><span data-lang="fr">Permettre l’arrivée d’autres acteurs</span></h3><p><span data-lang="de">Ein erstes Produkt könnte weitere Hersteller zur Entwicklung passender Gurtzeuge und Geräte anregen. Dokumentierte Schnittstellen und vereinbarte Lizenzmodelle könnten diesen Markt öffnen. Der erste Partner kann früh Produktgestaltung, Integration und Kundenerfahrung prägen.</span><span data-lang="en">A first product could encourage other manufacturers to develop compatible harnesses and recorders. Documented interfaces and agreed licensing models could open up this market. The initial partner can help shape product design, integration and the customer experience early on.</span><span data-lang="fr">Un premier produit pourrait inciter d’autres fabricants à développer des sellettes et des boîtiers compatibles. Des interfaces documentées et des modèles de licence convenus pourraient ouvrir ce marché. Le premier partenaire peut contribuer dès le départ à façonner le produit, son intégration et l’expérience client.</span></p></article></div></section></details>
+<details><summary><span data-lang="de">Forschung und weitere Perspektiven</span><span data-lang="en">Research and future possibilities</span><span data-lang="fr">Recherche et perspectives</span></summary><div class="prose"><h2><span data-lang="de">Fortschritt hat mehr als eine Dimension.</span><span data-lang="en">Progress has more than one dimension.</span><span data-lang="fr">Le progrès a plusieurs dimensions.</span></h2>
+<p><span data-lang="de">Wie viel zusätzliche Gleitleistung lässt sich noch gewinnen? In meiner <a href="https://doi.org/10.31223/X5G23K">Untersuchung zu Gleitschirmpolaren</a> werte ich 86’000 Flüge von 73 Schirmtypen aus. Der begleitende Text <a href="https://joerxc.org/ausentwickelt/">«Sind die Gleitschirme ausentwickelt?»</a> fragt nach den Grenzen weiterer Leistungsgewinne. Die Untersuchung ist als Preprint veröffentlicht und noch nicht begutachtet.</span><span data-lang="en">How much more glide performance can be gained? My <a href="https://doi.org/10.31223/X5G23K">study of paraglider sink polars</a> analyses 86,000 flights across 73 wing types. The accompanying article <a href="https://joerxc.org/ausentwickelt/">“Have paragliders stopped getting better?”</a> explores the limits of further performance gains. The study is published as a preprint and has not yet been peer-reviewed.</span><span data-lang="fr">Quelle marge reste-t-il pour améliorer la finesse ? Mon <a href="https://doi.org/10.31223/X5G23K">étude des polaires de parapentes</a> analyse 86 000 vols de 73 modèles. Le texte associé <a href="https://joerxc.org/ausentwickelt/">« Les parapentes ont-ils atteint leurs limites ? »</a> (en allemand et en anglais) interroge les possibilités de gains supplémentaires. L’étude est publiée en prépublication et n’a pas encore été évaluée par les pairs.</span></p>
+<p><span data-lang="de">Unabhängig von der Antwort eröffnet sich eine weitere Ebene: Wie viel können wir durch besseres Verstehen, Training und Teilen von Erfahrungen gewinnen? Hier setzt Parabox an — als Ergänzung zur aerodynamischen Weiterentwicklung.</span><span data-lang="en">Whatever the answer, another question opens up: how much can we gain through better understanding, training and sharing experience? This is where Parabox comes in, complementing aerodynamic development.</span><span data-lang="fr">Quelle que soit la réponse, une autre question se pose : que peut-on gagner en comprenant mieux ses vols, en s’entraînant et en partageant ses expériences ? C’est sur ce terrain que se place Parabox, en complément du développement aérodynamique.</span></p>
+<section class="research-outlook"><h3><span data-lang="de">Über die Aufzeichnung hinausdenken.</span><span data-lang="en">Thinking beyond recording.</span><span data-lang="fr">Penser au-delà de l’enregistrement.</span></h3><p><span data-lang="de">Ein Einblick in Jörg Korners Forschung: Ein realer Flug und ein simulierter Avatar bewegen sich im zeitlich veränderlichen Strömungsfeld. Die Forschung erkundet, wie Flugdaten künftig auch Flugplanung und Navigation unterstützen könnten. Parabox ist ein konkreter Einstieg — weitere Anwendungen können daraus entstehen.</span><span data-lang="en">A glimpse into Jörg Korner’s research: a recorded flight and a simulated avatar move through a time-varying airflow field. The research explores how flight data might also support flight planning and navigation. Parabox is a practical starting point, with scope for further applications.</span><span data-lang="fr">Un aperçu des recherches de Jörg Korner : un vol réel et un avatar simulé évoluent dans un champ d’écoulement variable dans le temps. Ces recherches explorent comment les données de vol pourraient aussi contribuer à la préparation des vols et à la navigation. Parabox constitue un point de départ concret, ouvrant la voie à d’autres applications.</span></p><figure style="margin:18px 0"><video controls muted playsinline preload="metadata" poster="parabox-flowfield-poster.png" width="1280" height="720" style="width:100%;height:auto;display:block;border-radius:12px"><source src="parabox-flowfield-vision.mp4" type="video/mp4"></video><figcaption style="font-size:14px;color:var(--text2);margin-top:8px"><span data-lang="de">Forschungsdemonstration · 29. April 2025, ca. 14:30–14:40 · 30-facher Zeitraffer. Aufgezeichneter Pilot: rot; simulierter Avatar: blau. Keine Live-Navigation.</span><span data-lang="en">Research demonstration · 29 April 2025, approx. 14:30–14:40 · 30× playback. Recorded pilot: red; simulated avatar: blue. Not live navigation.</span><span data-lang="fr">Démonstration de recherche · 29 avril 2025, env. 14 h 30–14 h 40 · accéléré 30×. Pilote enregistré : rouge ; avatar simulé : bleu. Il ne s’agit pas de navigation en direct.</span></figcaption></figure><p><a href="https://joerxc.org/vs-avatar/?igc=pae-2025-04-29" target="_blank" rel="noopener"><span data-lang="de">Interaktiven Player öffnen →</span><span data-lang="en">Open the interactive player →</span><span data-lang="fr">Ouvrir le lecteur interactif →</span></a></p></section>
+</div></details>
+<details><summary><span data-lang="de">Aufnahmen und freiwilliger Austausch</span><span data-lang="en">Recordings and voluntary sharing</span><span data-lang="fr">Enregistrements et partage volontaire</span></summary><div class="prose">
+<p><span data-lang="de">Privat auswerten, einzelne Ausschnitte teilen oder festgelegte Ausschnitte automatisch freigeben: Die Wahl bleibt beim Piloten, auch bei einem Herstellerprodukt. Geteilt werden kurze Ausschnitte, keine ganzen Flugvideos — auf Wunsch ohne Namen. Eine spätere Freigabeansicht soll genaue Zeit- und Ortsangaben ausblenden; Bilder können dennoch Hinweise auf Personen oder Orte enthalten. Hersteller erhalten keinen automatischen Zugriff auf private Aufnahmen.</span><span data-lang="en">Private review, sharing selected clips or automatically sharing predefined excerpts: the choice stays with the pilot, including in a manufacturer’s product. Sharing is limited to short clips, not entire flight videos, with the option to omit names. A future sharing view is intended to hide precise time and location information, although images may still reveal people or places. Manufacturers do not receive automatic access to private recordings.</span><span data-lang="fr">Analyse privée, partage d’extraits choisis ou partage automatique de passages prédéfinis : le choix reste au pilote, même dans un produit porté par un fabricant. Seuls de courts extraits sont partagés, pas les vidéos de vols entiers, avec la possibilité de ne pas afficher son nom. Un futur mode de partage doit masquer les indications précises de date, d’heure et de lieu ; les images peuvent toutefois révéler des personnes ou des lieux. Les fabricants n’obtiennent aucun accès automatique aux enregistrements privés.</span></p>
+<p><span data-lang="de">Piloten können Ausschnitte mit anderen Piloten, Fluglehrern oder Fachpersonen besprechen und freiwillig einer Zwischenfallmeldung beilegen.</span><span data-lang="en">Pilots can discuss clips with other pilots, instructors or specialists and voluntarily include them in incident reports.</span><span data-lang="fr">Les pilotes peuvent discuter d’extraits avec d’autres pilotes, des moniteurs ou des spécialistes et les joindre volontairement à un signalement d’incident.</span></p></div></details>
+<details><summary><span data-lang="de">Bisherige Entwicklung</span><span data-lang="en">Development to date</span><span data-lang="fr">Le développement du projet</span></summary><div class="prose"><figure class="shot">
+        <img src="https://joerxc.org/parabox/parabox-app-2019.png" alt="Parabox app, 2019: fisheye video of the canopy, the flight track on a map, the altitude curve, playback controls">
+        <figcaption><span data-lang="de">Die App 2019: Kappe durchs Fischauge, Spur auf der Karte, Höhenkurve, synchron abspielbar.</span><span data-lang="en">The app in 2019: fisheye view of the canopy, flight track and altitude graph, with synchronised playback.</span><span data-lang="fr">L’application en 2019 : voile filmée au fisheye, trace sur la carte et courbe d’altitude, avec lecture synchronisée.</span></figcaption>
+      </figure><p><span data-lang="de">Parabox verfolge ich seit 2018. Ein erster Ansatz mit Innosuisse, FHNW und Flugschule Aerosport wurde im Flug erprobt. Die wichtigste Lehre: Aufzeichnung muss von selbst geschehen. Erfahrungen und kritische Rückmeldungen anderer Piloten begleiten das Projekt.</span><span data-lang="en">I have pursued Parabox since 2018. An initial approach with Innosuisse, FHNW and Aerosport flight school was tested in flight. The key lesson: recording must happen automatically. Other pilots contribute experience and critical feedback.</span><span data-lang="fr">Je poursuis Parabox depuis 2018. Une première approche avec Innosuisse, la FHNW et l’école Aerosport a été testée en vol. La leçon essentielle : l’enregistrement doit se faire automatiquement. Les expériences et retours critiques d’autres pilotes nourrissent le projet.</span></p><div style="clear:both"></div></div></details>
 
-<!-- STREAM: Aktuell — eine Zeile pro Neuigkeit, neueste zuoberst; die sechste und folgende tragen class="row hid" -->
-<section class="stream" id="aktuell">
-  <div class="box">
-    <div class="head"><p class="kicker"><span data-lang="de">Aktuell</span><span data-lang="en">What's new</span></p>
-      <button class="more" id="stream-more" type="button" hidden><span data-lang="de">alle</span><span data-lang="en">all</span></button></div>
-    <a class="row" href="https://joerxc.org/parabox/"><span class="d">21.10.</span><span class="chip idea">Parabox</span><span class="t"><span data-lang="de">Demo-Player und neuer Plan: GPS, Vario, roter Knopf</span><span data-lang="en">Demo player and new plan: GPS, vario, red button</span></span><span class="arr">→</span></a>
-    <a class="row" href="https://joerxc.org/ausentwickelt/"><span class="d">17.10.</span><span class="chip"><span data-lang="de">Texte</span><span data-lang="en">Writing</span></span><span class="t"><span data-lang="de">Sind die Gleitschirme ausentwickelt? 73 Typen im Vergleich</span><span data-lang="en">Have paragliders stopped getting better? 73 types compared</span></span><span class="arr">→</span></a>
-    <a class="row" href="#writing"><span class="d">16.10.</span><span class="chip">Paper</span><span class="t"><span data-lang="de">Polaren-Paper: Endfassung und die Daten als CSV</span><span data-lang="en">Polars paper: final version and the data as CSV</span></span><span class="arr">→</span></a>
-    <a class="row" href="https://joerxc.org/xcmag_268_invisible_railway.pdf"><span class="d">13.10.</span><span class="chip">Cross Country</span><span class="t"><span data-lang="de">Vier Seiten über die Invisible Railway in Heft 268</span><span data-lang="en">Four pages on the invisible railway in issue 268</span></span><span class="arr">→</span></a>
-    <a class="row" href="https://joerxc.org/alpen-player/"><span class="d">10.10.</span><span class="chip live">Live</span><span class="t"><span data-lang="de">Alpen-Player: erstes Strömungsfeld der ganzen Alpen</span><span data-lang="en">Alps player: a first flow field for the whole Alps</span></span><span class="arr">→</span></a>
-  </div>
-</section>
-
-<header class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Jörg Korner</p>
-    <h1>
-      <span data-lang="en">Flight data holds valuable information.</span>
-      <span data-lang="de">In Flugdaten steckt wertvolle Information.</span>
-    </h1>
-    <figure class="spur anomal">
-      <svg id="an-svg" viewBox="0 0 1000 600" role="img" aria-label="Paraglider tracks: sudden large height losses alternating with regular circling patterns">
-        <rect class="an-grund" x="0" y="0" width="1000" height="600" rx="18"/>
-        <path id="an-linie" class="an-linie" d=""/>
-        <g id="an-punkte"></g>
-        <circle id="an-ring" class="an-ring" r="15" cx="-50" cy="-50"/>
-        <text id="an-ringtext" class="an-ringtext" x="-200" y="-200"><tspan data-lang="de">plötzliches Sinken</tspan><tspan data-lang="en">sudden sink</tspan></text>
-        <g class="an-mass"><line id="an-mass" x1="40" y1="44" x2="90" y2="44"/><text x="40" y="34">50 m</text></g>
-        <g id="an-streifen">
-          <line class="an-trenn" x1="40" y1="425" x2="960" y2="425"/>
-          <text class="an-achse" x="40" y="452"><tspan data-lang="de">Höhe</tspan><tspan data-lang="en">Height</tspan></text>
-          <path id="an-hoehe" class="an-hoehe" d=""/>
-          <path id="an-fall" class="an-fall" d=""/>
-          <text id="an-falltext" class="an-falltext" x="960" y="452" text-anchor="end"><tspan data-lang="de" id="an-ft-de"></tspan><tspan data-lang="en" id="an-ft-en"></tspan></text>
-        </g>
-      </svg>
-      <figcaption><span data-lang="de">Auswertungen von Störungen und ihrem Gegenteil stehen noch aus.</span><span data-lang="en">Analyses of disturbances and of their opposite are still to come.</span></figcaption>
-    </figure>
-  </div>
-</header>
-
-<!-- WRITING -->
-<section class="band alt" id="writing">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kicker"><span data-lang="en">Writing</span><span data-lang="de">Texte</span></p>
-      <h2><span data-lang="en">Writing and papers</span><span data-lang="de">Texte und Paper</span></h2>
-    </div>
-    <div class="grid">
-      <article class="card feature">
-        <div class="chips">
-          <span class="chip"><span data-lang="en">Article</span><span data-lang="de">Artikel</span></span>
-          <span class="chip live"><span data-lang="en">Online</span><span data-lang="de">Online</span></span>
-        </div>
-        <h3>The invisible railway</h3>
-        <p>
-          <span data-lang="en">How a moist wedge under dry plateau air carried a paraglider 612 km — the dryline and the lid are two views of the same object. In a statistical comparison of the record flight against the hundred longest Sertão flights, nothing stood out — except one single parameter: ground speed while climbing. From there the piece follows the machine behind it — the lee trough, the lid, and Blackadar&rsquo;s pendulum: the nocturnal jet, caught re-accelerating in the tracklog itself. It contains a forecast link for the Texas dryline.</span>
-          <span data-lang="de">Wie ein feuchter Keil unter trockener Plateau-Luft einen Gleitschirm 612 km weit trug — Dryline und Deckel sind zwei Ansichten desselben Objekts. Beim statistischen Vergleich des Weltrekordflugs mit den hundert längsten Sertão-Flügen war nichts auffällig — ausser einem einzigen Parameter: der Grundgeschwindigkeit im Steigen. Von dort verfolgt der Text die Maschine dahinter — den Lee-Trog, den Deckel und Blackadars Pendel: den nächtlichen Jet, den der Tracklog beim Wiederanlaufen erwischt. Er enthält einen Forecast-Link für die Texas-Dryline.</span>
-        </p>
-        <p class="note">
-          <span data-lang="en">Cross Country Magazine 268 (October 2026) ran a four-page feature on it, &ldquo;Weather: The Invisible Railway&rdquo; by Ed Ewing. The PDF is here by courtesy of Cross Country; it ends with their 10&nbsp;% shop code.</span>
-          <span data-lang="de">Cross Country Magazine 268 (Oktober 2026) bringt einen vierseitigen Text darüber, &bdquo;Weather: The Invisible Railway&ldquo; von Ed Ewing. Das PDF steht hier mit freundlicher Erlaubnis von Cross Country; am Schluss ein 10-%-Code für ihren Shop.</span>
-        </p>
-        <div class="links">
-          <a href="https://joerxc.org/invisible-railway/"><span data-lang="en">Read the piece</span><span data-lang="de">Zum Artikel</span></a>
-          <a href="https://joerxc.org/xcmag_268_invisible_railway.pdf"><span data-lang="en">Cross Country feature (PDF)</span><span data-lang="de">Cross-Country-Artikel (PDF)</span></a>
-        </div>
-      </article>
-
-      <article class="card feature">
-        <div class="chips">
-          <span class="chip"><span data-lang="en">Paper</span><span data-lang="de">Paper</span></span>
-          <span class="chip live"><span data-lang="en">Online</span><span data-lang="de">Online</span></span>
-        </div>
-        <h3><span data-lang="en">Paragliders as probes of the Alpine boundary layer</span><span data-lang="de">Gleitschirme als Sonden der alpinen Grenzschicht</span></h3>
-        <p>
-          <span data-lang="en">Sink polars of 73 paraglider types, measured from 86,000 flights in the Valais, and with them the flow field of the whole valley system: where the air between the thermals rises and sinks. Two natural experiments check the method: the faired race harness shows up in the polar of the Enzo 3, and one wing in two cloths gives the same polar twice.</span>
-          <span data-lang="de">Sinkpolaren von 73 Gleitschirmtypen, gemessen aus 86 000 Flügen im Wallis, und mit ihnen das Strömungsfeld des ganzen Talsystems: wo die Luft zwischen den Bärten steigt und sinkt. Zwei natürliche Experimente prüfen die Methode: Das verschalte Wettkampfgurtzeug zeigt sich in der Polare der Enzo 3, und ein Schirm in zwei Tüchern gibt zweimal dieselbe Polare.</span>
-        </p>
-        <p class="note">
-          <span data-lang="en">Scientific paper in English, posted as a preprint on EarthArXiv (<a href="https://doi.org/10.31223/X5G23K">doi:10.31223/X5G23K</a>), not yet peer-reviewed. The polars are also available as a <a href="https://joerxc.org/Korner_2026_polars.csv">CSV file</a>.</span>
-          <span data-lang="de">Wissenschaftliches Paper auf Englisch, als Preprint auf EarthArXiv (<a href="https://doi.org/10.31223/X5G23K">doi:10.31223/X5G23K</a>), noch nicht begutachtet. Die Polaren gibt es auch als <a href="https://joerxc.org/Korner_2026_polars.csv">CSV-Datei</a>.</span>
-        </p>
-        <div class="links">
-          <a href="https://joerxc.org/Korner_2026_Paraglider_sink_polars_and_flow_field_Valais.pdf"><span data-lang="en">Paper (PDF)</span><span data-lang="de">Paper (PDF)</span></a>
-        </div>
-      </article>
-
-      <article class="card feature">
-        <div class="chips">
-          <span class="chip"><span data-lang="en">Paper</span><span data-lang="de">Paper</span></span>
-          <span class="chip live"><span data-lang="en">New</span><span data-lang="de">Neu</span></span>
-        </div>
-        <h3><span data-lang="en">Paraglider flight logs as hypsometers</span><span data-lang="de">Flug-Logs als Thermometer der Luftsäule</span></h3>
-        <p>
-          <span data-lang="en">A flight recorder stores two altitudes, one from air pressure and one from GPS. Their difference tells how warm the air in between is: every flight becomes a radiosonde. Many flights over the Valais thus yield, day after day, a temperature profile of the valley air that agrees well with the Payerne radiosonde. This may be a new, simple way to measure the warming of the air in valleys. As a by-product: the ceiling of the thermals is almost level.</span>
-          <span data-lang="de">Ein Flugrecorder speichert zwei Höhen, eine aus dem Luftdruck und eine vom GPS. Ihr Unterschied verrät, wie warm die Luft dazwischen ist: Jeder Flug wird zur Radiosonde. Aus vielen Flügen über dem Wallis entsteht so Tag für Tag ein Temperaturprofil der Talluft, das mit der Radiosonde von Payerne gut übereinstimmt. Das könnte eine neue, einfache Methode sein, um die Erwärmung der Luft in Tälern zu messen. Nebenbei zeigt sich: Die Decke der Bärte ist fast eben.</span>
-        </p>
-        <p class="note">
-          <span data-lang="en">Scientific paper in English, posted as a preprint on EarthArXiv (<a href="https://doi.org/10.31223/X5PJ7S">doi:10.31223/X5PJ7S</a>), not yet peer-reviewed; submitted to a journal.</span>
-          <span data-lang="de">Wissenschaftliches Paper auf Englisch, als Preprint auf EarthArXiv (<a href="https://doi.org/10.31223/X5PJ7S">doi:10.31223/X5PJ7S</a>), noch nicht begutachtet; bei einer Fachzeitschrift eingereicht.</span>
-        </p>
-        <div class="links">
-          <a href="https://doi.org/10.31223/X5PJ7S"><span data-lang="en">Preprint on EarthArXiv</span><span data-lang="de">Preprint auf EarthArXiv</span></a>
-        </div>
-      </article>
-
-      <article class="card feature">
-        <div class="chips">
-          <span class="chip"><span data-lang="en">Side finding</span><span data-lang="de">Nebenfund</span></span>
-          <span class="chip live"><span data-lang="en">Online</span><span data-lang="de">Online</span></span>
-        </div>
-        <h3><span data-lang="en">Have paragliders stopped getting better?</span><span data-lang="de">Sind die Gleitschirme ausentwickelt?</span></h3>
-        <p>
-          <span data-lang="en">We compare every glider type at the airspeed it is most often flown at – where its polar is measured most precisely. In no class do the best gliders glide measurably better today than five to ten years ago. The Valais fleet has improved since 2019 only because more and more kilometres are flown on the Zeno 2 and the Zeolite 2 GT – and part of that may come from the faired harnesses flown with them.</span>
-          <span data-lang="de">Wir vergleichen jeden Schirmtyp bei der Eigengeschwindigkeit, die am häufigsten geflogen wird – dort ist seine Polare am genauesten gemessen. In keiner Klasse gleiten die besten Schirme heute messbar besser als vor fünf bis zehn Jahren. Die Wallis-Flotte wird seit 2019 nur noch besser, weil immer mehr Kilometer auf Zeno 2 und Zeolite 2 GT geflogen werden – und ein Teil davon kann von den verkleideten Gurtzeugen kommen, mit denen sie geflogen werden.</span>
-        </p>
-        <p class="note">
-          <span data-lang="en">Short piece, second version, October 2026.</span>
-          <span data-lang="de">Kurzer Text, zweite Fassung, Oktober 2026.</span>
-        </p>
-        <div class="links">
-          <a href="https://joerxc.org/ausentwickelt/"><span data-lang="en">Read the piece</span><span data-lang="de">Zum Text</span></a>
-        </div>
-      </article>
-
-      </div>
-  </div>
-</section>
-
-<!-- TOOLS -->
-<section class="band" id="tools">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kicker"><span data-lang="en">Tools</span><span data-lang="de">Tools</span></p>
-      <h2><span data-lang="en">Usable today</span><span data-lang="de">Heute nutzbar</span></h2>
-      <p class="sec-sub"><span data-lang="en">One takes your own tracks. The second is a fixed collection of flights. The third lets you picture how the air moves over the Goms on light-wind days — derived from 300 hours of gliding.</span><span data-lang="de">Eines nimmt eigene Tracks. Das zweite ist eine feste Sammlung von Flügen. Das dritte erlaubt, sich die Luftströmung an windschwachen Tagen im Goms einmal vorzustellen — abgeleitet aus 300 Flugstunden.</span></p>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
-        <h3>flyfaster</h3>
-        <p>
-          <span data-lang="en">Compares pilots who flew in the same air, so what is left is the difference between the pilots, not between the days. Upload tracks, get a radar profile per pilot.</span>
-          <span data-lang="de">Vergleicht Piloten, die in derselben Luft geflogen sind — was bleibt, ist der Unterschied zwischen den Piloten, nicht zwischen den Tagen. Tracks hochladen, Radarprofil pro Pilot.</span>
-        </p>
-        <div class="links"><a href="https://flyfaster-production.up.railway.app/"><span data-lang="en">Open flyfaster</span><span data-lang="de">flyfaster öffnen</span></a></div>
-      </article>
-
-      <article class="card">
-        <div class="chips">
-          <span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span>
-          <span class="chip"><span data-lang="en">Collection</span><span data-lang="de">Sammlung</span></span>
-        </div>
-        <h3>Jura-Player</h3>
-        <p>
-          <span data-lang="en">A collection of Jura flights to study — no upload, the flights are already there. Pick one, for instance Sebastian Benz&rsquo;s longest, and replay it: many data sources on one timeline, satellite clouds included, and a bar showing which section of the arc between La Dôle and Weissenstein the flight touched. Even with a simulated vario sound.</span>
-          <span data-lang="de">Eine Sammlung von Jura-Flügen zum Studieren — kein Upload, die Flüge sind schon da. Einen auswählen, etwa den längsten von Sebastian Benz, und ihn abspielen: viele Datenquellen auf einer Zeitachse, Satellitenwolken inklusive, und ein Balken, der zeigt, welchen Abschnitt des Bogens zwischen La Dôle und Weissenstein der Flug berührt hat. Sogar mit simuliertem Vario-Sound.</span>
-        </p>
-        <div class="links"><a href="https://joerxc.org/juraplayer/"><span data-lang="en">Browse the flights</span><span data-lang="de">Flüge ansehen</span></a></div>
-      </article>
-
-      <article class="card weit">
-        <div class="chips">
-          <span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span>
-          <span class="chip"><span data-lang="en">Study</span><span data-lang="de">Studie</span></span>
-        </div>
-        <h3><span data-lang="en">Goms in 3D</span><span data-lang="de">Goms r&auml;umlich</span></h3>
-        <p>
-          <span data-lang="en">What the air does over a valley, measured from the flights themselves. Vertical motion comes from the glides, horizontal motion from the drift while circling &mdash; two independent measurements, 300 hours of gliding on 184 days. Turn the valley, cut it open anywhere by dragging a line, let the arrows move, and run through the day: mornings look different from afternoons. Not a forecast, and not a single day &mdash; an average of the hours people actually fly.</span>
-          <span data-lang="de">Was die Luft &uuml;ber einem Tal tut, gemessen aus den Fl&uuml;gen selbst. Das Senkrechte stammt aus den Gleitstrecken, das Waagrechte aus der Abdrift beim Kreisen &mdash; zwei unabh&auml;ngige Messungen, 300 Gleitstunden an 184 Tagen. Das Tal drehen, mit einem Mausstrich beliebig aufschneiden, die Pfeile laufen lassen und den Tag durchfahren: der Vormittag sieht anders aus als der Nachmittag. Keine Vorhersage und kein einzelner Tag &mdash; ein Mittel &uuml;ber die Stunden, in denen wirklich geflogen wird.</span>
-        </p>
-        <div class="links"><a href="https://joerxc.org/goms-stroemung/"><span data-lang="en">Open the field</span><span data-lang="de">Str&ouml;mungsfeld &ouml;ffnen</span></a></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- PLANNER -->
-<section class="band alt" id="planner">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kicker"><span data-lang="en">Long-term project</span><span data-lang="de">Langzeitprojekt</span></p>
-      <h2><span data-lang="en">&ldquo;Google Maps for paragliding&rdquo;</span><span data-lang="de">&bdquo;Google Maps fürs Gleitschirmfliegen&ldquo;</span></h2>
-      <p class="sec-sub">
-        <span data-lang="en">Three attempts at the same problem, each on a different basis. Two dropped; out of the third came the Goms player, and from it the Valais player.</span>
-        <span data-lang="de">Drei Anläufe an derselben Aufgabe, jeder auf anderer Grundlage. Zwei verworfen; aus dem dritten wurde der Goms-Player und daraus der Wallis-Player.</span>
-      </p>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="n">01</div>
-        <div>
-          <div class="chips"><span class="chip dropped"><span data-lang="en">Dropped</span><span data-lang="de">Verworfen</span></span></div>
-          <h3>FAIplaner</h3>
-          <p><span data-lang="en">Based on kk7 hotspots and Dijkstra.</span><span data-lang="de">Basierend auf kk7-Hotspots und Dijkstra.</span></p>
-          <div class="links"><a href="https://joerxc.org/FAIplaner/"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="n">02</div>
-        <div>
-          <div class="chips"><span class="chip dropped"><span data-lang="en">Dropped</span><span data-lang="de">Verworfen</span></span></div>
-          <h3>planner</h3>
-          <p><span data-lang="en">Based on kk7 hotspots, a generalised map and Dijkstra.</span><span data-lang="de">Basierend auf kk7-Hotspots, generalisierter Karte und Dijkstra.</span></p>
-          <div class="links">
-            <a href="https://joerxc.org/planner/science.html"><span data-lang="en">Method</span><span data-lang="de">Methode</span></a>
-            <a href="https://joerxc.org/planner/map.html"><span data-lang="en">Map</span><span data-lang="de">Karte</span></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="n">03</div>
-        <div>
-          <div class="chips"><span class="chip live"><span data-lang="en">Pilot study positive</span><span data-lang="de">Pilotprojekt positiv</span></span></div>
-          <h3>goms</h3>
-          <p><span data-lang="en">Based on finely segmented IGC data and Bellman&rsquo;s principle.</span><span data-lang="de">Basierend auf fein segmentierten IGC-Daten und dem Bellman-Prinzip.</span></p>
-          <div class="links"><a href="https://joerxc.org/gomsv2/"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="n">04</div>
-        <div>
-          <div class="chips"><span class="chip live"><span data-lang="en">Demo</span><span data-lang="de">Demo</span></span></div>
-          <h3><span data-lang="en">Goms player</span><span data-lang="de">Goms-Player</span></h3>
-          <p>
-            <span data-lang="en">The first &laquo;Google Maps&raquo; demo for the Goms: Philipp&rsquo;s flight in the newest player.</span>
-            <span data-lang="de">Die erste &laquo;Google Maps&raquo;-Demo fürs Goms: Philipps Flug im neusten Abspieler.</span>
-          </p>
-          <div class="links"><a href="https://joerxc.org/goms-race/pae3.html"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="n">05</div>
-        <div>
-          <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
-          <h3><span data-lang="en">Valais player</span><span data-lang="de">Wallis-Player</span></h3>
-          <p>
-            <span data-lang="en">Pre-loaded with Philipp&rsquo;s flights, but any flight in the Valais can be played.</span>
-            <span data-lang="de">Vorabgefüllt mit Flügen von Philipp, aber jeder Wallis-Flug kann abgespielt werden.</span>
-          </p>
-          <div class="links"><a href="https://joerxc.org/vs-avatar/"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="n">06</div>
-        <div>
-          <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
-          <h3><span data-lang="en">Alps player</span><span data-lang="de">Alpen-Player</span></h3>
-          <p>
-            <span data-lang="en">A first flow field for the whole Alps is in place. In it, the best FAI triangles from Riederalp look quite different from what we traditionally fly – too good to be true. The cause is known: where there are few flights, the model fills the gaps too optimistically, and the avatar is drawn there. We are waiting for more data to correct it.</span>
-            <span data-lang="de">Ein erstes Strömungsfeld der ganzen Alpen steht. Die besten FAI-Dreiecke ab Riederalp sehen darin ganz anders aus, als was wir traditionell fliegen – zu gut, um wahr zu sein. Der Grund ist erkannt: Wo es wenige Flüge gibt, füllt das Modell die Lücken zu optimistisch auf, und der Avatar zieht dorthin. Wir warten auf mehr Daten, um das zu korrigieren.</span>
-          </p>
-          <div class="links"><a href="https://joerxc.org/alpen-player/"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CLOUDS -->
-<section class="band" id="clouds">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kicker"><span data-lang="en">Long-term project</span><span data-lang="de">Langzeitprojekt</span></p>
-      <h2><span data-lang="en">Software for cloud observation</span><span data-lang="de">Software zur Wolkenbeobachtung</span></h2>
-      <p class="sec-sub">
-        <span data-lang="en">A 360° camera follows every single cloud through its life. The goal is an instrument in flight that tells which cloud will still be working when you get there.</span>
-        <span data-lang="de">Eine 360°-Kamera verfolgt jede einzelne Wolke durch ihr Leben. Das Ziel ist ein Instrument im Flug, das sagt, welche Wolke beim Ankommen noch trägt.</span>
-      </p>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="n">01</div>
-        <div>
-          <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
-          <h3><span data-lang="en">On the ground</span><span data-lang="de">Auf dem Boden</span></h3>
-          <p>
-            <span data-lang="en">Caicó, Brazil, 5 October 2026: a camera on a roof, a full-sphere photo every 13 seconds for almost two hours. 393 clouds tracked one by one &mdash; each on the map, with its own video, its life cycle and a table.</span>
-            <span data-lang="de">Caicó, Brasilien, 5. Oktober 2026: eine Kamera auf dem Dach, knapp zwei Stunden lang alle 13 Sekunden ein Rundumbild. 393 Wolken einzeln verfolgt &mdash; jede auf der Karte, mit eigenem Video, Lebenslauf und Tabelle.</span>
-          </p>
-          <div class="links"><a href="https://joerxc.org/sky-over-caico/wolken.html"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PARABOX -->
-<section class="band alt" id="parabox">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kicker"><span data-lang="en">Long-term project</span><span data-lang="de">Langzeitprojekt</span></p>
-      <h2><span data-lang="en">Parabox &mdash; a black box for the paraglider</span><span data-lang="de">Parabox &mdash; die Blackbox für den Gleitschirm</span></h2>
-      <p class="sec-sub">
-        <span data-lang="en">Record canopy, hands, altitude and acceleration, so that an incident can be understood afterwards. Since 2018, three attempts; the first two failed because a device you have to switch on does not get switched on.</span>
-        <span data-lang="de">Kappe, Hände, Höhe und Beschleunigung aufzeichnen, damit eine Störung nachträglich verstanden werden kann. Seit 2018 drei Anläufe; die ersten zwei scheiterten daran, dass ein Gerät, das man einschalten muss, nicht eingeschaltet wird.</span>
-      </p>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="n">01</div>
-        <div>
-          <div class="chips"><span class="chip">2018&ndash;2020</span><span class="chip"><span data-lang="en">Prototype flown</span><span data-lang="de">Prototyp geflogen</span></span></div>
-          <h3><span data-lang="en">The app on the risers</span><span data-lang="de">Die App am Tragegurt</span></h3>
-          <p>
-            <span data-lang="en">Innosuisse innovation cheque with the FHNW. A smartphone on the risers films the canopy and logs position and altitude; playback in sync. The test flight worked. Nobody started the app before a flight.</span>
-            <span data-lang="de">Innosuisse-Innovationsscheck mit der FHNW. Ein Smartphone am Tragegurt filmt die Kappe und zeichnet Position und Höhe auf; Wiedergabe synchron. Der Testflug funktionierte. Vor dem Flug gestartet hat die App niemand.</span>
-          </p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="n">02</div>
-        <div>
-          <div class="chips"><span class="chip">2024</span><span class="chip dropped"><span data-lang="en">Abandoned</span><span data-lang="de">Abgebrochen</span></span></div>
-          <h3><span data-lang="en">Own electronics, no smartphone</span><span data-lang="de">Eigene Elektronik, ohne Smartphone</span></h3>
-          <p>
-            <span data-lang="en">Around the low-power camera HM01B0. Driving the camera and a wide-angle lens for the tiny sensor were too much for one person.</span>
-            <span data-lang="de">Um die Stromspar-Kamera HM01B0. Die Ansteuerung der Kamera und eine Weitwinkellinse für den winzigen Sensor waren für eine Person zu viel.</span>
-          </p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="n">03</div>
-        <div>
-          <div class="chips"><span class="chip">2026</span><span class="chip idea"><span data-lang="en">Idea</span><span data-lang="de">Idee</span></span></div>
-          <h3><span data-lang="en">Install and forget</span><span data-lang="de">Montieren und vergessen</span></h3>
-          <p>
-            <span data-lang="en">A device in the harness cockpit, solar-powered, that records by itself: canopy and hands at 640&nbsp;&times;&nbsp;480, acceleration, altitude, the last hours in a ring. Upload after an incident, see it as a player. With a power budget of 10&ndash;20 milliwatts and the lens as the first thing to settle.</span>
-            <span data-lang="de">Ein Gerät im Cockpit des Gurtzeugs, solarbetrieben, das von selbst aufzeichnet: Kappe und Hände mit 640&nbsp;&times;&nbsp;480 Punkten, Beschleunigung, Höhe, die letzten Stunden im Ring. Nach einer Störung hochladen, als Player ansehen. Mit einem Watt-Budget von 10&ndash;20 Milliwatt, und der Linse als erstem Punkt, der zu klären ist.</span>
-          </p>
-          <div class="links"><a href="https://joerxc.org/parabox/"><span data-lang="en">The plan</span><span data-lang="de">Der Plan</span></a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LABS -->
-<section class="band" id="labs">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kicker"><span data-lang="en">Experiments</span><span data-lang="de">Experimente</span></p>
-      <h2><span data-lang="en">Trying techniques out</span><span data-lang="de">Techniken ausprobieren</span></h2>
-    </div>
-
-    <div class="grid">
-      <article class="card shots">
-        <div class="chips"><span class="chip private"><span data-lang="en">Private &middot; Tailscale only</span><span data-lang="de">Privat &middot; nur via Tailscale</span></span></div>
-        <h3>windfieldmap</h3>
-        <p>
-          <span data-lang="en">An in-flight tool showing the surrounding air and trajectories from satellite data. The idea: see the new clouds via satellite, assign each one a trajectory — a thermal — and derive from the wind data how long it would take me to reach it and what altitude I would have left. It runs on my Mac mini and reaches my phone over Tailscale, so there is nothing public to open.</span>
-          <span data-lang="de">Ein Inflight-Tool zur Darstellung von Umgebungsluft und Trajektorien aus Satellitendaten. Die Idee: via Satellit die neuen Wolken sehen, ihnen je eine Trajektorie — einen Bart — zuordnen, und aus den Winddaten ableiten, wie lange ich zum Bart brauchen würde und welche Höhe ich dann noch hätte. Läuft auf meinem Mac mini und erreicht mein Handy über Tailscale — es gibt also nichts Öffentliches zu öffnen.</span>
-        </p>
-        <p class="note">
-          <span data-lang="en">These days the picture gets faster. MTG-I2 launches on 27 August 2026 on an Ariane 62 and joins Meteosat-12 in geostationary orbit. Its imager scans the full disc every 10 minutes and, in rapid-scan mode, the upper quarter — Europe — every 2½ minutes. Once the satellite is in service, that is four times as many images to work a trajectory out of.</span>
-          <span data-lang="de">Dieser Tage wird das Bild schneller. Am 27. August 2026 startet MTG-I2 auf einer Ariane 62 und stösst zu Meteosat-12 im geostationären Orbit. Sein Imager scannt die volle Scheibe alle 10 Minuten und im Rapid-Scan das obere Viertel — Europa — alle 2½ Minuten. Sobald der Satellit im Dienst ist, sind das viermal so viele Bilder, um eine Trajektorie daraus abzuleiten.</span>
-        </p>
-        <div class="shots">
-          <figure>
-            <img src="assets/windfield-inflight.jpg" alt="Screenshot taken in flight: instrument readouts, an airspace map with the track, and a wind-field map with a cloud, its assigned trajectory and an arrival estimate">
-            <figcaption>
-              <span data-lang="en">Taken in flight, because I could not read the number in the air. The label on the trajectory reads 4 min.</span>
-              <span data-lang="de">Im Flug aufgenommen, weil ich die Zahl in der Luft nicht sehen konnte. Die Beschriftung an der Trajektorie zeigt 4 min.</span>
-            </figcaption>
-          </figure>
-          <figure>
-            <img src="assets/windfield-decay.jpg" alt="Wide map of the Jura and Swiss plateau showing thermal trajectories in green and grey">
-            <figcaption>
-              <span data-lang="en">How thermals that are no longer active could be shown: grey instead of green.</span>
-              <span data-lang="de">Wie nicht mehr aktive Bärte dargestellt werden könnten: grau statt grün.</span>
-            </figcaption>
-          </figure>
-        </div>
-      </article>
-    </div>
-
-    <div class="grid" style="margin-top:20px">
-      <article class="card">
-        <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
-        <h3>Jura-Konvergenz-Planer</h3>
-        <p>
-          <span data-lang="en">Based on historical satellite data. Very experimental. Little return for the effort — but I learned to play with satellite data properly.</span>
-          <span data-lang="de">Basierend auf historischen Satellitendaten. Sehr experimentell. Etwas wenig Ertrag für den Aufwand — dafür gelernt, besser mit Satellitendaten zu spielen.</span>
-        </p>
-        <div class="links"><a href="https://joerxc.org/jura/"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
-      </article>
-
-      <article class="card">
-        <div class="chips"><span class="chip live"><span data-lang="en">Live</span><span data-lang="de">Live</span></span></div>
-        <h3>inflight1</h3>
-        <p>
-          <span data-lang="en">A test bench for checking a widget: put it into a historical flight and see how it would have behaved in the air — second by second.</span>
-          <span data-lang="de">Ein Prüfstand, um ein Widget zu prüfen: Man kann es in einen historischen Flug einsetzen und sehen, wie es sich in der Luft verhalten hätte — Sekunde für Sekunde.</span>
-        </p>
-        <div class="links"><a href="https://joerxc.org/inflight1"><span data-lang="en">Open</span><span data-lang="de">Öffnen</span></a></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section class="band about" id="about">
-  <div class="wrap">
-    <div class="about-grid">
-      <figure class="portrait">
-        <img src="assets/joerg-pod-small.jpg" alt="Jörg Korner in a GIN Genie Race pod harness, suspended in a workshop">
-        <figcaption>
-          <span data-lang="en">Trying things out&hellip;</span>
-          <span data-lang="de">Dinge ausprobieren&hellip;</span>
-        </figcaption>
-      </figure>
-      <div>
-        <p class="kicker"><span data-lang="en">About</span><span data-lang="de">Über mich</span></p>
-        <h2><span data-lang="en">Build it, fly it, understand it.</span><span data-lang="de">Bauen, fliegen, verstehen.</span></h2>
-        <p>
-          <span data-lang="en">Natural scientist. Along the way a few small companies, founded with others, usually with a piece of software at the centre. Paragliding gives the work its subject: build the tool, fly with it, write down what changed. And not only my own flights — I take other pilots&rsquo; apart in software, Kayrouz&rsquo;s, Benz&rsquo;s, Aeschbach&rsquo;s and so on, to learn what actually happened in them.</span>
-          <span data-lang="de">Naturwissenschaftler. Unterwegs ein paar kleine Firmen mitgegründet, meist mit einem Stück Software im Kern. Das Gleitschirmfliegen gibt der Arbeit ihr Thema: das Werkzeug bauen, damit fliegen, aufschreiben, was sich geändert hat. Und nicht nur die eigenen Flüge — die von anderen zerlege ich in Software, Kayrouz, Benz, Aeschbach und so weiter, um zu lernen, was darin wirklich passiert ist.</span>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
+<p class="end"><span data-lang="de">Für Piloten: Die <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMAREZhJx7Wx7Q-RJiNi7XGMdarmTCk-1vg_G4avwNKXd7DQ/viewform">unverbindliche Umfrage</a> bietet Raum für Rückmeldungen. Erfahrungen, Wünsche und skeptische Einschätzungen sind gleichermassen willkommen.</span><span data-lang="en">For pilots: the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMAREZhJx7Wx7Q-RJiNi7XGMdarmTCk-1vg_G4avwNKXd7DQ/viewform">non-binding survey</a> welcomes feedback. Experiences, suggestions and sceptical views are equally welcome.</span><span data-lang="fr">Pour les pilotes : le <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMAREZhJx7Wx7Q-RJiNi7XGMdarmTCk-1vg_G4avwNKXd7DQ/viewform">sondage sans engagement</a> permet de donner son avis. Expériences, souhaits et avis critiques sont également bienvenus.</span></p>
+<p><a href="https://joerxc.org/">← joerxc.org</a></p>
 </main>
-
-<footer>
-  <div class="wrap">
-    <p>© <span id="yr">2026</span> Jörg Korner</p>
-    <a href="mailto:joergkorner@gmail.com">joergkorner@gmail.com</a>
-    <a href="https://github.com/joergkorner">GitHub</a>
-    <p class="sp">joerxc.org</p>
-  </div>
-</footer>
-
-<script>
-/* joerxc: abwechselnd ein abnormer Moment (plötzliches Sinken, oben Spur über Grund, unten Höhe) und eine Kreis-Figur (Girlande, Kreise aufeinander, Zentrieren, Ausbrechen) */
-(function(){
-  var S = [{"f":0,"k":60,"e":75,"v":49,"d":10,"s":7,"p":[[154.6,109.3],[148.7,108.1],[142.7,106.9],[136.8,105.7],[132.5,104.4],[128.3,103.2],[124.0,102.0],[119.8,99.5],[114.8,97.1],[108.8,94.6],[102.1,92.1],[95.7,89.7],[89.7,87.2],[84.6,84.8],[80.6,82.3],[78.1,79.8],[76.4,76.2],[74.7,72.5],[73.0,68.9],[70.5,65.2],[68.3,61.5],[66.6,57.8],[66.4,54.1],[67.1,50.4],[68.8,46.7],[70.5,41.9],[72.2,36.0],[73.9,28.6],[76.4,22.3],[79.9,16.7],[85.0,11.7],[90.8,10.0],[97.0,10.2],[103.8,12.6],[109.2,17.2],[112.4,23.0],[112.4,30.4],[108.8,37.8],[103.7,43.0],[96.9,44.3],[91.6,42.4],[87.0,39.6],[83.7,35.9],[81.0,32.2],[78.1,28.5],[74.8,24.8],[70.7,21.1],[66.4,17.8],[62.2,15.3],[57.9,14.8],[53.5,15.2],[48.4,16.4],[42.6,16.7],[36.4,16.3],[29.7,15.1],[23.5,12.9],[18.0,10.1],[13.8,6.4],[10.2,3.7],[6.4,1.5],[1.3,0.3],[-3.2,-0.9],[-6.8,-2.4],[-8.5,-4.9],[-9.6,-6.5],[-10.0,-6.9],[-9.2,-4.4],[-8.3,-2.8],[-7.5,-1.6],[-6.6,-0.4],[-7.0,1.7],[-8.2,5.0],[-10.7,11.1],[-16.2,19.0],[-23.3,27.1],[-31.8,33.3],[-39.7,36.1],[-47.4,36.8],[-55.0,35.6],[-62.6,34.4],[-69.8,33.2],[-74.9,31.9],[-78.9,30.7],[-81.8,29.3],[-81.8,26.8],[-80.1,23.6],[-77.6,19.9],[-75.0,16.2],[-73.0,11.7],[-71.6,7.1],[-71.6,4.6],[-72.1,2.2],[-72.7,-0.3],[-71.9,-2.7],[-70.5,-5.9],[-69.0,-9.6],[-69.0,-13.3],[-69.5,-17.0],[-70.6,-20.7],[-74.0,-24.4],[-77.9,-28.1],[-82.1,-31.8],[-86.3,-35.5],[-90.6,-39.9],[-94.8,-44.7],[-99.1,-48.4],[-104.2,-52.1],[-110.2,-55.7],[-116.1,-58.2],[-122.5,-60.6],[-129.2,-63.1],[-134.3,-65.6],[-138.5,-68.0],[-141.9,-70.5],[-146.2,-72.9],[-150.9,-76.0],[-156.0,-79.7],[-161.9,-82.2],[-168.3,-85.3],[-175.0,-89.0]],"h":[9.0,9.7,10.7,12.0,12.0,12.3,13.0,13.0,13.0,13.0,13.6,15.2,17.9,20.5,22.6,23.9,25.2,26.6,27.9,29.2,30.3,30.9,30.4,29.5,28.1,26.8,25.5,24.2,23.4,23.0,23.0,21.8,20.3,18.3,15.7,14.0,14.0,14.6,15.7,17.7,18.6,19.0,19.0,19.0,18.8,18.1,18.5,19.0,19.0,16.9,14.4,12.4,10.4,8.4,6.5,4.5,2.8,2.2,1.0,0.0,0.0,-1.5,-4.1,-8.8,-11.9,-14.9,-18.9,-21.9,-25.1,-30.5,-35.8,-40.7,-44.0,-45.0,-45.5,-48.2,-49.9,-50.9,-50.2,-49.6,-48.6,-45.9,-42.8,-40.2,-41.5,-41.6,-40.6,-38.0,-37.4,-37.8,-36.5,-34.4,-31.9,-31.3,-31.0,-31.0,-31.0,-30.6,-29.9,-28.6,-27.2,-26.0,-26.0,-25.6,-24.9,-22.9,-21.3,-19.9,-17.2,-15.3,-13.9,-11.9,-10.3,-8.9,-7.0,-6.0,-6.0,-4.7,-3.7,-3.0]},{"f":1,"p":[[0.0,0.0],[-11.4,-7.4],[-26.6,-9.2],[-43.0,-5.7],[-55.8,5.2],[-62.3,18.0],[-61.4,32.6],[-55.3,45.6],[-45.4,55.0],[-35.3,59.0],[-26.3,57.6],[-20.9,50.7],[-20.4,38.4],[-27.3,25.5],[-38.3,15.9],[-51.9,11.6],[-65.8,12.7],[-79.8,19.3],[-90.4,29.8],[-96.3,42.4],[-96.0,53.7],[-90.6,64.8],[-82.1,72.8],[-71.2,75.6],[-62.9,71.5],[-59.3,63.1],[-62.8,52.5],[-69.8,42.9],[-78.4,35.1],[-90.2,30.6],[-102.8,29.7],[-116.4,32.4],[-129.4,40.1],[-137.5,53.3],[-138.4,68.0],[-133.5,81.4],[-125.4,91.7],[-118.3,97.1],[-112.8,98.2],[-107.7,97.0],[-104.4,92.7],[-102.7,84.7],[-103.0,75.5],[-108.4,65.2],[-118.4,56.5],[-131.4,52.6],[-145.3,53.0],[-158.5,58.2],[-169.6,67.8],[-177.5,81.0],[-179.4,94.6],[-175.2,107.5],[-168.2,116.2],[-160.6,120.7],[-153.7,122.3],[-148.7,120.3],[-145.6,114.7],[-145.0,106.4],[-148.3,96.2],[-154.6,85.2],[-164.8,76.9],[-178.1,74.1],[-192.0,75.9],[-205.3,81.3],[-216.2,89.5],[-223.4,100.4],[-226.2,113.3],[-223.9,124.5],[-218.3,132.9],[-212.0,139.5],[-206.2,143.5],[-201.6,144.6],[-197.8,143.8],[-194.0,139.8],[-191.2,132.5],[-190.9,124.4],[-193.5,115.3],[-200.8,106.7],[-213.1,100.7],[-227.0,98.2],[-241.0,100.0],[-254.5,107.3],[-265.6,118.9],[-271.3,131.8],[-271.8,144.1],[-269.8,154.6],[-265.6,163.3],[-260.2,169.6],[-253.9,172.8],[-247.9,173.7],[-243.1,171.0],[-239.6,165.0],[-237.7,157.3],[-238.5,148.1],[-242.8,139.3],[-250.2,131.9],[-261.8,125.3],[-275.0,122.7],[-290.0,125.1],[-303.3,131.6],[-312.8,142.9],[-318.7,155.5],[-322.0,166.5],[-321.5,177.6],[-317.3,188.1],[-310.9,195.0],[-303.3,198.1],[-295.9,196.1],[-291.0,192.1],[-287.6,184.5],[-289.1,175.5],[-293.1,168.0],[-301.0,159.1],[-313.8,153.6],[-329.0,150.2],[-342.8,152.2],[-354.2,157.7],[-363.0,165.1],[-370.6,174.3],[-376.9,183.5]]},{"f":0,"k":60,"e":72,"v":65,"d":8,"s":12,"p":[[204.4,-229.8],[199.3,-227.3],[194.7,-224.3],[190.4,-220.6],[187.9,-218.1],[184.9,-215.6],[181.5,-213.2],[178.1,-209.5],[174.7,-205.8],[171.3,-202.1],[167.1,-197.3],[162.9,-192.9],[158.6,-189.2],[155.2,-184.4],[151.8,-180.5],[148.4,-178.1],[146.6,-175.6],[145.3,-173.1],[144.4,-170.7],[142.8,-167.1],[141.1,-163.4],[139.4,-159.7],[137.7,-154.9],[136.4,-150.0],[135.5,-145.1],[134.7,-141.2],[133.5,-137.5],[131.8,-133.9],[129.3,-130.2],[126.8,-126.0],[124.3,-121.1],[121.0,-116.2],[117.6,-111.7],[114.2,-108.0],[110.1,-104.3],[105.8,-100.6],[101.6,-96.9],[97.3,-93.2],[93.1,-89.5],[88.9,-85.9],[83.9,-82.2],[79.1,-78.1],[74.9,-73.1],[71.3,-67.2],[68.2,-61.1],[65.6,-54.9],[61.7,-47.8],[57.5,-40.8],[53.2,-34.6],[49.0,-28.5],[44.8,-22.7],[40.5,-17.7],[36.3,-12.8],[32.0,-7.9],[27.8,-3.0],[23.6,1.9],[19.1,6.2],[14.0,8.7],[8.9,8.3],[4.3,6.2],[0.9,1.2],[3.2,-4.6],[7.8,-9.0],[13.8,-7.7],[14.1,-5.6],[13.9,-4.0],[19.0,-5.2],[19.8,-2.0],[18.6,0.5],[16.1,-5.6],[21.3,-8.3],[29.0,-7.3],[33.2,2.6],[28.6,9.8],[20.4,13.7],[13.6,7.5],[12.1,-0.3],[14.1,-8.3],[21.8,-13.2],[30.0,-14.0],[38.0,-12.4],[44.0,-8.7],[48.8,-2.6],[52.6,4.6],[54.3,10.8],[53.8,16.1],[52.0,20.9],[49.5,24.6],[45.3,27.5],[40.1,29.8],[34.2,31.0],[28.3,32.3],[22.3,33.6],[16.4,36.1],[10.4,38.6],[4.6,41.1],[-0.5,44.8],[-5.6,48.5],[-10.8,52.2],[-17.6,55.9],[-23.9,58.9],[-30.0,61.4],[-37.6,65.1],[-44.7,68.8],[-51.5,72.5],[-57.4,76.2],[-62.9,80.6],[-67.9,85.5],[-72.2,90.4],[-76.9,94.7],[-82.0,98.5],[-87.1,104.6],[-92.6,110.8],[-98.5,116.9],[-104.5,124.3],[-109.5,131.7],[-113.8,139.1],[-118.0,145.2],[-122.7,151.4],[-127.8,157.5]],"h":[-52.0,-50.0,-47.7,-45.0,-43.7,-42.4,-41.0,-40.4,-39.7,-39.0,-38.4,-37.1,-35.1,-33.1,-31.1,-29.1,-27.8,-26.7,-26.1,-25.4,-25.0,-25.0,-24.4,-23.5,-22.1,-22.0,-22.0,-22.0,-22.6,-23.0,-23.0,-23.6,-24.2,-24.9,-25.0,-25.2,-25.9,-26.6,-27.2,-27.9,-28.0,-27.8,-27.1,-26.5,-25.4,-23.4,-21.9,-20.6,-19.3,-17.4,-15.2,-12.6,-10.4,-8.3,-5.6,-2.9,-0.6,0.7,1.5,1.7,0.3,-1.0,-3.0,-6.9,-13.8,-21.7,-29.0,-36.7,-44.9,-53.5,-59.3,-63.3,-64.6,-62.2,-58.6,-56.6,-55.1,-53.5,-50.9,-47.8,-44.6,-41.9,-39.3,-36.6,-33.9,-32.1,-30.8,-29.5,-29.0,-29.0,-29.0,-27.8,-25.9,-25.3,-24.2,-22.9,-21.5,-20.6,-19.9,-19.3,-18.2,-16.8,-14.9,-12.9,-10.8,-8.2,-5.2,-1.9,0.1,1.4,2.0,2.7,3.4,4.0,4.7,5.7,7.0,7.7,7.7,7.0]},{"f":1,"p":[[0.0,0.0],[-3.3,-24.1],[3.1,-46.6],[20.0,-63.6],[43.3,-70.0],[67.6,-66.9],[89.8,-54.9],[108.3,-39.2],[119.7,-19.5],[126.4,0.1],[127.1,22.6],[122.9,41.3],[109.6,56.9],[91.0,67.4],[69.1,68.1],[47.9,60.4],[29.7,46.3],[19.3,24.9],[15.3,3.4],[19.5,-19.8],[31.1,-41.3],[48.4,-56.4],[70.7,-64.1],[93.1,-64.0],[113.5,-56.0],[129.9,-41.1],[139.5,-22.9],[142.9,0.4],[139.3,23.7],[129.6,45.1],[114.6,58.3],[96.9,67.5],[77.8,68.1],[56.6,62.8],[36.6,48.4],[21.5,29.1],[14.0,6.9],[15.9,-16.4],[24.9,-37.8],[42.2,-50.9],[63.5,-58.6],[89.8,-56.0],[108.2,-46.7],[123.7,-31.4],[133.2,-11.5],[137.8,11.7],[135.4,33.2],[126.8,52.9],[111.3,65.8],[90.8,71.9],[69.0,68.9],[48.7,56.9],[33.4,36.6],[25.8,14.0],[24.5,-11.9],[33.2,-33.3],[46.6,-51.2],[64.1,-62.6],[84.4,-66.4],[104.7,-61.0],[123.2,-48.9],[134.7,-29.0],[137.8,-6.4],[132.3,15.6],[119.9,32.5],[101.5,42.3],[80.7,43.7],[58.6,36.4],[40.1,19.9],[27.2,-0.2],[23.0,-21.5],[26.1,-43.3],[37.8,-63.6],[55.7,-76.1],[76.0,-83.2],[98.1,-79.3],[118.0,-66.5],[132.4,-47.5],[140.7,-27.5],[142.2,-6.9],[135.1,11.9],[121.6,26.5],[101.8,35.3],[80.9,35.3],[58.8,26.6],[38.8,11.1],[26.5,-11.9],[22.0,-34.7],[25.5,-56.6],[36.3,-75.7],[53.4,-87.6],[73.2,-92.7],[94.1,-89.0],[113.9,-79.5],[130.1,-64.5],[139.0,-43.6],[142.6,-23.5],[139.1,-2.9],[128.2,15.8],[113.8,28.3],[95.8,34.4],[75.5,33.4],[55.2,25.4],[35.0,12.5],[20.9,-6.6],[13.7,-29.4],[12.0,-53.2],[18.2,-73.4],[30.5,-89.9],[48.5,-101.3],[68.8,-107.5],[90.4,-104.0],[108.4,-93.8],[122.5,-78.5],[130.6,-55.7],[131.9,-33.4],[123.8,-11.8],[111.1,6.6],[93.8,17.9],[74.0,24.1]]},{"f":0,"k":60,"e":75,"v":37,"d":10,"s":6,"p":[[99.7,55.6],[91.2,55.6],[83.1,53.8],[75.5,50.1],[69.5,46.4],[64.0,42.1],[58.9,37.2],[56.3,32.3],[55.3,27.9],[56.2,24.2],[58.7,20.5],[62.8,18.0],[68.7,16.7],[74.6,15.5],[80.2,15.4],[85.3,16.6],[88.8,20.1],[91.4,24.9],[93.1,31.0],[90.9,38.3],[87.0,45.2],[81.0,51.3],[73.5,54.1],[66.2,55.1],[59.5,53.9],[52.7,49.3],[46.6,43.4],[41.5,36.1],[39.4,27.6],[38.7,20.4],[39.5,15.4],[39.6,11.6],[40.2,8.8],[41.9,7.6],[44.4,4.2],[47.8,0.1],[52.9,-4.8],[59.4,-8.7],[65.9,-11.5],[71.9,-12.8],[76.4,-10.9],[79.8,-7.6],[81.5,-2.7],[81.1,1.2],[80.2,4.9],[79.4,8.6],[77.2,13.3],[74.4,18.2],[71.0,23.1],[65.5,26.1],[59.4,28.5],[52.6,31.0],[45.1,30.5],[37.7,29.3],[30.9,28.1],[24.1,25.9],[17.8,23.1],[12.7,19.4],[8.3,14.8],[4.3,9.3],[0.9,1.9],[0.0,-6.4],[0.6,-14.2],[3.2,-19.1],[5.1,-22.2],[6.6,-24.4],[7.4,-25.6],[7.1,-26.8],[6.8,-28.1],[8.5,-29.3],[12.0,-31.4],[16.7,-33.9],[23.5,-36.3],[30.3,-36.2],[36.9,-34.3],[42.8,-29.4],[48.2,-24.4],[53.1,-19.5],[57.4,-14.6],[61.6,-10.5],[66.1,-7.2],[72.1,-6.0],[77.5,-5.6],[82.7,-5.7],[88.6,-7.0],[94.6,-8.2],[100.5,-9.1],[106.4,-7.9],[112.4,-5.1],[118.1,-1.4],[122.3,2.3],[127.1,6.0],[132.3,9.5],[138.2,12.0],[144.2,14.5],[150.2,16.8],[157.0,18.0],[163.2,19.3],[169.1,20.4],[174.2,20.4],[179.3,19.7],[184.3,18.5],[188.6,18.5],[192.8,19.9],[197.0,22.4],[201.3,24.9],[205.5,28.7],[209.6,33.7],[211.3,39.8],[211.6,46.0],[210.7,52.1],[207.3,58.3],[203.0,63.8],[197.9,68.7],[191.1,73.6],[184.3,77.3],[177.5,79.7],[171.6,79.7],[165.7,78.4],[159.7,76.0]],"h":[-40.0,-39.3,-38.7,-38.0,-37.3,-36.4,-35.0,-33.7,-32.4,-31.1,-31.0,-30.4,-29.1,-27.7,-25.8,-23.2,-22.4,-22.0,-22.0,-21.4,-20.7,-20.1,-20.0,-20.0,-20.0,-20.0,-20.0,-20.0,-18.8,-17.2,-15.3,-13.8,-12.8,-12.1,-12.0,-12.2,-12.9,-13.6,-13.5,-12.2,-10.9,-9.6,-8.2,-6.9,-5.6,-4.3,-4.0,-4.0,-4.0,-4.0,-3.8,-3.1,-2.5,-1.8,-1.2,-0.5,0.2,0.8,1.0,0.8,0.2,-0.5,-1.3,-2.6,-3.0,-3.8,-7.1,-9.9,-12.7,-16.0,-19.8,-24.1,-29.4,-32.8,-35.3,-36.6,-37.5,-38.1,-38.8,-39.0,-39.0,-39.0,-39.0,-39.1,-39.8,-39.6,-39.0,-39.0,-38.6,-38.0,-38.0,-38.0,-38.0,-38.0,-37.6,-36.9,-36.3,-34.8,-32.9,-31.6,-30.2,-28.9,-27.6,-26.6,-25.9,-24.6,-23.6,-23.0,-23.0,-23.0,-23.0,-23.0,-23.0,-23.0,-22.3,-21.7,-21.0,-21.0,-20.7,-20.0]},{"f":1,"p":[[0.0,0.0],[10.4,10.4],[22.9,14.1],[35.0,13.1],[43.3,7.7],[48.1,-2.9],[48.7,-16.5],[44.2,-28.9],[37.0,-40.2],[27.8,-45.8],[16.5,-46.2],[6.0,-39.6],[-4.0,-28.7],[-8.8,-17.3],[-8.1,-7.5],[-1.7,3.1],[11.0,12.1],[26.0,16.7],[39.9,15.9],[48.7,10.7],[52.5,-0.5],[52.5,-13.2],[50.0,-27.7],[42.5,-40.4],[35.1,-45.0],[25.1,-45.3],[14.0,-41.3],[5.3,-31.5],[-1.8,-16.1],[-2.9,-0.7],[2.0,13.5],[14.6,21.8],[28.8,24.1],[40.8,20.4],[47.2,12.2],[51.5,-1.0],[52.5,-15.5],[50.7,-29.2],[46.1,-39.8],[37.4,-50.4],[24.7,-55.6],[13.6,-54.1],[4.4,-46.7],[-1.3,-37.0],[-5.1,-23.8],[-2.8,-6.9],[4.6,8.3],[16.0,19.3],[28.4,24.2],[41.7,24.4],[53.3,17.6],[61.1,6.4],[66.9,-8.1],[73.1,-20.8],[77.3,-35.2],[78.1,-50.9],[75.7,-64.3],[70.2,-75.9],[61.8,-86.6],[52.4,-97.1],[40.7,-106.2],[27.4,-111.0],[13.1,-113.0],[-0.6,-110.9],[-12.6,-102.3],[-19.2,-89.0],[-21.7,-76.3],[-16.6,-64.2],[-8.4,-53.2],[3.8,-45.2],[16.7,-43.3],[25.5,-49.0],[31.2,-57.7],[34.7,-67.5],[34.9,-79.6],[29.8,-91.6],[20.6,-101.9],[7.2,-103.8],[-6.1,-102.7],[-17.2,-95.3],[-23.1,-83.0],[-21.8,-70.4],[-16.4,-60.7],[-8.1,-53.1],[2.4,-47.4],[15.0,-47.7],[25.7,-53.9],[31.6,-64.1],[34.1,-77.3],[29.8,-90.1],[21.3,-101.3],[10.6,-108.6],[-3.2,-112.7],[-16.7,-110.7],[-29.0,-104.2],[-36.1,-93.2],[-38.4,-81.1],[-36.3,-66.6],[-30.4,-54.5],[-22.1,-46.6],[-11.5,-42.6],[1.1,-42.6],[13.9,-44.2],[27.1,-46.9],[38.7,-53.5],[48.4,-63.1],[55.3,-76.7],[57.6,-91.9],[56.8,-108.8],[51.4,-122.1],[41.1,-131.8],[28.6,-140.4],[15.3,-144.3],[-0.4,-143.9],[-11.4,-138.1],[-18.4,-129.4],[-21.7,-119.6],[-19.0,-106.8],[-14.0,-92.3],[-7.7,-77.8]]},{"f":0,"k":60,"e":75,"v":86,"d":10,"s":11,"p":[[-146.9,-11.1],[-142.7,-6.2],[-139.7,-0.7],[-138.0,5.5],[-138.0,10.4],[-139.2,15.3],[-141.8,20.3],[-146.0,25.2],[-149.8,29.5],[-153.2,33.2],[-158.2,35.7],[-163.3,38.2],[-168.4,40.6],[-172.7,43.1],[-176.5,45.0],[-179.9,46.3],[-182.5,46.3],[-184.0,45.8],[-184.0,44.6],[-184.0,45.6],[-185.1,45.8],[-187.6,44.6],[-192.5,42.2],[-197.5,38.8],[-202.6,33.9],[-206.2,26.7],[-208.9,18.9],[-210.6,10.2],[-208.6,0.5],[-205.4,-8.8],[-201.1,-17.4],[-196.2,-23.9],[-190.4,-30.5],[-183.7,-37.9],[-177.6,-42.1],[-171.7,-45.4],[-165.7,-47.8],[-159.8,-49.2],[-153.8,-50.9],[-147.9,-53.3],[-141.3,-54.8],[-134.2,-55.6],[-126.6,-55.6],[-119.6,-54.6],[-112.8,-53.0],[-106.1,-50.5],[-100.0,-50.0],[-94.0,-49.3],[-88.1,-46.8],[-81.5,-44.4],[-74.7,-41.6],[-67.9,-37.9],[-61.1,-35.1],[-54.3,-32.3],[-47.5,-28.6],[-41.4,-24.9],[-35.2,-21.3],[-28.5,-17.6],[-20.4,-12.9],[-11.7,-7.7],[-2.4,-1.6],[7.0,3.7],[16.3,8.6],[25.6,13.5],[35.0,17.5],[43.1,19.8],[47.4,17.4],[51.6,18.5],[55.7,20.4],[59.1,20.4],[61.9,19.5],[64.1,18.0],[64.9,15.6],[64.6,11.4],[63.9,5.5],[63.9,-4.3],[65.6,-15.8],[68.2,-27.9],[70.7,-39.0],[73.3,-50.1],[75.5,-60.7],[76.4,-69.3],[76.7,-77.1],[76.8,-84.7],[77.6,-93.3],[79.0,-102.7],[80.7,-112.6],[82.4,-122.4],[85.7,-130.7],[90.1,-138.1],[95.2,-145.5],[100.8,-149.8],[106.9,-152.0],[114.6,-152.0],[122.2,-151.2],[129.8,-149.7],[137.5,-146.0],[143.6,-141.6],[148.6,-136.8],[152.8,-133.1],[156.6,-128.0],[160.0,-121.9],[163.4,-117.0],[166.8,-112.8],[170.1,-109.2],[173.5,-106.7],[176.9,-104.3],[180.3,-101.8],[183.7,-99.3],[187.1,-95.5],[190.5,-90.6],[193.9,-85.7],[197.3,-80.8],[200.7,-75.8],[204.1,-69.7],[207.0,-63.5],[209.6,-57.4],[212.1,-51.2],[215.1,-45.1],[218.5,-38.9]],"h":[1.0,1.7,2.0,2.0,2.7,3.0,3.0,1.7,0.7,0.0,-0.6,-0.7,-0.0,1.3,2.0,2.0,0.8,-0.9,-2.8,-5.5,-7.3,-7.9,-8.0,-7.7,-7.1,-7.0,-7.0,-7.0,-7.0,-6.2,-4.3,-3.4,-2.8,-2.1,-1.4,-0.8,-0.1,0.0,0.0,0.0,-0.6,-0.3,1.6,2.5,3.2,3.9,4.5,5.2,5.9,6.5,7.4,8.7,9.5,10.0,10.0,9.0,7.5,5.5,4.0,2.5,0.5,-2.5,-7.1,-15.7,-20.9,-26.0,-34.6,-42.7,-50.4,-57.1,-63.2,-69.1,-74.4,-78.3,-81.6,-84.9,-86.0,-85.8,-84.4,-83.1,-81.9,-81.2,-80.6,-80.0,-80.0,-79.6,-79.0,-79.0,-79.0,-79.0,-79.0,-79.8,-81.2,-82.5,-83.0,-83.0,-83.0,-82.2,-80.8,-78.1,-75.8,-73.9,-73.3,-73.0,-73.0,-73.0,-73.4,-74.0,-74.7,-75.4,-76.0,-76.7,-76.6,-76.0,-75.3,-75.3,-76.0,-76.0,-75.7,-75.0]},{"f":1,"p":[[0.0,0.0],[18.1,11.6],[33.0,23.6],[44.2,39.4],[50.6,58.8],[51.3,76.2],[47.6,92.9],[39.6,105.6],[26.8,112.3],[14.2,112.8],[4.0,108.5],[-2.0,99.8],[-3.8,88.2],[0.4,76.5],[10.2,64.9],[25.0,56.1],[41.3,51.6],[59.3,51.4],[78.7,55.3],[95.7,65.7],[111.9,80.0],[122.7,96.4],[130.0,114.9],[131.4,134.8],[127.6,150.6],[119.6,162.8],[108.4,168.4],[98.8,167.9],[90.7,161.2],[86.2,151.4],[87.6,139.5],[96.6,126.3],[110.3,117.0],[126.3,111.5],[145.5,109.3],[164.9,111.2],[184.2,117.3],[202.3,129.2],[218.5,143.8],[230.2,161.2],[237.1,181.6],[237.1,201.2],[232.6,218.7],[224.5,229.3],[213.8,235.6],[203.7,235.9],[195.3,231.9],[189.5,223.2],[190.8,211.8],[198.1,198.3],[209.6,187.7],[226.6,179.5],[245.5,177.9],[265.6,180.8],[285.7,186.6],[304.0,198.6],[320.8,215.0],[332.1,232.5],[337.6,252.0],[337.7,271.1],[332.4,287.5],[325.3,297.6],[315.5,302.1],[306.7,302.1],[302.7,295.2],[301.8,284.3],[305.6,271.4],[316.6,259.2],[330.8,249.1],[350.5,244.6],[370.6,244.6],[392.7,250.5],[411.7,262.6],[426.8,278.5],[438.1,298.4],[442.0,318.8],[439.8,336.5],[431.9,348.4],[423.9,356.1],[414.6,359.5],[407.5,356.9],[403.5,348.7],[403.6,338.4],[409.1,326.7],[421.7,316.9],[441.2,309.2],[463.2,305.8],[482.3,307.1],[501.7,310.6],[521.9,318.0],[539.8,332.8],[552.1,352.1],[558.6,372.5],[557.9,391.0],[551.9,407.5],[542.9,418.6],[533.8,425.7],[525.0,426.2],[517.6,424.4],[513.5,417.5],[514.5,406.7],[524.3,395.0],[538.4,384.4],[554.4,378.6],[574.7,378.9],[596.8,385.5],[618.2,401.1],[636.4,418.6],[648.6,437.4],[656.3,455.9],[659.2,476.3],[657.0,495.9],[650.5,513.4],[642.4,522.9],[633.1,526.1],[626.9,521.8],[626.0,513.1],[632.0,501.4],[639.9,489.8],[650.5,480.0]]},{"f":0,"k":60,"e":71,"v":73,"d":7,"s":14,"p":[[-322.5,166.8],[-316.6,164.3],[-311.1,162.5],[-306.0,161.2],[-300.0,160.0],[-294.1,158.2],[-288.1,155.7],[-282.2,153.3],[-275.8,151.4],[-269.0,150.2],[-263.9,147.7],[-258.4,145.8],[-252.4,144.6],[-246.5,141.0],[-240.6,137.9],[-234.6,135.4],[-228.7,133.0],[-222.7,130.5],[-216.8,128.1],[-211.6,125.6],[-206.1,123.1],[-200.2,120.7],[-195.0,117.1],[-189.9,113.4],[-184.8,109.7],[-179.0,106.0],[-173.0,102.3],[-167.1,98.6],[-161.1,95.0],[-155.5,92.2],[-150.4,91.0],[-145.3,89.7],[-139.9,88.1],[-133.9,85.6],[-128.7,83.1],[-123.3,80.7],[-117.4,78.2],[-111.4,74.7],[-105.5,71.9],[-99.5,70.6],[-93.6,68.4],[-87.6,66.3],[-81.7,65.1],[-76.4,62.8],[-71.1,60.8],[-65.1,59.5],[-59.9,57.3],[-54.5,54.8],[-48.6,52.4],[-42.6,50.9],[-36.9,49.0],[-31.8,45.3],[-26.7,41.6],[-20.0,37.2],[-8.9,31.1],[-3.1,26.8],[0.9,22.8],[4.3,17.9],[4.5,12.0],[3.2,6.2],[0.6,1.2],[-4.4,1.8],[-8.8,4.6],[-7.9,8.3],[-7.1,7.5],[-7.0,5.3],[-9.5,4.0],[-7.8,6.4],[-4.9,7.1],[-4.1,-2.7],[-10.5,-8.2],[-19.5,-10.1],[-27.1,-5.2],[-30.0,-1.1],[-30.7,2.1],[-30.7,3.3],[-31.3,2.9],[-32.3,2.3],[-34.0,4.7],[-34.0,8.9],[-32.9,14.0],[-30.3,20.1],[-26.6,24.7],[-22.5,28.2],[-19.1,30.6],[-17.4,33.1],[-16.4,35.6],[-14.7,38.0],[-12.5,42.0],[-9.7,47.0],[-5.5,51.9],[-0.7,56.0],[4.1,59.6],[6.7,62.0],[8.7,64.5],[10.4,67.0],[12.1,69.4],[14.8,72.6],[18.4,76.4],[24.4,81.3],[30.8,84.1],[37.5,85.1],[42.6,82.6],[47.2,81.5],[51.5,81.5],[55.7,80.2],[60.0,78.3],[64.1,75.5],[65.8,66.9],[64.7,59.7],[61.3,53.7],[58.8,53.7],[59.9,53.7],[64.0,53.5],[65.7,43.7],[61.7,36.4],[52.4,31.6],[48.2,37.7],[47.8,43.3],[51.2,48.2]],"h":[36.0,38.0,39.3,40.0,40.0,39.7,39.0,39.0,38.7,38.0,37.4,36.7,36.0,24.7,18.0,18.0,17.4,17.0,17.0,16.4,15.7,15.1,15.0,15.0,15.0,14.4,13.5,12.2,7.9,5.0,5.0,5.0,6.0,8.6,9.0,8.8,8.1,5.2,2.8,2.1,1.4,0.8,0.1,-1.1,-2.2,-2.9,-3.5,-4.0,-4.0,-4.5,-5.2,-5.9,-5.5,-5.2,-5.8,-2.4,0.6,-0.7,-2.0,-2.5,-0.5,-3.5,-8.4,-14.4,-22.3,-31.0,-39.6,-49.2,-58.7,-66.7,-70.9,-72.9,-72.2,-71.1,-69.7,-68.4,-68.5,-69.1,-69.8,-72.2,-75.0,-75.0,-75.0,-74.7,-72.7,-72.0,-72.7,-78.1,-82.1,-85.1,-85.7,-84.8,-82.8,-80.8,-78.4,-75.9,-75.3,-75.4,-76.0,-76.0,-74.8,-72.9,-71.6,-70.6,-70.0,-70.7,-71.4,-72.1,-74.8,-78.9,-84.2,-89.5,-99.4,-113.1,-117.8,-122.8,-128.0,-126.7,-123.3,-118.0]},{"f":1,"p":[[0.0,0.0],[-7.0,-8.7],[-11.1,-16.7],[-11.5,-25.1],[-6.8,-34.6],[1.3,-43.3],[12.9,-48.2],[24.6,-45.0],[33.7,-35.7],[37.1,-24.0],[34.4,-9.7],[25.6,-0.8],[13.9,5.6],[2.2,5.2],[-7.8,2.4],[-16.1,-3.9],[-21.8,-12.5],[-23.0,-24.4],[-16.4,-33.5],[-4.2,-38.6],[8.8,-34.4],[18.0,-23.8],[19.6,-9.5],[13.6,2.5],[3.5,9.3],[-8.4,11.1],[-19.4,9.7],[-27.7,3.4],[-31.6,-7.8],[-29.7,-19.2],[-22.6,-28.0],[-10.4,-33.4],[3.1,-31.3],[15.1,-22.7],[21.9,-9.3],[21.9,4.3],[14.9,15.1],[4.4,21.6],[-6.5,26.7],[-18.4,27.8],[-28.5,25.1],[-36.4,19.1],[-40.9,8.7],[-40.3,-2.1],[-36.3,-12.9],[-28.2,-21.7],[-15.9,-25.4],[-2.4,-25.9],[9.4,-19.9],[15.6,-10.4],[14.5,3.4],[5.7,16.4],[-7.2,23.1],[-19.5,24.1],[-30.1,22.1],[-40.2,19.9],[-49.2,18.5],[-58.8,18.5],[-70.2,18.5],[-83.4,18.5],[-96.6,16.4],[-106.7,12.0],[-115.6,6.9],[-124.6,1.5],[-135.5,-1.4],[-148.6,-3.6],[-163.3,-3.5],[-176.4,-1.4],[-187.3,0.8],[-196.2,3.0],[-206.1,5.1],[-217.8,9.0],[-232.4,13.3],[-245.1,18.2],[-255.6,23.9],[-266.0,29.3],[-276.5,35.8],[-286.9,42.3],[-298.8,50.8],[-310.7,59.0],[-322.7,66.3],[-333.8,75.0],[-344.3,83.6],[-354.7,92.3],[-362.5,102.4],[-371.4,106.2],[-380.4,105.0],[-386.9,95.0],[-387.4,82.0],[-378.5,70.8],[-365.4,69.7],[-355.7,81.7],[-357.4,95.9],[-368.8,105.4],[-382.2,103.1],[-389.5,93.0],[-385.9,80.3],[-374.3,71.7],[-360.0,73.0],[-349.8,81.9],[-347.5,94.2],[-353.7,105.4],[-365.8,111.2],[-378.0,109.5],[-385.7,102.1],[-388.4,92.2],[-384.2,79.9],[-372.0,72.4],[-357.7,75.8],[-349.7,89.4],[-350.7,103.6],[-358.5,113.0],[-370.0,116.4],[-380.7,111.2],[-387.5,102.0],[-388.8,89.0],[-383.9,76.9],[-373.9,68.6],[-359.9,66.7],[-346.2,70.4]]},{"f":0,"k":60,"e":75,"v":77,"d":10,"s":13,"p":[[-370.5,51.9],[-366.3,50.7],[-361.6,50.6],[-356.5,51.9],[-351.5,51.9],[-345.5,51.3],[-338.8,50.1],[-331.1,48.8],[-323.9,47.6],[-317.1,46.4],[-311.2,47.5],[-306.0,49.9],[-301.8,53.6],[-296.7,57.2],[-291.2,60.4],[-285.3,62.9],[-277.8,63.0],[-270.9,62.5],[-264.9,61.3],[-258.2,58.9],[-251.8,56.4],[-245.8,54.0],[-239.9,53.7],[-234.0,53.7],[-228.0,53.7],[-221.3,53.7],[-214.5,53.3],[-207.8,52.0],[-201.0,49.7],[-194.2,47.3],[-187.4,44.8],[-181.4,43.4],[-175.1,42.2],[-168.3,40.9],[-161.5,39.7],[-154.8,38.5],[-148.0,37.3],[-141.2,35.0],[-134.4,32.9],[-127.6,31.7],[-121.5,30.5],[-115.6,29.2],[-109.7,28.0],[-104.4,26.8],[-98.8,25.2],[-92.0,22.7],[-84.5,21.2],[-76.9,20.0],[-69.3,18.8],[-63.7,17.6],[-58.8,16.3],[-54.6,15.1],[-49.7,13.9],[-43.9,12.3],[-36.2,9.8],[-27.9,8.3],[-20.1,7.1],[-14.2,5.9],[-9.6,4.6],[-5.3,3.1],[-1.1,0.6],[4.4,-0.9],[10.8,-2.1],[18.4,-3.4],[25.4,-6.4],[31.2,-10.7],[33.8,-16.8],[32.0,-23.9],[27.7,-29.7],[20.1,-29.7],[15.5,-23.5],[14.2,-16.2],[20.9,-13.7],[27.1,-17.3],[30.5,-23.9],[22.9,-32.5],[13.5,-33.5],[4.8,-30.0],[3.1,-21.4],[6.5,-14.4],[12.8,-9.3],[20.4,-9.3],[26.9,-10.9],[32.6,-13.2],[36.8,-14.4],[40.5,-14.8],[44.2,-14.8],[49.2,-14.8],[54.9,-16.4],[60.9,-18.8],[67.7,-21.3],[74.5,-24.5],[81.3,-27.9],[88.1,-29.2],[94.3,-31.1],[100.2,-33.5],[105.3,-34.7],[110.9,-35.9],[116.9,-37.3],[123.7,-39.7],[130.4,-42.2],[137.2,-44.7],[144.0,-47.1],[150.3,-48.9],[156.3,-50.2],[162.2,-52.7],[168.6,-54.4],[175.3,-55.7],[181.3,-58.2],[187.7,-60.6],[194.4,-63.1],[200.4,-65.6],[206.8,-68.0],[213.5,-70.5],[219.5,-72.9],[225.4,-75.4],[231.3,-77.9],[236.4,-80.3],[241.1,-82.2],[245.3,-83.4]],"h":[60.0,58.7,57.3,56.0,52.7,48.8,44.1,43.4,44.2,46.9,45.1,43.7,43.0,41.1,39.4,38.1,36.8,35.7,35.1,35.0,34.7,34.1,33.4,32.2,30.2,28.8,27.7,27.1,26.4,25.7,25.1,24.4,23.5,22.2,22.0,21.5,20.2,19.4,18.5,17.2,17.6,18.0,18.0,16.4,13.7,9.8,7.4,6.4,7.7,10.1,11.6,10.3,6.9,3.1,-0.2,-3.1,-3.2,3.4,4.5,3.3,0.7,-4.0,-8.3,-9.6,-8.1,-6.5,-8.4,-13.3,-19.4,-26.1,-32.2,-38.7,-47.4,-56.5,-65.6,-74.3,-77.9,-78.8,-77.4,-76.1,-74.8,-73.5,-71.3,-68.8,-67.5,-68.3,-70.4,-73.0,-76.1,-79.2,-80.5,-81.4,-82.0,-82.0,-82.0,-82.1,-82.7,-83.8,-85.2,-87.9,-89.4,-90.0,-90.0,-90.0,-90.0,-90.7,-91.7,-93.1,-95.1,-96.4,-97.0,-97.7,-98.0,-98.0,-99.4,-100.3,-101.0,-101.0,-101.3,-102.0]},{"f":1,"p":[[0.0,0.0],[14.5,7.7],[24.7,20.8],[29.0,37.1],[23.4,56.2],[9.8,70.1],[-7.7,77.2],[-26.2,79.5],[-45.0,71.6],[-58.8,57.4],[-64.5,40.5],[-66.4,24.6],[-63.9,8.6],[-53.2,-7.4],[-35.5,-16.9],[-15.7,-17.0],[-0.1,-10.9],[11.7,-4.0],[20.5,3.8],[28.0,14.7],[35.1,31.0],[35.3,52.0],[28.6,71.2],[14.1,85.0],[-4.0,91.4],[-23.8,92.5],[-42.6,87.9],[-58.2,74.9],[-67.0,58.5],[-67.8,37.6],[-57.4,18.4],[-44.2,4.4],[-31.1,-6.3],[-18.0,-15.8],[-2.6,-21.4],[13.8,-19.3],[25.6,-9.1],[30.3,8.2],[28.2,25.5],[22.1,42.8],[10.9,60.3],[-7.2,69.1],[-28.3,69.1],[-45.3,60.5],[-56.5,44.5],[-62.0,28.5],[-58.5,11.2],[-45.0,0.2],[-25.3,-5.0],[-6.5,-2.2],[8.5,8.2],[18.4,19.3],[23.2,33.2],[26.3,49.7],[26.7,68.8],[16.0,83.4],[-4.1,89.0],[-23.7,86.4],[-40.1,80.0],[-53.9,68.7],[-61.0,53.4],[-59.6,36.3],[-47.7,21.8],[-29.1,12.9],[-11.5,6.9],[4.9,5.6],[20.7,11.9],[33.3,23.5],[40.9,38.1],[40.9,52.5],[36.1,71.4],[25.3,88.8],[7.3,96.4],[-11.6,98.2],[-27.9,91.9],[-39.1,77.4],[-42.2,58.3],[-41.3,39.1],[-35.2,23.2],[-24.8,10.6],[-11.6,1.0],[2.3,-1.9],[16.1,0.5],[28.0,5.5],[39.0,15.0],[47.6,28.1],[50.7,44.3],[44.1,63.5],[31.7,77.8],[16.3,88.3],[-0.4,92.7],[-17.1,91.2],[-33.1,81.6],[-45.8,66.2],[-52.2,47.1],[-53.7,31.0],[-51.4,14.3],[-44.2,-2.6],[-33.3,-15.4],[-17.4,-22.4],[0.2,-25.9],[16.5,-25.9],[32.3,-21.4],[41.3,-8.9],[44.5,7.3],[41.2,26.5],[36.8,40.8],[32.0,56.8],[26.7,74.7],[23.3,91.0],[20.5,105.6],[15.5,118.4],[4.3,129.4],[-11.9,134.7],[-29.0,132.0],[-42.6,121.3],[-47.1,105.3],[-43.9,86.5],[-33.3,70.2],[-16.6,59.3]]},{"f":0,"k":60,"e":74,"v":57,"d":9,"s":12,"p":[[-118.8,-109.3],[-111.2,-106.9],[-104.4,-107.5],[-98.5,-111.1],[-95.0,-114.8],[-92.5,-118.5],[-90.8,-122.2],[-89.1,-125.9],[-87.8,-129.6],[-86.9,-133.3],[-87.7,-139.4],[-88.5,-146.1],[-89.4,-153.4],[-91.0,-160.8],[-91.6,-167.1],[-90.8,-172.0],[-89.9,-175.8],[-88.0,-179.5],[-84.6,-183.2],[-80.4,-185.7],[-75.8,-188.2],[-70.7,-190.7],[-64.9,-192.0],[-59.3,-192.2],[-54.2,-191.0],[-49.9,-188.7],[-45.9,-185.2],[-42.6,-180.3],[-39.9,-174.3],[-37.7,-168.6],[-36.0,-163.7],[-34.3,-157.7],[-32.9,-152.0],[-32.1,-147.1],[-31.9,-141.1],[-32.5,-135.0],[-34.2,-128.8],[-35.9,-122.7],[-37.6,-116.9],[-39.3,-112.0],[-41.0,-105.0],[-42.4,-98.1],[-43.3,-91.9],[-42.0,-85.7],[-40.3,-79.6],[-38.7,-73.4],[-35.6,-67.3],[-32.4,-61.1],[-29.9,-55.0],[-28.0,-49.8],[-26.1,-45.3],[-23.5,-41.6],[-21.7,-36.9],[-19.5,-32.0],[-16.1,-27.1],[-13.4,-21.2],[-10.6,-15.4],[-7.2,-10.4],[-5.1,-6.5],[-3.2,-3.1],[-0.6,-0.6],[1.9,3.7],[4.9,8.9],[9.1,15.0],[14.6,19.4],[20.5,22.2],[26.5,22.2],[29.9,17.8],[30.3,12.2],[22.7,8.5],[16.8,12.6],[13.8,20.0],[18.9,27.4],[27.5,27.9],[36.4,24.1],[39.8,14.2],[37.4,6.1],[31.7,-0.4],[23.2,-2.9],[15.9,-1.2],[9.7,2.7],[6.3,7.6],[4.6,12.5],[3.8,17.2],[3.8,20.9],[4.4,25.4],[5.2,30.5],[6.1,36.7],[6.9,42.8],[8.0,49.0],[10.5,55.1],[13.1,60.5],[15.8,65.0],[20.1,66.2],[25.3,66.7],[31.2,66.7],[36.3,66.7],[41.9,65.3],[47.7,62.8],[52.8,60.3],[57.4,56.4],[61.6,51.5],[65.0,46.6],[67.4,41.0],[69.0,34.8],[69.9,28.7],[70.3,21.8],[70.3,14.5],[70.3,7.1],[69.8,0.4],[68.9,-5.8],[67.2,-13.2],[65.5,-19.9],[63.8,-26.1],[60.4,-32.3],[57.5,-38.4],[54.9,-44.6],[50.6,-50.7],[46.4,-56.2],[42.2,-61.2]],"h":[39.0,39.0,38.7,38.0,40.0,41.0,41.0,39.7,37.8,35.1,31.8,28.5,25.2,25.6,27.5,30.8,30.4,29.4,28.1,25.5,23.7,23.1,23.0,23.0,23.0,21.8,20.5,19.2,17.8,17.0,17.0,17.0,16.8,16.1,14.9,13.5,12.2,11.4,11.0,11.0,9.9,8.8,8.1,7.5,6.8,6.1,6.0,6.0,6.0,6.5,7.2,7.9,7.0,5.1,1.8,-0.0,-0.6,0.7,2.0,2.5,0.5,-3.0,-6.6,-9.3,-8.1,-6.6,-9.3,-15.7,-24.1,-34.1,-41.7,-47.9,-52.6,-55.4,-56.7,-55.4,-55.0,-55.1,-55.8,-56.0,-55.9,-55.2,-54.6,-54.0,-54.0,-55.3,-57.6,-61.5,-64.7,-66.8,-65.5,-63.8,-62.0,-62.0,-63.2,-65.1,-66.5,-67.4,-68.0,-68.0,-68.4,-69.1,-69.7,-70.4,-71.0,-71.7,-72.7,-74.0,-74.7,-75.7,-77.0,-77.0,-77.4,-78.0,-78.7,-79.3,-80.0,-80.7,-81.3,-82.0]},{"f":1,"p":[[0.0,0.0],[-13.1,-8.9],[-21.2,-21.2],[-24.3,-29.7],[-23.3,-36.3],[-17.7,-43.5],[-7.6,-50.1],[3.3,-51.9],[11.8,-51.9],[19.2,-48.1],[27.3,-38.4],[29.4,-23.4],[20.8,-9.2],[6.0,-4.1],[-8.2,-6.9],[-19.3,-14.9],[-25.9,-25.0],[-27.4,-35.7],[-25.5,-44.6],[-19.9,-52.6],[-13.2,-60.6],[-2.0,-67.4],[12.0,-67.1],[24.2,-63.5],[30.8,-55.5],[31.6,-43.0],[25.7,-28.0],[13.8,-16.6],[0.3,-13.0],[-14.5,-14.7],[-27.0,-21.2],[-36.1,-33.4],[-38.0,-48.7],[-35.3,-59.5],[-28.7,-65.1],[-20.5,-67.8],[-11.2,-68.6],[-0.8,-68.6],[8.5,-66.9],[16.7,-60.3],[22.3,-49.6],[25.9,-37.0],[25.9,-25.0],[20.8,-9.7],[9.2,2.6],[-6.9,7.4],[-22.9,4.7],[-35.3,-3.3],[-41.9,-14.6],[-42.4,-28.0],[-35.7,-39.1],[-28.3,-47.1],[-19.6,-54.6],[-11.5,-62.7],[-0.9,-70.5],[10.2,-72.3],[21.3,-70.5],[34.1,-71.1],[44.9,-72.3],[55.4,-71.8],[65.6,-67.7],[78.0,-63.0],[89.8,-64.1],[102.7,-68.8],[113.7,-75.1],[123.6,-81.4],[131.6,-86.7],[139.7,-92.1],[146.0,-99.8],[146.9,-110.6],[145.0,-119.6],[138.6,-126.5],[129.7,-129.6],[116.8,-126.9],[103.9,-120.7],[96.1,-110.1],[95.6,-97.8],[101.2,-86.8],[109.5,-76.1],[121.8,-70.4],[133.9,-70.4],[144.8,-74.4],[152.2,-79.8],[159.5,-86.9],[161.2,-96.5],[155.3,-108.3],[144.2,-116.0],[131.3,-118.6],[119.9,-113.8],[108.8,-104.6],[100.8,-89.7],[101.7,-73.9],[109.7,-65.0],[120.8,-62.2],[131.9,-61.2],[141.3,-62.3],[149.5,-67.7],[154.1,-79.3],[158.8,-92.4],[159.6,-106.3],[155.0,-115.0],[144.5,-120.4],[130.3,-124.2],[117.4,-120.9],[106.6,-111.9],[98.3,-100.0],[94.3,-87.0],[94.1,-73.6],[97.6,-58.6],[105.7,-48.9],[116.2,-44.5],[125.5,-48.0],[132.4,-54.9],[137.1,-66.0],[139.0,-79.4],[136.9,-92.4],[128.6,-101.9],[117.7,-105.8],[102.2,-105.4],[86.9,-98.2]]}];
-  var svg = document.getElementById('an-svg'); if(!svg) return;
-  var NS = 'http://www.w3.org/2000/svg', W = 1000, RAND = 70, HX = [110, 960], HY = [440, 580];
-  var VIR = [[68,1,84],[72,40,120],[62,74,137],[49,104,142],[38,130,142],[31,158,137],[53,183,121],[109,205,89],[180,222,44],[253,231,37]];
-  function farbe(f){ var x = f*(VIR.length-1), i = Math.min(VIR.length-2, Math.floor(x)), u = x-i, a = VIR[i], b = VIR[i+1];
-    return 'rgb(' + [0,1,2].map(function(k){ return Math.round(a[k]+(b[k]-a[k])*u); }).join(',') + ')'; }
-  S.forEach(function(s){
-    var oben = s.f ? [60, 580] : [60, 400];
-    var xs = s.p.map(function(q){return q[0];}), ys = s.p.map(function(q){return q[1];});
-    var x0 = Math.min.apply(0,xs), x1 = Math.max.apply(0,xs), y0 = Math.min.apply(0,ys), y1 = Math.max.apply(0,ys);
-    var m = Math.min((W-2*RAND)/Math.max(x1-x0,1), (oben[1]-oben[0]-40)/Math.max(y1-y0,1));
-    var cx = (x0+x1)/2, cy = (y0+y1)/2, my = (oben[0]+oben[1])/2;
-    s.xy = s.p.map(function(q){ return [W/2 + (q[0]-cx)*m, my - (q[1]-cy)*m]; }); s.m = m;
-    if (!s.f){ var h0 = Math.min.apply(0,s.h), h1 = Math.max.apply(0,s.h), n = s.h.length;
-      s.hy = s.h.map(function(z,i){ return [HX[0] + (HX[1]-HX[0])*i/(n-1), HY[1] - 10 - (z-h0)/Math.max(h1-h0,1)*(HY[1]-HY[0]-20)]; }); }
-  });
-  var N = S[0].xy.length, g = document.getElementById('an-punkte'), pkt = [];
-  for (var i = 0; i < N; i++){ var c = document.createElementNS(NS,'circle'); c.setAttribute('r', 4); c.setAttribute('fill', farbe(i/(N-1))); g.appendChild(c); pkt.push(c); }
-  var linie = document.getElementById('an-linie'), ring = document.getElementById('an-ring'), mass = document.getElementById('an-mass');
-  var streifen = document.getElementById('an-streifen'), hoehe = document.getElementById('an-hoehe'), fall = document.getElementById('an-fall');
-  var rt = document.getElementById('an-ringtext'), ft = document.getElementById('an-falltext');
-  var ftde = document.getElementById('an-ft-de'), ften = document.getElementById('an-ft-en');
-  function pfad(pts, a, b){ var d = ''; for (var i = a; i <= b; i++) d += (i > a ? 'L' : 'M') + pts[i][0].toFixed(1) + ',' + pts[i][1].toFixed(1); return d; }
-  function setzen(xy, hy, sicht, m, so){
-    for (var i = 0; i < N; i++){ pkt[i].setAttribute('cx', xy[i][0].toFixed(1)); pkt[i].setAttribute('cy', xy[i][1].toFixed(1)); pkt[i].style.opacity = i <= sicht ? 1 : .12; }
-    linie.setAttribute('d', pfad(xy, 0, N-1)); mass.setAttribute('x2', (40 + 50*m).toFixed(1));
-    hoehe.setAttribute('d', hy && sicht > 0 ? pfad(hy, 0, Math.min(sicht, N-1)) : ''); streifen.style.opacity = so;
-  }
-  function marken(s, a){
-    if (s.f){ a = 0; }
-    ring.style.opacity = rt.style.opacity = fall.style.opacity = ft.style.opacity = a;
-    if (!a) return;
-    var q = s.xy[s.k];
-    ring.setAttribute('cx', q[0]); ring.setAttribute('cy', q[1]); ring.setAttribute('r', 15 + 10*(1-a));
-    var rechts = q[0] < 700; rt.setAttribute('x', q[0] + (rechts ? 24 : -24)); rt.setAttribute('y', q[1] - 18); rt.setAttribute('text-anchor', rechts ? 'start' : 'end');
-    fall.setAttribute('d', pfad(s.hy, s.k, s.e));
-    ftde.textContent = '−' + s.v + ' m in ' + s.d + ' s · bis ' + s.s + ' m/s Sinken'; ften.textContent = '−' + s.v + ' m in ' + s.d + ' s · sinking up to ' + s.s + ' m/s';
-  }
-  var ZEICHNEN = 7500, HALTEN = 2600, FLIESSEN = 1700;
-  var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (ruhig){ setzen(S[0].xy, S[0].hy, N, S[0].m, 1); marken(S[0], 1); return; }
-  var j = 0, t0 = null;
-  function glatt(u){ return u < .5 ? 2*u*u : 1 - Math.pow(-2*u+2, 2)/2; }
-  function mix(A, B, u){ return A.map(function(q,i){ return [q[0] + (B[i][0]-q[0])*u, q[1] + (B[i][1]-q[1])*u]; }); }
-  function bild(t){
-    if (t0 === null) t0 = t;
-    var dt = t - t0, s = S[j], so = s.f ? 0 : 1;
-    if (dt < ZEICHNEN){
-      var sicht = Math.floor(dt/ZEICHNEN * N); setzen(s.xy, s.hy, sicht, s.m, so);
-      marken(s, !s.f && sicht >= s.e ? Math.min(1, (sicht - s.e)/6) : 0);
-    } else if (dt < ZEICHNEN + HALTEN){
-      setzen(s.xy, s.hy, N, s.m, so); marken(s, 1);
-    } else if (dt < ZEICHNEN + HALTEN + FLIESSEN){
-      var u = glatt((dt - ZEICHNEN - HALTEN)/FLIESSEN), b = S[(j+1) % S.length];
-      marken(s, Math.max(0, 1 - u*3));
-      var hy = s.hy && b.hy ? mix(s.hy, b.hy, u) : (s.hy || b.hy);
-      var sb = b.f ? 0 : 1;
-      setzen(mix(s.xy, b.xy, u), s.f ? null : hy, N, s.m + (b.m - s.m)*u, so + (sb - so)*u);
-    } else { j = (j+1) % S.length; t0 = t; }
-    requestAnimationFrame(bild);
-  }
-  requestAnimationFrame(bild);
-})();
-</script>
 <script>
 (function(){
-  var html = document.documentElement;
-  function setLang(de){
-    html.classList.toggle('de', de);
-    html.lang = de ? 'de' : 'en';
+  var KEY='joerxc_lang', html=document.documentElement;
+  var descriptions={de:'Parabox: automatische Flugaufzeichnung und gemeinsame Auswertung. Entwicklungspartner gesucht.',fr:'Parabox : mieux comprendre ses vols, apprendre de ses expériences et choisir ce que l’on partage.',en:'Parabox: automatic flight recording and shared learning. Seeking a development partner.'};
+  function valid(l){return Object.prototype.hasOwnProperty.call(descriptions,l);}
+  function wahl(){
+    var q=new URLSearchParams(location.search).get('lang');
+    if(valid(q)) return q;
+    try {var stored=localStorage.getItem(KEY);if(valid(stored)) return stored;} catch(e){}
+    var langs=navigator.languages||[navigator.language||'de'];
+    for(var i=0;i<langs.length;i++){var l=langs[i].slice(0,2).toLowerCase();if(valid(l)) return l;}
+    return 'de';
   }
-  setLang(false);            /* default: English */
-  var btn = document.getElementById('lang');
-  if(btn) btn.addEventListener('click', function(){ setLang(!html.classList.contains('de')); });
-  var y = document.getElementById('yr');
-  if(y) y.textContent = new Date().getFullYear();
-})();
-</script>
-<script>
-/* joerxc: Sprachwahl merken (localStorage) und aus ?lang=de uebernehmen */
-(function(){
-  var KEY = 'joerxc_lang';
-  function gewaehlt(){
-    var m = location.search.match(/[?&]lang=([a-z]{2})/i) || location.hash.match(/lang=([a-z]{2})/i);
-    if (m) return m[1].toLowerCase();
-    try { var g = localStorage.getItem(KEY); if (g) return g; } catch(e) {}
-    var b = (navigator.languages && navigator.languages[0]) || navigator.language || '';
-    return b.toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
+  function setze(l){
+    if(!valid(l)) l='de';
+    html.lang=l;
+    html.classList.toggle('de',l==='de');
+    try{localStorage.setItem(KEY,l);}catch(e){}
+    document.querySelectorAll('[data-choice]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.choice===l));});
+    document.querySelector('meta[name="description"]').content=descriptions[l];
   }
-  function merken(l){ try { localStorage.setItem(KEY, l); } catch(e) {} }
-  function anwenden(l){
-    var radio = document.getElementById('lang-' + l);      /* Artikel mit Radio-Umschalter */
-    if (radio) { radio.checked = true; return; }
-    document.documentElement.classList.toggle('de', l === 'de');
-    document.documentElement.lang = l;
-  }
-  function aktuell(){
-    var r = document.querySelector('.langsel:checked');
-    if (r) return r.id.replace('lang-', '');
-    return document.documentElement.classList.contains('de') ? 'de' : 'en';
-  }
-  var l = gewaehlt();
-  if (l) anwenden(l);
-  document.addEventListener('click', function(e){
-    var t = e.target.closest && e.target.closest('#lang, .langbtn, .lang-switch label');
-    if (!t) return;
-    setTimeout(function(){ merken(aktuell()); }, 0);
-  });
-})();
-</script>
-
-<script>
-(function(){
-  var st=document.getElementById('aktuell'), b=document.getElementById('stream-more');
-  if(st&&b&&st.querySelector('a.row.hid')){ b.hidden=false; b.addEventListener('click',function(){ st.classList.toggle('open'); b.innerHTML=st.classList.contains('open')?'<span data-lang="de">weniger</span><span data-lang="en">fewer</span>':'<span data-lang="de">alle</span><span data-lang="en">all</span>'; }); }
+  document.querySelectorAll('[data-choice]').forEach(function(b){b.addEventListener('click',function(){setze(b.dataset.choice);});});
+  setze(wahl());
 })();
 </script>
 </body>
