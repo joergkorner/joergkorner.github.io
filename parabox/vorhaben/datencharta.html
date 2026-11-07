@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de" class="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Parabox: Datencharta</title>
+<meta name="description" content="Parabox: Datencharta für Studienpiloten, Entwurf. Freigaben, Zugriff, Studie, Ausstieg und Ereignisaufzeichnungen.">
+<style>
+:root{--bg:#ffffff;--bg2:#f5f5f7;--text:#1d1d1f;--text2:#55555a;--text3:#86868b;--line:rgba(0,0,0,.10);--accent:#1f6fd1;--idea:#5b4bb8;--idea-bg:rgba(110,90,230,.14);--chip:rgba(0,0,0,.055);--red:#d0342c;--sun:#e3a600;--wedge:rgba(31,111,209,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.top{max-width:980px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line)}
+.top .brand{font-weight:600;color:var(--text);font-size:15px}
+.langbtn{margin-left:auto;font:inherit;font-size:13px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer}
+main{max-width:980px;margin:0 auto;padding:40px 20px 80px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 10px}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:0 0 18px;letter-spacing:-.025em;text-wrap:balance}
+h2{font-size:24px;margin:52px 0 12px;letter-spacing:-.015em;text-wrap:balance}
+h3{font-size:18px;margin:26px 0 8px;letter-spacing:-.01em}
+.prose{max-width:68ch}
+.prose p{margin:0 0 14px}
+.lead{font-size:21px;color:var(--text2);line-height:1.45}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:34px 0 10px}.figs figure{margin:0}
+@media (max-width:760px){.figs{grid-template-columns:1fr;gap:28px}}
+.product-concept{box-sizing:border-box;max-width:620px;margin:8px auto 24px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(0,0,0,.08)}.product-concept img{display:block;width:100%;height:auto;border-radius:14px}.product-concept figcaption,.mounting-note{font-size:14.5px;color:var(--text2);line-height:1.5}.product-concept figcaption{margin-top:12px}
+.figs figure{margin:0;min-width:0}
+.figs svg{display:block;width:100%;height:auto;background:var(--bg2);border-radius:14px;border:1px solid var(--line)}
+.figs figcaption{font-size:14.5px;color:var(--text2);margin-top:10px;line-height:1.45}
+.figs figcaption b{color:var(--text);font-weight:600}
+.legend{list-style:none;padding:0;margin:8px 0 0;font-size:13.5px;color:var(--text2)}
+.legend li{display:flex;gap:8px;align-items:baseline;margin:2px 0}
+.legend .n{display:inline-block;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:18px}
+.sv-line{stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sv-thin{stroke:var(--text3);fill:none;stroke-width:1.2;stroke-linecap:round}
+.sv-dash{stroke:var(--accent);fill:none;stroke-width:1.5;stroke-dasharray:4 4}
+.sv-fill{fill:var(--bg);stroke:var(--text);stroke-width:2}
+.sv-soft{fill:var(--chip)}
+.sv-acc{fill:var(--accent)}
+.sv-red{fill:var(--red)}
+.sv-sun{fill:var(--sun)}
+.sv-sunray{stroke:var(--sun);stroke-width:2;stroke-linecap:round}
+.sv-wedge{fill:var(--wedge)}
+.sv-t{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text)}
+.sv-t2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text3)}
+.sv-tw{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:#fff}
+.sv-num{fill:var(--accent)}
+.steps3{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:14px 0 0}
+@media (max-width:760px){.steps3{grid-template-columns:1fr}}
+.steps3 div{min-width:0}
+.steps3 .k{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+.steps3 h3{margin:0 0 6px;font-size:19px}
+.steps3 p{margin:0;color:var(--text2);font-size:16px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:10px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.two>div{min-width:0}
+.two h3{margin-top:0}
+.two p{color:var(--text2);margin:0 0 10px}
+.join{margin-top:40px;padding:28px 26px;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}
+.join li{margin:0 0 14px;max-width:62ch}.join li small{display:block;color:var(--text2);font-size:14px;margin-top:4px}.join ol{padding-left:24px;margin:22px 0}.join h2{margin:0 0 10px}
+.join p{margin:0 0 14px;color:var(--text2);max-width:62ch}
+.btn{display:inline-block;font:inherit;font-weight:600;font-size:18px;color:#fff;background:var(--accent);padding:12px 22px;border-radius:999px;border:0;cursor:pointer}
+.btn:hover{text-decoration:none;filter:brightness(1.08)}
+.addr{display:inline-block;margin:12px 0 0 2px;font-size:15px;color:var(--text2)}
+.addr code{font-size:15px;color:var(--text);background:var(--chip);padding:3px 8px;border-radius:6px;user-select:all}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+.chip{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--text2);background:var(--chip);padding:4px 9px;border-radius:980px;line-height:1.4}
+.chip.dropped{color:#9a4a1f;background:rgba(200,110,40,.14)}
+@media (prefers-color-scheme:dark){.chip.dropped{color:#f0a468}}
+.steps{margin:26px 0 0;max-width:72ch}
+.step{display:grid;grid-template-columns:56px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
+.step:last-child{border-bottom:1px solid var(--line)}
+.step .n{font-size:15px;font-weight:600;color:var(--text3);padding-top:4px}
+.step h3{margin:0 0 8px;font-size:21px;font-weight:600;letter-spacing:-.017em;line-height:1.2}
+.step p{margin:0;color:var(--text2);font-size:16.5px;line-height:1.55}
+.step p+p{margin-top:10px}
+.shot{float:right;width:210px;margin:4px 0 12px 24px}
+.shot img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+.shot figcaption{font-size:12.5px;color:var(--text3);margin-top:6px;line-height:1.4}
+@media (max-width:600px){.shot{float:none;width:200px;margin:0 0 14px}}
+.step .clear{clear:both}
+@media (max-width:600px){.step{grid-template-columns:1fr;gap:8px}}
+.plan{max-width:72ch}
+.plan h3{font-size:18px;margin:30px 0 8px;letter-spacing:-.01em}
+.plan p{margin:0 0 10px;color:var(--text2)}
+table{border-collapse:collapse;width:100%;max-width:72ch;margin:12px 0 6px;font-size:15.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--text3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.sum td{font-weight:600;color:var(--text)}
+.tbl{overflow-x:auto}
+.method{font-size:15px;color:var(--text2);background:var(--bg2);border-radius:10px;padding:14px 18px;max-width:72ch;margin:14px 0}
+details{border-top:1px solid var(--line);padding:6px 0 10px}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-size:20px;font-weight:600;letter-spacing:-.01em;padding:14px 0;list-style:none;display:flex;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"";width:9px;height:9px;border-right:2px solid var(--text3);border-bottom:2px solid var(--text3);transform:rotate(-45deg);transition:transform .15s;flex:none}
+details[open] summary::before{transform:rotate(45deg)}
+summary small{font-size:14px;font-weight:400;color:var(--text3)}
+.end{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);font-size:15px;color:var(--text2)}
+[data-lang]{display:none!important}
+html[lang="de"] [data-lang="de"],html[lang="fr"] [data-lang="fr"],html[lang="en"] [data-lang="en"]{display:revert!important}
+.languages{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.languages button{font:inherit;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--text2);cursor:pointer}
+.languages button[aria-pressed="true"]{background:var(--bg2);border-color:var(--line);color:var(--text);font-weight:600}
+.languages button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.survey-intro{max-width:740px;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);line-height:1.5}
+
+.business-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0 30px}.business-grid article{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:22px}.business-grid h3{margin:0 0 10px;font-size:19px}.business-grid p{margin:0;color:var(--text2);font-size:16px;line-height:1.55}@media(max-width:640px){.business-grid{grid-template-columns:1fr}}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:14px 0 0}
+@media (max-width:760px){.three{grid-template-columns:1fr}}
+.three>div{min-width:0;padding:18px 18px 8px;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
+.three h3{margin:0 0 8px}.three p{color:var(--text2);font-size:16px;margin:0 0 10px}
+.qtab{width:100%;border-collapse:collapse;margin:14px 0 10px;font-size:16px}
+.qtab th,.qtab td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+.qtab th{color:var(--text3);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.qtab td:first-child{font-weight:600;width:38%}
+@media (max-width:640px){.qtab thead{display:none}.qtab tr,.qtab td{display:block;width:auto}.qtab td:first-child{border-bottom:none;padding-bottom:2px}.qtab td{padding-left:0;padding-right:0}}
+.cta{display:inline-block;margin:6px 0 4px;padding:10px 18px;border-radius:999px;background:var(--accent);color:#fff!important;font-weight:600;text-decoration:none!important}
+.src{font-size:14px;color:var(--text2);word-break:break-word}
+</style>
+</head>
+<body>
+<div class="top"><a class="brand" href="https://joerxc.org/">joerxc</a><a href="../" style="font-size:15px">Parabox</a><span style="font-size:15px;color:var(--text3)">/ <a href="./" style="color:inherit"><span data-lang="de">Das Vorhaben</span><span data-lang="en">The project</span><span data-lang="fr">Le projet</span></a> / <span data-lang="de">Datencharta</span><span data-lang="en">Data charter</span><span data-lang="fr">Charte des données</span></span>
+<nav class="languages" aria-label="Language"><button type="button" data-choice="de" lang="de">Deutsch</button><button type="button" data-choice="fr" lang="fr">Français</button><button type="button" data-choice="en" lang="en">English</button></nav></div>
+<main>
+<p class="kicker"><span data-lang="de">Parabox · Datencharta · Stand 7. November 2026</span><span data-lang="en">Parabox · Data charter · As of 7 November 2026</span><span data-lang="fr">Parabox · Charte des données · État au 7 novembre 2026</span></p>
+<div class="prose">
+<h1 id="datencharta"><span data-lang="de">Datencharta für Studienpiloten (Entwurf).</span><span data-lang="en">Data charter for study pilots (draft).</span><span data-lang="fr">Charte des données pour les pilotes de l’étude (projet).</span></h1>
+<p><span data-lang="de">Parabox zeichnet im Flug Bilder von Kappe und Händen, Flugspur, Luftdruck und Fluglage auf. Diese Charta legt fest, wem die Daten gehören, was davon in die Studie fliesst und was im Unfallfall geschieht. Sie ist Teil der Vereinbarung zwischen Studienpilot und Studienleitung und gilt für die Erprobung 2028 und die Saison 2029.</span><span data-lang="en">In flight, Parabox records images of canopy and hands, the track, air pressure and attitude. This charter sets out who owns the data, what part of it goes into the study, and what happens in the event of an accident. It is part of the agreement between study pilot and study lead and applies to the 2028 trial and the 2029 season.</span><span data-lang="fr">En vol, Parabox enregistre des images de la voile et des mains, la trace, la pression atmosphérique et l’assiette. Cette charte fixe à qui appartiennent les données, ce qui en entre dans l’étude et ce qui se passe en cas d’accident. Elle fait partie de l’accord entre le pilote de l’étude et la direction de l’étude et s’applique aux essais 2028 et à la saison 2029.</span></p>
+<ol>
+<li><span data-lang="de"><b>Die Aufzeichnung gehört dem Piloten und bleibt auf dem Gerät.</b> Hersteller, Plattform, Verbände und Studienleitung haben keinen Zugriff auf private Aufnahmen. Das Gerät sendet nichts von selbst.</span><span data-lang="en"><b>The recording belongs to the pilot and stays on the device.</b> Manufacturer, platform, federations and study lead have no access to private recordings. The device sends nothing by itself.</span><span data-lang="fr"><b>L’enregistrement appartient au pilote et reste sur l’appareil.</b> Le fabricant, la plateforme, les fédérations et la direction de l’étude n’ont aucun accès aux enregistrements privés. L’appareil n’envoie rien de lui-même.</span></li>
+<li><span data-lang="de"><b>Der Pilot entscheidet, was er teilt.</b> Was er teilt, geht vollständig: die gewählten Minuten mit Bild, Flugdaten, Ort und Zeit, unverändert und mit Prüfsumme. Er kann ohne Namensangabe teilen. Ort, Zeit, Bilder und die Seriennummer des Geräts können eine Zuordnung ermöglichen. Die Auswertung sieht er auf der Plattform; mit anderen teilt er sie nur, wenn er es will.</span><span data-lang="en"><b>The pilot decides what to share.</b> What he shares goes out complete: the selected minutes with image, flight data, place and time, unchanged and with checksum. He can share without giving his name. Place, time, images and the device’s serial number can make identification possible. He sees the analysis on the platform and shares it with others only if he wants to.</span><span data-lang="fr"><b>Le pilote décide de ce qu’il partage.</b> Ce qu’il partage part complet : les minutes choisies avec image, données de vol, lieu et heure, inchangées et avec somme de contrôle. Il peut partager sans indiquer son nom. Le lieu, l’heure, les images et le numéro de série de l’appareil peuvent permettre une identification. Il voit l’analyse sur la plateforme et ne la partage avec d’autres que s’il le souhaite.</span></li>
+<li><span data-lang="de"><b>Für die Studie gibt der Pilot das Flugbuch.</b> Bei jeder Nutzung der Plattform gehen das Flugbuch (Datum, Beginn, Ende und Dauer je Flug, kein Bild, keine Spur) sowie das Energie- und das Geräteprotokoll an die Studie. Daraus entstehen Tragequote und Zuverlässigkeit.</span><span data-lang="en"><b>For the study, the pilot provides the logbook.</b> Each time the platform is used, the logbook (date, start, end and duration per flight, no image, no track) and the energy and device logs go to the study. From these come the wearing rate and reliability.</span><span data-lang="fr"><b>Pour l’étude, le pilote fournit le carnet de vol.</b> À chaque utilisation de la plateforme, le carnet de vol (date, début, fin et durée par vol, sans image, sans trace) ainsi que les journaux d’énergie et d’appareil partent vers l’étude. On en tire le taux de port et la fiabilité.</span></li>
+<li><span data-lang="de"><b>Am Saisonende wird jedes Gerät einmal ausgelesen:</b> Flugbuch und Protokolle, keine Bilder ohne Zustimmung des Piloten. In der Erprobung 2028 geschieht das beim Behalten oder Zurückgeben des Geräts, 2029 beim Übergang ins Eigentum oder bei der Rückgabe.</span><span data-lang="en"><b>At the end of the season each device is read out once:</b> logbook and logs, no images without the pilot’s consent. In the 2028 trial this happens when the device is kept or returned, in 2029 when it passes into ownership or is returned.</span><span data-lang="fr"><b>À la fin de la saison, chaque appareil est lu une fois :</b> carnet de vol et journaux, pas d’images sans l’accord du pilote. Pendant les essais 2028, cela se fait lorsque l’appareil est gardé ou rendu, en 2029 lors du passage en propriété ou de la restitution.</span></li>
+<li><span data-lang="de"><b>Studiengerät 2029.</b> Das Gerät bleibt während der Saison Eigentum des Projekts. Der Pilot zahlt ein Depot, erhält bei einem Defekt ein Ersatzgerät und kauft das Gerät am Saisonende zum Depot oder gibt es zurück.</span><span data-lang="en"><b>Study device 2029.</b> During the season the device remains the property of the project. The pilot pays a deposit, receives a replacement in case of a defect, and at the end of the season buys the device for the deposit or returns it.</span><span data-lang="fr"><b>Appareil d’étude 2029.</b> Pendant la saison, l’appareil reste la propriété du projet. Le pilote verse un dépôt, reçoit un appareil de remplacement en cas de défaut et, en fin de saison, achète l’appareil au prix du dépôt ou le rend.</span></li>
+<li><span data-lang="de"><b>Unfall.</b> Auch nach einem Unfall bleibt die Aufzeichnung auf dem Gerät und gehört dem Piloten. Ob sie einer Unfalluntersuchung übergeben wird, zum Beispiel der SUST oder der Unfallanalyse des Verbands, entscheidet der Pilot, bei Tod seine Angehörigen. Die Studienleitung bittet darum und hilft bei Sicherung und Übergabe. Sie gibt nichts weiter, was sie nicht vom Piloten erhalten hat. Was sie erhält, dient der Sicherheitsauswertung, nicht der Bewertung individuellen Verschuldens. Nach einem Unfall das Gerät nicht wieder einschalten, bis es ausgelesen ist. Gesetzliche Pflichten bleiben vorbehalten: Polizei und Staatsanwaltschaft können das Gerät in einem Verfahren als Beweismittel sicherstellen, unabhängig von dieser Charta.</span><span data-lang="en"><b>Accident.</b> Even after an accident the recording stays on the device and belongs to the pilot. Whether it is handed to an accident investigation, for example the STSB or the federation’s accident analysis, is the pilot’s decision, or his relatives’ in case of death. The study management asks for it and helps with preservation and handover. It passes on nothing it has not received from the pilot. What it receives serves the safety evaluation, not the assessment of individual fault. After an accident, do not switch the device on again until it has been read out. Legal duties remain reserved: police and prosecutors can seize the device as evidence in proceedings, regardless of this charter.</span><span data-lang="fr"><b>Accident.</b> Même après un accident, l’enregistrement reste sur l’appareil et appartient au pilote. S’il est remis à une enquête d’accident, par exemple au SESE ou à l’analyse des accidents de la fédération, c’est la décision du pilote, ou de ses proches en cas de décès. La direction de l’étude le demande et aide à la sauvegarde et à la remise. Elle ne transmet rien qu’elle n’ait reçu du pilote. Ce qu’elle reçoit sert à l’évaluation de la sécurité, pas à juger une faute individuelle. Après un accident, ne pas rallumer l’appareil avant qu’il ait été lu. Les obligations légales sont réservées : la police et le ministère public peuvent saisir l’appareil comme preuve dans une procédure, indépendamment de cette charte.</span></li>
+<li><span data-lang="de"><b>Studienleitung.</b> Die Studienleitung sieht die Auswertungen der Studienpiloten mit Namen, um Gerät und Plattform zu verbessern und Fälle mit den Piloten zu besprechen. In Berichten und Veröffentlichungen der Studienleitung erscheint kein Name. Geteilte Fälle enthalten Ort und Zeit; der Name nur, wenn der Pilot ihn angibt.</span><span data-lang="en"><b>Study lead.</b> The study lead sees the study pilots’ analyses with names in order to improve device and platform and to discuss cases with the pilots. No name appears in the study lead’s reports and publications. Shared cases contain place and time; the name only if the pilot gives it.</span><span data-lang="fr"><b>Direction de l’étude.</b> La direction de l’étude voit les analyses des pilotes de l’étude avec leurs noms, pour améliorer l’appareil et la plateforme et discuter des cas avec les pilotes. Aucun nom n’apparaît dans les rapports et publications de la direction de l’étude. Les cas partagés contiennent le lieu et l’heure ; le nom seulement si le pilote l’indique.</span></li>
+<li><span data-lang="de"><b>Dritte im Bild.</b> Die Kamera blickt nach oben auf Kappe und Hände; andere Piloten können am Bildrand erscheinen. Geteilte Ausschnitte sind kurz und auf die Störung beschränkt; Personen werden nicht identifiziert und nicht gesucht.</span><span data-lang="en"><b>Third parties in the picture.</b> The camera looks up at canopy and hands; other pilots may appear at the edge of the image. Shared excerpts are short and limited to the incident; people are neither identified nor searched for.</span><span data-lang="fr"><b>Tiers dans l’image.</b> La caméra regarde vers le haut, la voile et les mains ; d’autres pilotes peuvent apparaître au bord de l’image. Les extraits partagés sont courts et limités à l’incident ; les personnes ne sont ni identifiées ni recherchées.</span></li>
+<li><span data-lang="de"><b>Auswertung nur als Summe, nie gegen eine Person.</b> Es gibt keine automatische Störungserkennung als Messgrösse und keine Raten je Stunde aus privaten Daten. Die Zahlen entstehen aus Flugbuch, Kasse, Interessenliste, den freiwillig geschickten Fällen und der Unfallstatistik des Verbands.</span><span data-lang="en"><b>Evaluation only in aggregate, never against a person.</b> There is no automatic incident detection as a measure and no rates per hour from private data. The figures come from the logbook, the till, the interest list, the voluntarily sent cases and the federation’s accident statistics.</span><span data-lang="fr"><b>Évaluation uniquement en somme, jamais contre une personne.</b> Il n’y a pas de détection automatique d’incidents comme mesure ni de taux horaires issus de données privées. Les chiffres viennent du carnet de vol, de la caisse, de la liste d’intérêt, des cas envoyés volontairement et de la statistique des accidents de la fédération.</span></li>
+<li><span data-lang="de"><b>Ausstieg.</b> Der Pilot kann jederzeit aus der Studie aussteigen. Seine Aufzeichnungen bleiben bei ihm; die bis dahin gegebenen Flugbuchdaten bleiben ohne Namen in der Summe.</span><span data-lang="en"><b>Leaving.</b> The pilot can leave the study at any time. His recordings stay with him; the logbook data given up to then remain in the aggregate without a name.</span><span data-lang="fr"><b>Sortie.</b> Le pilote peut quitter l’étude à tout moment. Ses enregistrements restent chez lui ; les données de carnet de vol déjà fournies restent dans l’agrégat sans nom.</span></li>
+<li><span data-lang="de"><b>Zentrale Plattform und Verbände.</b> Die Plattform ist eine zentrale Plattform mit Landesbereichen. Diese Charta gilt für sie, wer sie auch betreibt, für jeden Landesbereich und für jede Datenschnittstelle. Verbandsmitgliedschaft und Nutzungsgebühr begründen keinen Zugriff auf Aufnahmen. Verbände sehen in ihrem Landesbereich und über die Schnittstelle nur, was Piloten für diesen Zweck freigegeben haben, und Summen; Freigaben gelten mit ihrem Verwendungszweck auch für Abrufe über die Schnittstelle, und der Zugriff auf geteilte Fälle ist nach Rollen und Freigaben begrenzt. Private Aufzeichnungen bleiben beim Piloten.</span><span data-lang="en"><b>Central platform and federations.</b> The platform is one central platform with national areas. This charter applies to it, whoever runs it, to every national area and to every data interface. Federation membership and usage fees give no access to recordings. In their national area and through the interface, federations see only what pilots have released for that purpose, and aggregates; releases apply with their stated purpose also to retrievals through the interface, and access to shared cases is limited by roles and releases. Private recordings stay with the pilot.</span><span data-lang="fr"><b>Plateforme centrale et fédérations.</b> La plateforme est une plateforme centrale avec des espaces nationaux. Cette charte s’applique à elle, quel que soit son exploitant, à chaque espace national et à chaque interface de données. L’appartenance à une fédération et la redevance d’utilisation ne donnent aucun accès aux enregistrements. Dans leur espace national et par l’interface, les fédérations ne voient que ce que les pilotes ont partagé à cette fin, et des sommes ; les partages valent avec leur finalité aussi pour les consultations par l’interface, et l’accès aux cas partagés est limité selon les rôles et les partages. Les enregistrements privés restent chez le pilote.</span></li>
+</ol>
+<p><span data-lang="de">Änderungen dieser Charta gelten nur mit neuer Unterschrift des Piloten. Ansprechperson für Fragen zu Daten: die Studienleitung, joergkorner@gmail.com.</span><span data-lang="en">Changes to this charter take effect only with a new signature from the pilot. Contact for data questions: the study lead, joergkorner@gmail.com.</span><span data-lang="fr">Les modifications de cette charte ne s’appliquent qu’avec une nouvelle signature du pilote. Contact pour les questions de données : la direction de l’étude, joergkorner@gmail.com.</span></p>
+<p class="kicker" style="margin-top:40px"><a href="./"><span data-lang="de">zurück zum Vorhaben</span><span data-lang="en">back to the project</span><span data-lang="fr">retour au projet</span></a></p>
+</div>
+</main>
+
+<script>
+(function(){
+  var KEY='joerxc_lang', html=document.documentElement;
+  var descriptions={de:'Parabox: Datencharta für Studienpiloten, Entwurf. Freigaben, Zugriff, Studie, Ausstieg und Ereignisaufzeichnungen.',fr:'Parabox : charte des données pour les pilotes de l’étude, projet. Partages, accès, étude, retrait et enregistrements d’événements.',en:'Parabox: data charter for study pilots, draft. Releases, access, study, withdrawal and event recordings.'};
+  function valid(l){return Object.prototype.hasOwnProperty.call(descriptions,l);}
+  function wahl(){
+    var q=new URLSearchParams(location.search).get('lang');
+    if(valid(q)) return q;
+    try {var stored=localStorage.getItem(KEY);if(valid(stored)) return stored;} catch(e){}
+    var langs=navigator.languages||[navigator.language||'de'];
+    for(var i=0;i<langs.length;i++){var l=langs[i].slice(0,2).toLowerCase();if(valid(l)) return l;}
+    return 'de';
+  }
+  function setze(l){
+    if(!valid(l)) l='de';
+    html.lang=l;
+    html.classList.toggle('de',l==='de');
+    try{localStorage.setItem(KEY,l);}catch(e){}
+    document.querySelectorAll('[data-choice]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.choice===l));});
+    document.querySelector('meta[name="description"]').content=descriptions[l];
+  }
+  document.querySelectorAll('[data-choice]').forEach(function(b){b.addEventListener('click',function(){setze(b.dataset.choice);});});
+  setze(wahl());
+})();
+</script>
+</body>
+</html>
