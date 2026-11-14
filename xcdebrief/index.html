@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de" class="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XCDebrief-Studie</title>
+<meta name="description" content="">
+<style>
+:root{--bg:#ffffff;--bg2:#f5f5f7;--text:#1d1d1f;--text2:#55555a;--text3:#86868b;--line:rgba(0,0,0,.10);--accent:#1f6fd1;--idea:#5b4bb8;--idea-bg:rgba(110,90,230,.14);--chip:rgba(0,0,0,.055);--red:#d0342c;--sun:#e3a600;--wedge:rgba(31,111,209,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.top{max-width:980px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line)}
+.top .brand{font-weight:600;color:var(--text);font-size:15px}
+.langbtn{margin-left:auto;font:inherit;font-size:13px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer}
+main{max-width:980px;margin:0 auto;padding:40px 20px 80px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 10px}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:0 0 18px;letter-spacing:-.025em;text-wrap:balance}
+h2{font-size:24px;margin:52px 0 12px;letter-spacing:-.015em;text-wrap:balance}
+h3{font-size:18px;margin:26px 0 8px;letter-spacing:-.01em}
+.prose{max-width:68ch}
+.prose p{margin:0 0 14px}
+.lead{font-size:21px;color:var(--text2);line-height:1.45}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:34px 0 10px}.figs figure{margin:0}
+@media (max-width:760px){.figs{grid-template-columns:1fr;gap:28px}}
+.product-concept{box-sizing:border-box;max-width:620px;margin:8px auto 24px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(0,0,0,.08)}.product-concept img{display:block;width:100%;height:auto;border-radius:14px}.product-concept figcaption,.mounting-note{font-size:14.5px;color:var(--text2);line-height:1.5}.product-concept figcaption{margin-top:12px}
+.figs figure{margin:0;min-width:0}
+.figs svg{display:block;width:100%;height:auto;background:var(--bg2);border-radius:14px;border:1px solid var(--line)}
+.figs figcaption{font-size:14.5px;color:var(--text2);margin-top:10px;line-height:1.45}
+.figs figcaption b{color:var(--text);font-weight:600}
+.legend{list-style:none;padding:0;margin:8px 0 0;font-size:13.5px;color:var(--text2)}
+.legend li{display:flex;gap:8px;align-items:baseline;margin:2px 0}
+.legend .n{display:inline-block;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:18px}
+.sv-line{stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sv-thin{stroke:var(--text3);fill:none;stroke-width:1.2;stroke-linecap:round}
+.sv-dash{stroke:var(--accent);fill:none;stroke-width:1.5;stroke-dasharray:4 4}
+.sv-fill{fill:var(--bg);stroke:var(--text);stroke-width:2}
+.sv-soft{fill:var(--chip)}
+.sv-acc{fill:var(--accent)}
+.sv-red{fill:var(--red)}
+.sv-sun{fill:var(--sun)}
+.sv-sunray{stroke:var(--sun);stroke-width:2;stroke-linecap:round}
+.sv-wedge{fill:var(--wedge)}
+.sv-t{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text)}
+.sv-t2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text3)}
+.sv-tw{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:#fff}
+.sv-num{fill:var(--accent)}
+.steps3{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:14px 0 0}
+@media (max-width:760px){.steps3{grid-template-columns:1fr}}
+.steps3 div{min-width:0}
+.steps3 .k{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+.steps3 h3{margin:0 0 6px;font-size:19px}
+.steps3 p{margin:0;color:var(--text2);font-size:16px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:10px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.two>div{min-width:0}
+.two h3{margin-top:0}
+.two p{color:var(--text2);margin:0 0 10px}
+.join{margin-top:40px;padding:28px 26px;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}
+.join li{margin:0 0 14px;max-width:62ch}.join li small{display:block;color:var(--text2);font-size:14px;margin-top:4px}.join ol{padding-left:24px;margin:22px 0}.join h2{margin:0 0 10px}
+.join p{margin:0 0 14px;color:var(--text2);max-width:62ch}
+.btn{display:inline-block;font:inherit;font-weight:600;font-size:18px;color:#fff;background:var(--accent);padding:12px 22px;border-radius:999px;border:0;cursor:pointer}
+.btn:hover{text-decoration:none;filter:brightness(1.08)}
+.addr{display:inline-block;margin:12px 0 0 2px;font-size:15px;color:var(--text2)}
+.addr code{font-size:15px;color:var(--text);background:var(--chip);padding:3px 8px;border-radius:6px;user-select:all}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+.chip{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--text2);background:var(--chip);padding:4px 9px;border-radius:980px;line-height:1.4}
+.chip.dropped{color:#9a4a1f;background:rgba(200,110,40,.14)}
+@media (prefers-color-scheme:dark){.chip.dropped{color:#f0a468}}
+.steps{margin:26px 0 0;max-width:72ch}
+.step{display:grid;grid-template-columns:56px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
+.step:last-child{border-bottom:1px solid var(--line)}
+.step .n{font-size:15px;font-weight:600;color:var(--text3);padding-top:4px}
+.step h3{margin:0 0 8px;font-size:21px;font-weight:600;letter-spacing:-.017em;line-height:1.2}
+.step p{margin:0;color:var(--text2);font-size:16.5px;line-height:1.55}
+.step p+p{margin-top:10px}
+.shot{float:right;width:210px;margin:4px 0 12px 24px}
+.shot img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+.shot figcaption{font-size:12.5px;color:var(--text3);margin-top:6px;line-height:1.4}
+@media (max-width:600px){.shot{float:none;width:200px;margin:0 0 14px}}
+.step .clear{clear:both}
+@media (max-width:600px){.step{grid-template-columns:1fr;gap:8px}}
+.plan{max-width:72ch}
+.plan h3{font-size:18px;margin:30px 0 8px;letter-spacing:-.01em}
+.plan p{margin:0 0 10px;color:var(--text2)}
+table{border-collapse:collapse;width:100%;max-width:72ch;margin:12px 0 6px;font-size:15.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--text3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.sum td{font-weight:600;color:var(--text)}
+.tbl{overflow-x:auto}
+.method{font-size:15px;color:var(--text2);background:var(--bg2);border-radius:10px;padding:14px 18px;max-width:72ch;margin:14px 0}
+details{border-top:1px solid var(--line);padding:6px 0 10px}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-size:20px;font-weight:600;letter-spacing:-.01em;padding:14px 0;list-style:none;display:flex;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"";width:9px;height:9px;border-right:2px solid var(--text3);border-bottom:2px solid var(--text3);transform:rotate(-45deg);transition:transform .15s;flex:none}
+details[open] summary::before{transform:rotate(45deg)}
+summary small{font-size:14px;font-weight:400;color:var(--text3)}
+.end{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);font-size:15px;color:var(--text2)}
+[data-lang]{display:none!important}
+html[lang="de"] [data-lang="de"],html[lang="fr"] [data-lang="fr"],html[lang="en"] [data-lang="en"]{display:revert!important}
+.languages{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.languages button{font:inherit;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--text2);cursor:pointer}
+.languages button[aria-pressed="true"]{background:var(--bg2);border-color:var(--line);color:var(--text);font-weight:600}
+.languages button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.survey-intro{max-width:740px;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);line-height:1.5}
+
+.business-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0 30px}.business-grid article{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:22px}.business-grid h3{margin:0 0 10px;font-size:19px}.business-grid p{margin:0;color:var(--text2);font-size:16px;line-height:1.55}@media(max-width:640px){.business-grid{grid-template-columns:1fr}}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:14px 0 0}
+@media (max-width:760px){.three{grid-template-columns:1fr}}
+.three>div{min-width:0;padding:18px 18px 8px;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
+.three h3{margin:0 0 8px}.three p{color:var(--text2);font-size:16px;margin:0 0 10px}
+.qtab{width:100%;border-collapse:collapse;margin:14px 0 10px;font-size:16px}
+.qtab th,.qtab td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+.qtab th{color:var(--text3);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.qtab td:first-child{font-weight:600;width:38%}
+@media (max-width:640px){.qtab thead{display:none}.qtab tr,.qtab td{display:block;width:auto}.qtab td:first-child{border-bottom:none;padding-bottom:2px}.qtab td{padding-left:0;padding-right:0}}
+.cta{display:inline-block;margin:6px 0 4px;padding:10px 18px;border-radius:999px;background:var(--accent);color:#fff!important;font-weight:600;text-decoration:none!important}
+.src{font-size:14px;color:var(--text2);word-break:break-word}
+</style>
+</head>
+<body>
+<div class="top"><a class="brand" href="https://joerxc.org/">joerxc</a><span style="font-size:15px">XCDebrief</span><nav class="languages" aria-label="Language"><button type="button" data-choice="de" lang="de">Deutsch</button><button type="button" data-choice="fr" lang="fr">Français</button><button type="button" data-choice="en" lang="en">English</button></nav></div>
+<main>
+<p class="kicker"><span data-lang="de">XCDebrief-Studie · Stand November 2026</span><span data-lang="fr">Étude XCDebrief · État novembre 2026</span><span data-lang="en">XCDebrief study · As of November 2026</span></p>
+<h1><span data-lang="de">Eine Studie über die Reaktion in heftiger Luft.</span><span data-lang="fr">Une étude sur la réaction dans l’air turbulent.</span><span data-lang="en">A study of how pilots react in strong turbulence.</span></h1>
+<p class="lead"><span data-lang="de">XCDebrief untersucht, ob Streckenpiloten an Stellen mit heftiger Luft besser reagieren, wenn sie ihre eigenen Aufnahmen ansehen und mit einem Experten besprechen.</span><span data-lang="fr">XCDebrief examine si les pilotes de distance réagissent mieux dans l’air turbulent lorsqu’ils regardent leurs propres enregistrements et les discutent avec un expert.</span><span data-lang="en">XCDebrief examines whether cross-country pilots react better in strong turbulence when they watch their own recordings and discuss them with an expert.</span></p>
+<div class="prose">
+<h2><span data-lang="de">Warum</span><span data-lang="fr">Pourquoi</span><span data-lang="en">Why</span></h2>
+<p><span data-lang="de">Seit 2010 sind laut den Unfallanalysen des Schweizerischen Hängegleiter-Verbands 145 Gleitschirm-, Delta- und Speedflyingpiloten tödlich verunglückt, im Mittel neun im Jahr. 2025 war mit 17 Toten eines der schwersten Jahre. Bei acht der dreizehn tödlichen Gleitschirmunfälle 2025 führte ein Einklapper zum Kontrollverlust. Der Verband nennt den aktiven Flugstil seit Jahren als wichtigstes Gegenmittel.</span><span data-lang="fr">Selon les analyses d’accidents de la Fédération suisse de vol libre, 145 pilotes de parapente, de delta et de speedflying sont morts depuis 2010, en moyenne neuf par an. Avec 17 morts, 2025 a été l’une des années les plus lourdes. Dans huit des treize accidents mortels de parapente de 2025, une fermeture a conduit à la perte de contrôle. La fédération désigne depuis des années le pilotage actif comme la principale parade.</span><span data-lang="en">According to the accident analyses of the Swiss Hang Gliding Association, 145 paraglider, hang glider and speedflying pilots have died since 2010, nine a year on average. With 17 deaths, 2025 was one of the worst years. In eight of the thirteen fatal paragliding accidents of 2025, a collapse led to loss of control. The association has long named active flying as the most important countermeasure.</span></p>
+<p><span data-lang="de">Wie Piloten an Stellen mit heftiger Luft tatsächlich reagieren, wurde bisher nicht systematisch gemessen. In der Luft sieht sich der Pilot nicht selbst. Ob er zum richtigen Zeitpunkt gebremst hat, kann er nachher kaum beurteilen. Das Pendeln von Pilot und Schirm gibt es nur in der Luft; dort muss sein Dämpfen geübt werden.</span><span data-lang="fr">La manière dont les pilotes réagissent réellement dans l’air turbulent n’a pas encore été mesurée de façon systématique. En vol, le pilote ne se voit pas. Il peut difficilement juger après coup s’il a freiné au bon moment. Le balancement du pilote sous la voile n’existe qu’en vol; c’est là que son amortissement doit être exercé.</span><span data-lang="en">How pilots actually react in strong turbulence has not yet been measured systematically. In the air, pilots cannot see themselves. Afterwards they can hardly judge whether they braked at the right moment. The pendulum motion of pilot and wing exists only in flight; that is where damping it has to be practised.</span></p>
+<h2><span data-lang="de">Wie</span><span data-lang="fr">Comment</span><span data-lang="en">How</span></h2>
+<p><span data-lang="de">Die Studie läuft in drei Schritten. Der Pilot fliegt wie immer und zeichnet auf. Dann sieht er seine Aufnahmen und beurteilt seine Reaktion selbst. Schliesslich bespricht er sie mit einem Experten. Zwei Experten bewerten ausgeloste Stellen unabhängig voneinander nach einem gemeinsamen Raster: Zeitpunkt, Stärke und Richtung der Reaktion.</span><span data-lang="fr">L’étude se déroule en trois étapes. Le pilote vole comme d’habitude et enregistre. Ensuite, il regarde ses enregistrements et évalue lui-même sa réaction. Enfin, il en discute avec un expert. Deux experts évaluent indépendamment des passages tirés au sort selon une grille commune: moment, intensité et direction de la réaction.</span><span data-lang="en">The study runs in three steps. Pilots fly as usual and record. Then they watch their recordings and assess their own reaction. Finally they discuss it with an expert. Two experts independently rate randomly drawn passages using a common scheme: timing, strength and direction of the reaction.</span></p>
+<p><span data-lang="de">2028 ist die Vorstudie mit 50 Piloten; sie sehen ihre Aufnahmen gleich nach dem Hochladen. 2029 ist die Hauptstudie mit 200 weiteren Piloten. Dann bekommt jeder seine Aufnahmen an einem ausgelosten Tag zu sehen, damit sich die Zeit davor mit der Zeit danach vergleichen lässt. Gesucht wird das ganze Spektrum der regelmässig fliegenden Streckenpiloten.</span><span data-lang="fr">2028 est l’étude préliminaire avec 50 pilotes; ils voient leurs enregistrements dès le téléchargement. 2029 est l’étude principale avec 200 pilotes de plus. Chacun voit alors ses enregistrements à partir d’un jour tiré au sort, afin de comparer la période avant et la période après. L’étude cherche tout l’éventail des pilotes de distance qui volent régulièrement.</span><span data-lang="en">2028 is the pilot study with 50 pilots; they see their recordings as soon as they upload them. 2029 is the main study with 200 more pilots. Each of them then gets access to their recordings on a randomly drawn day, so that the time before can be compared with the time after. The study looks for the whole range of pilots who fly cross-country regularly.</span></p>
+<h2><span data-lang="de">Das Werkzeug</span><span data-lang="fr">L’outil</span><span data-lang="en">The tool</span></h2>
+<p><span data-lang="de">Aufgezeichnet wird mit einem kleinen, 3D-gedruckten Studiengerät am Gurtzeug. Es filmt Kappe und Hände und zeichnet die Flugdaten auf. Es ist für die Studie gebaut, nicht für den Markt.</span><span data-lang="fr">L’enregistrement se fait avec un petit appareil d’étude imprimé en 3D, fixé à la sellette. Il filme la voile et les mains et enregistre les données de vol. Il est construit pour l’étude, pas pour le marché.</span><span data-lang="en">Recording is done with a small, 3D-printed study device on the harness. It films the wing and the hands and records the flight data. It is built for the study, not for the market.</span></p>
+<h2><span data-lang="de">Die Aufnahmen gehören dem Piloten</span><span data-lang="fr">Les enregistrements appartiennent au pilote</span><span data-lang="en">The recordings belong to the pilot</span></h2>
+<p><span data-lang="de">Die Bilder sind auf dem Gerät verschlüsselt. Hochgeladen werden die Flugdaten und die Bilder der auffälligen Minuten. Andere sehen eine Aufnahme nur, wenn der Pilot sie ausdrücklich freigibt. Seine eigenen Aufnahmen darf er selbst zeigen und veröffentlichen.</span><span data-lang="fr">Les images sont chiffrées sur l’appareil. Sont téléchargées les données de vol et les images des minutes remarquables. Les autres ne voient un enregistrement que si le pilote le libère expressément. Il peut montrer et publier lui-même ses propres enregistrements.</span><span data-lang="en">Images are encrypted on the device. What is uploaded are the flight data and the images of conspicuous minutes. Others see a recording only if the pilot explicitly releases it. Pilots may show and publish their own recordings themselves.</span></p>
+<h2><span data-lang="de">Stand</span><span data-lang="fr">État</span><span data-lang="en">Status</span></h2>
+<p><span data-lang="de">Die Studie wird Ende November 2026 beim Bundesamt für Zivilluftfahrt (BAZL) zur Förderung aus der Spezialfinanzierung Luftverkehr eingereicht. Eine Förderung ist nicht zugesagt; ein Entscheid wird im Lauf des Jahres 2027 erwartet. Die Anmeldung für Piloten öffnet erst nach einer Zusage.</span><span data-lang="fr">L’étude sera soumise fin novembre 2026 à l’Office fédéral de l’aviation civile (OFAC) en vue d’un soutien au titre du financement spécial du trafic aérien. Aucun soutien n’est encore accordé; une décision est attendue dans le courant de 2027. L’inscription des pilotes n’ouvrira qu’après un accord.</span><span data-lang="en">The study will be submitted at the end of November 2026 to the Federal Office of Civil Aviation (FOCA) for funding from the Special Financing for Aviation. No funding has been granted yet; a decision is expected during 2027. Registration for pilots will open only after approval.</span></p>
+<h2><span data-lang="de">Kontakt</span><span data-lang="fr">Contact</span><span data-lang="en">Contact</span></h2>
+<p><span data-lang="de">Jörg Korner, Basel, Streckenpilot · <a href="mailto:joergkorner@gmail.com">joergkorner@gmail.com</a></span><span data-lang="fr">Jörg Korner, Bâle, pilote de distance · <a href="mailto:joergkorner@gmail.com">joergkorner@gmail.com</a></span><span data-lang="en">Jörg Korner, Basel, cross-country pilot · <a href="mailto:joergkorner@gmail.com">joergkorner@gmail.com</a></span></p>
+<p class="src"><span data-lang="de">Quelle</span><span data-lang="fr">Source</span><span data-lang="en">Source</span>: <a href="https://www.shv-fsvl.ch/fileadmin/files/redakteure/Allgemein/Sicherheit/Unfallmeldungen/Unfallanalysen/2025.pdf"><span data-lang="de">SHV, Unfallanalyse 2025</span><span data-lang="fr">FSVL, analyse des accidents 2025</span><span data-lang="en">SHV, accident analysis 2025</span></a></p>
+</div>
+</main>
+<script>
+(function(){
+  var KEY='joerxc_lang', html=document.documentElement;
+  var descriptions={"de": "XCDebrief-Studie: Reaktion von Streckenpiloten in heftiger Luft, Eigenanalyse und Gespräch mit Experten, 2028 und 2029.", "fr": "Étude XCDebrief : réaction des pilotes de distance dans l’air turbulent, auto-analyse et entretien avec des experts, 2028 et 2029.", "en": "XCDebrief study: how cross-country pilots react in strong turbulence, self-analysis and expert debriefing, 2028 and 2029."};
+  function valid(l){return Object.prototype.hasOwnProperty.call(descriptions,l);}
+  function wahl(){
+    var q=new URLSearchParams(location.search).get('lang');
+    if(valid(q)) return q;
+    try {var stored=localStorage.getItem(KEY);if(valid(stored)) return stored;} catch(e){}
+    var langs=navigator.languages||[navigator.language||'de'];
+    for(var i=0;i<langs.length;i++){var l=langs[i].slice(0,2).toLowerCase();if(valid(l)) return l;}
+    return 'de';
+  }
+  function setze(l){
+    if(!valid(l)) l='de';
+    html.lang=l;
+    html.classList.toggle('de',l==='de');
+    try{localStorage.setItem(KEY,l);}catch(e){}
+    document.querySelectorAll('[data-choice]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.choice===l));});
+    document.querySelector('meta[name="description"]').content=descriptions[l];
+  }
+  document.querySelectorAll('[data-choice]').forEach(function(b){b.addEventListener('click',function(){setze(b.dataset.choice);});});
+  setze(wahl());
+})();
+</script>
+</body>
+</html>
