@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de" class="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warum ein eigenes Studiengerät</title>
+<meta name="description" content="">
+<style>
+:root{--bg:#ffffff;--bg2:#f5f5f7;--text:#1d1d1f;--text2:#55555a;--text3:#86868b;--line:rgba(0,0,0,.10);--accent:#1f6fd1;--idea:#5b4bb8;--idea-bg:rgba(110,90,230,.14);--chip:rgba(0,0,0,.055);--red:#d0342c;--sun:#e3a600;--wedge:rgba(31,111,209,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--bg2:#121214;--text:#f5f5f7;--text2:#b4b4b9;--text3:#8e8e93;--line:rgba(255,255,255,.14);--accent:#4da3ff;--idea:#b0a4ff;--idea-bg:rgba(110,90,230,.22);--chip:rgba(255,255,255,.09);--red:#ff5f55;--sun:#f0bb2a;--wedge:rgba(77,163,255,.12);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.top{max-width:980px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line)}
+.top .brand{font-weight:600;color:var(--text);font-size:15px}
+.langbtn{margin-left:auto;font:inherit;font-size:13px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);color:var(--text);cursor:pointer}
+main{max-width:980px;margin:0 auto;padding:40px 20px 80px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 10px}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:0 0 18px;letter-spacing:-.025em;text-wrap:balance}
+h2{font-size:24px;margin:52px 0 12px;letter-spacing:-.015em;text-wrap:balance}
+h3{font-size:18px;margin:26px 0 8px;letter-spacing:-.01em}
+.prose{max-width:68ch}
+.prose p{margin:0 0 14px}
+.lead{font-size:21px;color:var(--text2);line-height:1.45}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:34px 0 10px}.figs figure{margin:0}
+@media (max-width:760px){.figs{grid-template-columns:1fr;gap:28px}}
+.product-concept{box-sizing:border-box;max-width:620px;margin:8px auto 24px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 28px rgba(0,0,0,.08)}.product-concept img{display:block;width:100%;height:auto;border-radius:14px}.product-concept figcaption,.mounting-note{font-size:14.5px;color:var(--text2);line-height:1.5}.product-concept figcaption{margin-top:12px}
+.figs figure{margin:0;min-width:0}
+.figs svg{display:block;width:100%;height:auto;background:var(--bg2);border-radius:14px;border:1px solid var(--line)}
+.figs figcaption{font-size:14.5px;color:var(--text2);margin-top:10px;line-height:1.45}
+.figs figcaption b{color:var(--text);font-weight:600}
+.legend{list-style:none;padding:0;margin:8px 0 0;font-size:13.5px;color:var(--text2)}
+.legend li{display:flex;gap:8px;align-items:baseline;margin:2px 0}
+.legend .n{display:inline-block;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:18px}
+.sv-line{stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sv-thin{stroke:var(--text3);fill:none;stroke-width:1.2;stroke-linecap:round}
+.sv-dash{stroke:var(--accent);fill:none;stroke-width:1.5;stroke-dasharray:4 4}
+.sv-fill{fill:var(--bg);stroke:var(--text);stroke-width:2}
+.sv-soft{fill:var(--chip)}
+.sv-acc{fill:var(--accent)}
+.sv-red{fill:var(--red)}
+.sv-sun{fill:var(--sun)}
+.sv-sunray{stroke:var(--sun);stroke-width:2;stroke-linecap:round}
+.sv-wedge{fill:var(--wedge)}
+.sv-t{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text)}
+.sv-t2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:var(--text3)}
+.sv-tw{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Segoe UI,Roboto,sans-serif;fill:#fff}
+.sv-num{fill:var(--accent)}
+.steps3{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:14px 0 0}
+@media (max-width:760px){.steps3{grid-template-columns:1fr}}
+.steps3 div{min-width:0}
+.steps3 .k{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+.steps3 h3{margin:0 0 6px;font-size:19px}
+.steps3 p{margin:0;color:var(--text2);font-size:16px;line-height:1.5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:10px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.two>div{min-width:0}
+.two h3{margin-top:0}
+.two p{color:var(--text2);margin:0 0 10px}
+.join{margin-top:40px;padding:28px 26px;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}
+.join li{margin:0 0 14px;max-width:62ch}.join li small{display:block;color:var(--text2);font-size:14px;margin-top:4px}.join ol{padding-left:24px;margin:22px 0}.join h2{margin:0 0 10px}
+.join p{margin:0 0 14px;color:var(--text2);max-width:62ch}
+.btn{display:inline-block;font:inherit;font-weight:600;font-size:18px;color:#fff;background:var(--accent);padding:12px 22px;border-radius:999px;border:0;cursor:pointer}
+.btn:hover{text-decoration:none;filter:brightness(1.08)}
+.addr{display:inline-block;margin:12px 0 0 2px;font-size:15px;color:var(--text2)}
+.addr code{font-size:15px;color:var(--text);background:var(--chip);padding:3px 8px;border-radius:6px;user-select:all}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+.chip{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--text2);background:var(--chip);padding:4px 9px;border-radius:980px;line-height:1.4}
+.chip.dropped{color:#9a4a1f;background:rgba(200,110,40,.14)}
+@media (prefers-color-scheme:dark){.chip.dropped{color:#f0a468}}
+.steps{margin:26px 0 0;max-width:72ch}
+.step{display:grid;grid-template-columns:56px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
+.step:last-child{border-bottom:1px solid var(--line)}
+.step .n{font-size:15px;font-weight:600;color:var(--text3);padding-top:4px}
+.step h3{margin:0 0 8px;font-size:21px;font-weight:600;letter-spacing:-.017em;line-height:1.2}
+.step p{margin:0;color:var(--text2);font-size:16.5px;line-height:1.55}
+.step p+p{margin-top:10px}
+.shot{float:right;width:210px;margin:4px 0 12px 24px}
+.shot img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+.shot figcaption{font-size:12.5px;color:var(--text3);margin-top:6px;line-height:1.4}
+@media (max-width:600px){.shot{float:none;width:200px;margin:0 0 14px}}
+.step .clear{clear:both}
+@media (max-width:600px){.step{grid-template-columns:1fr;gap:8px}}
+.plan{max-width:72ch}
+.plan h3{font-size:18px;margin:30px 0 8px;letter-spacing:-.01em}
+.plan p{margin:0 0 10px;color:var(--text2)}
+table{border-collapse:collapse;width:100%;max-width:72ch;margin:12px 0 6px;font-size:15.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--text3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.sum td{font-weight:600;color:var(--text)}
+.tbl{overflow-x:auto}
+.method{font-size:15px;color:var(--text2);background:var(--bg2);border-radius:10px;padding:14px 18px;max-width:72ch;margin:14px 0}
+details{border-top:1px solid var(--line);padding:6px 0 10px}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-size:20px;font-weight:600;letter-spacing:-.01em;padding:14px 0;list-style:none;display:flex;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"";width:9px;height:9px;border-right:2px solid var(--text3);border-bottom:2px solid var(--text3);transform:rotate(-45deg);transition:transform .15s;flex:none}
+details[open] summary::before{transform:rotate(45deg)}
+summary small{font-size:14px;font-weight:400;color:var(--text3)}
+.end{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);font-size:15px;color:var(--text2)}
+[data-lang]{display:none!important}
+html[lang="de"] [data-lang="de"],html[lang="fr"] [data-lang="fr"],html[lang="en"] [data-lang="en"]{display:revert!important}
+.languages{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.languages button{font:inherit;font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--text2);cursor:pointer}
+.languages button[aria-pressed="true"]{background:var(--bg2);border-color:var(--line);color:var(--text);font-weight:600}
+.languages button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.survey-intro{max-width:740px;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);line-height:1.5}
+
+.business-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0 30px}.business-grid article{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:22px}.business-grid h3{margin:0 0 10px;font-size:19px}.business-grid p{margin:0;color:var(--text2);font-size:16px;line-height:1.55}@media(max-width:640px){.business-grid{grid-template-columns:1fr}}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:14px 0 0}
+@media (max-width:760px){.three{grid-template-columns:1fr}}
+.three>div{min-width:0;padding:18px 18px 8px;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
+.three h3{margin:0 0 8px}.three p{color:var(--text2);font-size:16px;margin:0 0 10px}
+.qtab{width:100%;border-collapse:collapse;margin:14px 0 10px;font-size:16px}
+.qtab th,.qtab td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+.qtab th{color:var(--text3);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.qtab td:first-child{font-weight:600;width:38%}
+@media (max-width:640px){.qtab thead{display:none}.qtab tr,.qtab td{display:block;width:auto}.qtab td:first-child{border-bottom:none;padding-bottom:2px}.qtab td{padding-left:0;padding-right:0}}
+.cta{display:inline-block;margin:6px 0 4px;padding:10px 18px;border-radius:999px;background:var(--accent);color:#fff!important;font-weight:600;text-decoration:none!important}
+.src{font-size:14px;color:var(--text2);word-break:break-word}
+</style><style>table.w{border-collapse:collapse;width:100%;margin:12px 0 20px;font-size:15px;display:block;overflow-x:auto}table.w th,table.w td{text-align:left;padding:7px 10px 7px 0;border-bottom:1px solid var(--line);vertical-align:top}table.w td.r,table.w th.r{text-align:right}@media (max-width:600px){table.w{font-size:13px}}table.w th{font-weight:600;color:var(--text2)}</style>
+</head>
+<body>
+<div class="top"><a class="brand" href="https://joerxc.org/">joerxc</a><a href="./" style="font-size:15px">XCDebrief</a><nav class="languages" aria-label="Language"><button type="button" data-choice="de" lang="de">Deutsch</button><button type="button" data-choice="fr" lang="fr">Français</button><button type="button" data-choice="en" lang="en">English</button></nav></div>
+<main>
+<p class="kicker"><span data-lang="de">XCDebrief-Studie · Werkzeug</span><span data-lang="fr">Étude XCDebrief · Outil</span><span data-lang="en">XCDebrief study · The tool</span></p>
+<h1><span data-lang="de">Warum ein eigenes Studiengerät?</span><span data-lang="fr">Pourquoi un appareil d’étude propre ?</span><span data-lang="en">Why a dedicated study device?</span></h1>
+<p class="lead"><span data-lang="de">Könnte man die Studie nicht mit einer handelsüblichen Actionkamera und einem Variometer machen? Wir haben die günstigste Lösung durchgerechnet, die überhaupt in Frage kommt: eine Actionkamera mit eingebautem GPS, damit ihr Video zur Flugspur passt, ein einheitliches Variometer, eine Powerbank und eine grosse Speicherkarte. Leicht geneigt montiert sieht die Kamera Kappe und Oberkörper wie das Studiengerät. Trotzdem geht es nicht, und zwar aus mehreren Gründen zugleich.</span><span data-lang="fr">Ne pourrait-on pas mener l’étude avec une caméra d’action du commerce et un variomètre ? Nous avons calculé la solution la moins chère qui entre en ligne de compte : une caméra d’action avec GPS intégré, pour que sa vidéo corresponde à la trace, un variomètre uniforme, une batterie externe et une grande carte mémoire. Montée légèrement inclinée, la caméra voit la voile et le haut du corps comme l’appareil d’étude. Cela ne fonctionne pourtant pas, et pour plusieurs raisons à la fois.</span><span data-lang="en">Could the study not be done with a commercial action camera and a variometer? We worked through the cheapest solution that comes into question at all: an action camera with built-in GPS, so that its video matches the track, a uniform variometer, a power bank and a large memory card. Mounted at a slight tilt, the camera sees the wing and the upper body like the study device. It still does not work, for several reasons at once.</span></p>
+<div class="prose">
+<h2><span data-lang="de">Arbeit vor und nach jedem Flug</span><span data-lang="fr">Du travail avant et après chaque vol</span><span data-lang="en">Work before and after every flight</span></h2>
+<p><span data-lang="de">Die Kamera hält bei 1080p gut zweieinhalb Stunden. Ein mittlerer Streckenflug dauert 3,6 Stunden, ein langer 10. Aus Druck- und GPS-Höhe der Wallis-Flüge ergibt sich, dass die Luft beim Fliegen im Median nur rund 8 Grad hat, in einem Zehntel der Flugzeit unter null (<a href="https://doi.org/10.31223/X5PJ7S">Korner 2026</a>). Die Kamera braucht deshalb eine Powerbank am Kabel. Vor jedem Flug müssen Kamera und Powerbank geladen, angeschlossen und eingeschaltet sein, nach jedem Flug wieder geladen werden. Jeder vergessene Schritt kostet einen Flug. Das Studiengerät wird einmal montiert, lädt sich mit Solarzellen und läuft ohne Zutun mit.</span><span data-lang="fr">La caméra tient un peu plus de deux heures et demie en 1080p. Un vol de distance moyen dure 3,6 heures, un long 10 heures. La pression et l’altitude GPS des vols valaisans montrent que l’air en vol n’a en médiane qu’environ 8 degrés, et moins de zéro pendant un dixième du temps de vol (<a href="https://doi.org/10.31223/X5PJ7S">Korner 2026</a>). La caméra a donc besoin d’une batterie externe reliée par câble. Avant chaque vol, caméra et batterie doivent être chargées, branchées et allumées, après chaque vol rechargées. Chaque étape oubliée coûte un vol. L’appareil d’étude est monté une fois, se recharge par cellules solaires et fonctionne sans intervention.</span><span data-lang="en">The camera lasts a little over two and a half hours at 1080p. An average cross-country flight lasts 3.6 hours, a long one 10. Pressure and GPS altitude of the Valais flights show that the air in flight is only about 8 degrees in the median, and below zero for a tenth of the flight time (<a href="https://doi.org/10.31223/X5PJ7S">Korner 2026</a>). The camera therefore needs a power bank on a cable. Before every flight, camera and power bank must be charged, connected and switched on, and recharged after every flight. Every forgotten step costs a flight. The study device is mounted once, charges from solar cells and runs without any action.</span></p>
+<h2><span data-lang="de">Laptop und Stunden für das Auslesen</span><span data-lang="fr">Un ordinateur portable et des heures de lecture</span><span data-lang="en">A laptop and hours for reading out</span></h2>
+<table class="w"><tr><th></th><th class="r"><span data-lang="de">Actionkamera</span><span data-lang="fr">Caméra d’action</span><span data-lang="en">Action camera</span></th><th class="r"><span data-lang="de">Studiengerät</span><span data-lang="fr">Appareil d’étude</span><span data-lang="en">Study device</span></th></tr><tr><td><span data-lang="de">Daten je mittlerem Flug</span><span data-lang="fr">Données par vol moyen</span><span data-lang="en">Data per average flight</span></td><td class="r"><span data-lang="de">rund 50 GB</span><span data-lang="fr">environ 50 Go</span><span data-lang="en">about 50 GB</span></td><td class="r"><span data-lang="de">wenige MB</span><span data-lang="fr">quelques Mo</span><span data-lang="en">a few MB</span></td></tr><tr><td><span data-lang="de">Daten je langem Flug</span><span data-lang="fr">Données par long vol</span><span data-lang="en">Data per long flight</span></td><td class="r"><span data-lang="de">rund 135 GB</span><span data-lang="fr">environ 135 Go</span><span data-lang="en">about 135 GB</span></td><td class="r"><span data-lang="de">wenige MB</span><span data-lang="fr">quelques Mo</span><span data-lang="en">a few MB</span></td></tr><tr><td><span data-lang="de">Karte 1 TB voll nach</span><span data-lang="fr">Carte de 1 To pleine après</span><span data-lang="en">1 TB card full after</span></td><td class="r"><span data-lang="de">rund 20 Flügen</span><span data-lang="fr">environ 20 vols</span><span data-lang="en">about 20 flights</span></td><td class="r"><span data-lang="de">einer Saison und mehr</span><span data-lang="fr">une saison et plus</span><span data-lang="en">a season and more</span></td></tr><tr><td><span data-lang="de">Auslesen eines Monats</span><span data-lang="fr">Lecture d’un mois</span><span data-lang="en">Reading out a month</span></td><td class="r"><span data-lang="de">rund 3 h, Laptop mit 1 TB frei</span><span data-lang="fr">environ 3 h, portable avec 1 To libre</span><span data-lang="en">about 3 h, laptop with 1 TB free</span></td><td class="r"><span data-lang="de">Minuten</span><span data-lang="fr">minutes</span><span data-lang="en">minutes</span></td></tr></table>
+<p><span data-lang="de">Ein Programm auf dem Laptop könnte aus dem Video die Minuten mit heftiger Luft herausschneiden. Der Pilot braucht dafür aber einen Laptop mit viel Speicher und Stunden Zeit, auch auf Flugreisen; ist die Karte voll, gehen die nächsten Flüge verloren. Das Studiengerät nimmt Bild, Lage und Flugdaten mit einem einzigen Mikrocontroller auf derselben Uhr auf. Die Minuten mit heftiger Luft lassen sich in seinen Messwerten automatisch finden, und beim Anschliessen werden nur diese Bilder geholt. Gelöscht wird nichts; auch Unerwartetes, etwa ein Helikopter in der Nähe, bleibt erhalten.</span><span data-lang="fr">Un programme sur l’ordinateur portable pourrait découper dans la vidéo les minutes d’air turbulent. Mais le pilote a besoin pour cela d’un portable avec beaucoup de mémoire et de plusieurs heures, même en voyage ; si la carte est pleine, les vols suivants sont perdus. L’appareil d’étude enregistre image, attitude et données de vol avec un seul microcontrôleur sur la même horloge. Les minutes d’air turbulent se trouvent automatiquement dans ses mesures, et seules ces images sont récupérées. Rien n’est effacé ; l’imprévu, par exemple un hélicoptère à proximité, est conservé.</span><span data-lang="en">A program on the laptop could cut the minutes of strong turbulence out of the video. But the pilot needs a laptop with plenty of storage and hours of time, also when travelling; once the card is full, the next flights are lost. The study device records image, attitude and flight data with a single microcontroller on the same clock. The minutes of strong turbulence are found automatically in its measurements, and only those images are retrieved. Nothing is deleted; the unexpected, such as a helicopter nearby, is kept.</span></p>
+<h2><span data-lang="de">Wer mitmachen würde</span><span data-lang="fr">Qui participerait</span><span data-lang="en">Who would take part</span></h2>
+<p><span data-lang="de">Eine Saison lang vor und nach jedem Flug Kamera und Powerbank zu bedienen und regelmässig Video zu kopieren, nehmen vor allem sehr disziplinierte Piloten mit Laptop auf sich. Die Studie will aber das ganze Spektrum der Streckenpiloten, auch die, die einfach anziehen und losfliegen. Eine nach Disziplin ausgewählte Gruppe kann nicht zeigen, was die Methode für die Piloten im Allgemeinen bringt.</span><span data-lang="fr">Manipuler caméra et batterie avant et après chaque vol pendant toute une saison et copier régulièrement la vidéo, ce sont surtout des pilotes très disciplinés et équipés d’un portable qui l’accepteraient. Or l’étude veut tout l’éventail des pilotes de distance, y compris ceux qui s’équipent et décollent simplement. Un groupe sélectionné sur la discipline ne peut pas montrer ce que la méthode apporte aux pilotes en général.</span><span data-lang="en">Operating camera and power bank before and after every flight for a whole season and copying video regularly is something mainly very disciplined pilots with a laptop would take on. But the study wants the whole range of cross-country pilots, including those who just gear up and fly. A group selected by discipline cannot show what the method does for pilots in general.</span></p>
+<h2><span data-lang="de">Platz, Gewicht und Vergessen</span><span data-lang="fr">Place, poids et oubli</span><span data-lang="en">Space, weight and forgetting</span></h2>
+<p><span data-lang="de">Kamera, Variometer, Powerbank und Kabel wiegen rund 600 g und müssen im engen, verkleideten Cockpit eines Liegegurtzeugs Platz finden. Das Studiengerät wiegt rund 100 g, misst etwa 6 × 6 Zentimeter und hat keinen Knopf und keine Anzeige; nach wenigen Flügen denkt niemand mehr daran. Eine Kamera, die man vor jedem Flug vorbereitet, erinnert jedes Mal daran, dass man gefilmt wird. Wer weiss, dass er beobachtet wird, verhält sich oft anders.</span><span data-lang="fr">Caméra, variomètre, batterie et câbles pèsent environ 600 g et doivent trouver place dans le cockpit étroit et caréné d’une sellette couchée. L’appareil d’étude pèse environ 100 g, mesure environ 6 × 6 centimètres et n’a ni bouton ni écran ; après quelques vols, plus personne n’y pense. Une caméra qu’on prépare avant chaque vol rappelle à chaque fois qu’on est filmé. Qui se sait observé se comporte souvent autrement.</span><span data-lang="en">Camera, variometer, power bank and cables weigh about 600 g and have to fit into the narrow, faired cockpit of a pod harness. The study device weighs about 100 g, measures about 6 × 6 centimetres and has no button and no display; after a few flights nobody thinks about it. A camera you prepare before every flight reminds you each time that you are being filmed. People who know they are being observed often behave differently.</span></p>
+<h2><span data-lang="de">Ein Barometer ist zwingend</span><span data-lang="fr">Un baromètre est indispensable</span><span data-lang="en">A barometer is essential</span></h2>
+<p><span data-lang="de">Die Erkennung der heftigen Luft beruht auf dem Luftdruck. Die Kamera hat GPS und einen Lagesensor, aber keinen Drucksensor. Deshalb braucht die Kombination zwingend ein einheitliches Variometer. Uneinheitliche Geräte gehen nicht: Bei gleicher Luft zeigen die Variometer verschiedener Hersteller bis hundertfach verschieden viele heftige Stellen.</span><span data-lang="fr">La détection de l’air turbulent repose sur la pression. La caméra a un GPS et un capteur d’attitude, mais pas de capteur de pression. La combinaison exige donc un variomètre uniforme. Des appareils hétérogènes ne conviennent pas : dans le même air, les variomètres de différents fabricants indiquent jusqu’à cent fois plus ou moins de passages turbulents.</span><span data-lang="en">Detecting strong turbulence relies on air pressure. The camera has GPS and an attitude sensor, but no pressure sensor. The combination therefore needs a uniform variometer. Mixed instruments do not work: in the same air, variometers of different makers show up to a hundredfold different numbers of turbulent passages.</span></p>
+<h2><span data-lang="de">Weniger Disziplin heisst mehr Einkäufe</span><span data-lang="fr">Moins de discipline, plus d’achats</span><span data-lang="en">Less discipline means more purchases</span></h2>
+<p><span data-lang="de">Je Pilot ist die Kombination billiger, rund 1’260 gegen 1’690 Franken. Weil aber Flüge verloren gehen, braucht die Studie für dieselbe Aussagekraft mehr Piloten, und jeder braucht seine eigene Ausrüstung. Kommt mit der Kamera die Hälfte der Flugkilometer an, sind es rund 350 statt 200 Piloten und rund 510’000 statt 425’000 Franken; bei schwacher Disziplin rund 800’000. Billiger wäre die Kombination nur mit sehr disziplinierten Teilnehmern, also genau mit der Auswahl, die die Studie vermeiden muss.</span><span data-lang="fr">Par pilote, la combinaison est moins chère, environ 1’260 contre 1’690 francs. Mais comme des vols se perdent, l’étude a besoin de plus de pilotes pour la même puissance, et chacun a besoin de son propre équipement. Si la moitié des kilomètres de vol arrive avec la caméra, il faut environ 350 pilotes au lieu de 200 et environ 510’000 francs au lieu de 425’000 ; avec une faible discipline, environ 800’000. La combinaison ne serait moins chère qu’avec des participants très disciplinés, soit exactement la sélection que l’étude doit éviter.</span><span data-lang="en">Per pilot the combination is cheaper, about 1,260 against 1,690 francs. But because flights are lost, the study needs more pilots for the same statistical power, and each needs their own equipment. If half of the flight kilometres arrive with the camera, that is about 350 instead of 200 pilots and about 510,000 instead of 425,000 francs; with weak discipline about 800,000. The combination would only be cheaper with very disciplined participants, which is exactly the selection the study must avoid.</span></p>
+<p class="src"><span data-lang="de">Ausführlich mit allen Annahmen in der Beilage «Handelsübliche Kameras und Variometer» zum Gesuch, November 2026.</span><span data-lang="fr">En détail, avec toutes les hypothèses, dans l’annexe «&nbsp;Caméras et variomètres du commerce&nbsp;» de la demande, novembre 2026.</span><span data-lang="en">In detail, with all assumptions, in the appendix “Commercial cameras and variometers” to the application, November 2026.</span> · <a href="./"><span data-lang="de">Zur Studie</span><span data-lang="fr">Vers l’étude</span><span data-lang="en">To the study</span></a></p>
+</div>
+</main>
+<script>
+(function(){
+  var KEY='joerxc_lang', html=document.documentElement;
+  var descriptions={"de": "Warum die XCDebrief-Studie ein eigenes Studiengerät braucht und nicht mit einer Actionkamera auskommt.", "fr": "Pourquoi l’étude XCDebrief a besoin d’un appareil propre plutôt que d’une caméra d’action.", "en": "Why the XCDebrief study needs a dedicated device rather than an action camera."};
+  function valid(l){return Object.prototype.hasOwnProperty.call(descriptions,l);}
+  function wahl(){
+    var q=new URLSearchParams(location.search).get('lang');
+    if(valid(q)) return q;
+    try {var stored=localStorage.getItem(KEY);if(valid(stored)) return stored;} catch(e){}
+    var langs=navigator.languages||[navigator.language||'de'];
+    for(var i=0;i<langs.length;i++){var l=langs[i].slice(0,2).toLowerCase();if(valid(l)) return l;}
+    return 'de';
+  }
+  function setze(l){
+    if(!valid(l)) l='de';
+    html.lang=l;
+    html.classList.toggle('de',l==='de');
+    try{localStorage.setItem(KEY,l);}catch(e){}
+    document.querySelectorAll('[data-choice]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.choice===l));});
+    document.querySelector('meta[name="description"]').content=descriptions[l];
+  }
+  document.querySelectorAll('[data-choice]').forEach(function(b){b.addEventListener('click',function(){setze(b.dataset.choice);});});
+  setze(wahl());
+})();
+</script>
+</body>
+</html>
