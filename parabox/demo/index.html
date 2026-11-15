@@ -122,7 +122,6 @@ html.de [data-lang="en"]{display:none!important}
   <select id="rate"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></span>
   <button id="b_mark" class="mk" title="Marke an diesem Bild setzen">⌖ <span data-lang="de">Marke</span><span data-lang="en">Mark</span></button>
   <button id="b_rel" class="rel"><span data-lang="de">Freigabe</span><span data-lang="en">Release</span></button>
-  <button id="b_down" class="dn"><span data-lang="de">Nachbesprechung ↓</span><span data-lang="en">Debrief ↓</span></button>
 </div>
 <div class="flags" id="flags"></div>
 
@@ -154,79 +153,17 @@ html.de [data-lang="en"]{display:none!important}
 </div>
 
 
-<div class="debrief" id="debrief">
-<h2><span data-lang="de">Nachbesprechung</span><span data-lang="en">Debrief</span></h2>
-<p class="lead"><span data-lang="de">Beim Freigeben beantwortet der Pilot fünf Fragen und markiert, was er will. Störungen mit Kontrollverlust bekommen innert einer Woche eine Einordnung durch einen SIV-Lehrer, direkt hier. Teilen kann der Pilot mit wem er will, per Link.</span><span data-lang="en">On release the pilot answers five questions and marks what he wants. Incidents with loss of control get an assessment by an SIV instructor within a week, right here. The pilot can share with whom he wants, by link.</span></p>
-<div class="dcols">
-  <div class="dcol">
-    <h3><span data-lang="de">Fünf Fragen des Piloten (Beispiel)</span><span data-lang="en">The pilot's five questions (example)</span></h3>
-    <div class="q"><label><span data-lang="de">Flugphase</span><span data-lang="en">Flight phase</span></label>
-      <select data-lang="de"><option>Sicherheitstraining, Manöver</option><option>Thermikflug</option><option>Gleiten</option><option>Start</option><option>Landung</option></select>
-      <select data-lang="en"><option>SIV course, manoeuvre</option><option>Thermalling</option><option>Gliding</option><option>Launch</option><option>Landing</option></select></div>
-    <div class="q"><label><span data-lang="de">Was die Kappe tat</span><span data-lang="en">What the canopy did</span></label>
-      <textarea data-lang="de">Dynamische Kurve, dann Spirale, drei Umdrehungen, bis 16 m/s Sinken.</textarea>
-      <textarea data-lang="en">Dynamic turn, then spiral, three turns, sink up to 16 m/s.</textarea></div>
-    <div class="q"><label><span data-lang="de">Was ich tat</span><span data-lang="en">What I did</span></label>
-      <textarea data-lang="de">Spirale eingeleitet wie geübt; Ausleitung erst nach der dritten Umdrehung, weil ich den Horizont verloren hatte.</textarea>
-      <textarea data-lang="en">Entered the spiral as practised; exit only after the third turn because I had lost the horizon.</textarea></div>
-    <div class="q"><label><span data-lang="de">Was ich heute anders machen würde</span><span data-lang="en">What I would do differently today</span></label>
-      <textarea data-lang="de">Nach einer Umdrehung weich ausleiten, Blick nach vorn statt auf den See.</textarea>
-      <textarea data-lang="en">Exit softly after one turn, eyes forward instead of on the lake.</textarea></div>
-    <div class="q"><label><span data-lang="de">Bedingungen</span><span data-lang="en">Conditions</span></label>
-      <textarea data-lang="de">Ruhige Luft, Sicherheitstraining über dem Brienzersee.</textarea>
-      <textarea data-lang="en">Calm air, SIV course over Lake Brienz.</textarea></div>
-    <h3 style="margin-top:12px"><span data-lang="de">Bildmarken</span><span data-lang="en">Image marks</span></h3>
-    <ul class="marks" id="marks"><li class="none"><span data-lang="de">Noch keine. Im Player ein Bild anhalten und «Marke» drücken.</span><span data-lang="en">None yet. Stop at a frame in the player and press "Mark".</span></li></ul>
-  </div>
-  <div class="dcol">
-    <h3><span data-lang="de">Einordnung durch SIV-Lehrer (Beispiel)</span><span data-lang="en">Assessment by SIV instructor (example)</span></h3>
-    <div class="exp">
-      <span data-lang="de">Die Spirale ist sauber eingeleitet. Ab 52 s hängt die Kappe weit vorn, die Hände bleiben tief, das Sinken steigt auf 16 m/s; das ist der Punkt, an dem die Spirale stabil wird und von allein nicht mehr aufhört. Die Ausleitung beginnt erst nach der dritten Umdrehung. Richtig: kein Gegenbremsen, Gewicht neutral, dann weich ausgeleitet. Besser: nach der ersten Umdrehung ausleiten, zuerst die Aussenbremse lösen, Blick an den Horizont. Für die Studie: Kontrollverlust nein, Höhenverlust 290 m.</span>
-      <span data-lang="en">The spiral is entered cleanly. From 52 s the canopy hangs far forward, the hands stay low, the sink rises to 16 m/s; that is the point where the spiral becomes stable and no longer stops by itself. The exit begins only after the third turn. Right: no counter-braking, weight neutral, then a soft exit. Better: exit after the first turn, release the outer brake first, eyes on the horizon. For the study: loss of control no, height lost 290 m.</span>
-      <div class="who"><span data-lang="de">SIV-Lehrer, Akroschule · innert 6 Tagen · Beispieltext</span><span data-lang="en">SIV instructor, acro school · within 6 days · example text</span></div>
-    </div>
-    <div class="share">
-      <input id="share_link" readonly value="https://joerxc.org/parabox/s/7f3k2q (Beispiel)">
-      <button id="b_copy"><span data-lang="de">Link kopieren</span><span data-lang="en">Copy link</span></button>
-      <button id="b_sust" title="Demo, ohne Funktion"><span data-lang="de">Bilder + IGC herunterladen ↓</span><span data-lang="en">Download images + IGC ↓</span></button>
-      <span class="note" id="sust_note" style="display:none"><span data-lang="de">Holt die markierte Stelle: die drei Minuten vor der Marke als Einzelbilder, 480 × 480, 10 Bilder/s, und die vollständige IGC-Datei, nur mit Freigabe des Piloten. In der Demo ohne Funktion.</span><span data-lang="en">Fetches the marked section: the three minutes before the mark as single images, 480 × 480, 10 frames/s, and the complete IGC file, only with the pilot's release. No function in the demo.</span></span>
-      <span class="note"><span data-lang="de">Nur wer den Link hat, sieht diese Störung; der Pilot kann den Link jederzeit löschen. Keine öffentlichen Kommentare.</span><span data-lang="en">Only those with the link see this incident; the pilot can delete the link at any time. No public comments.</span></span>
-    </div>
-  </div>
-</div>
-</div>
-
 <div class="ov" id="ov" role="dialog" aria-modal="true">
   <div class="dlg">
     <h2><span data-lang="de">Wem diese Bilder gehören</span><span data-lang="en">Who owns these images</span></h2>
     <div class="row">
       <label class="switch"><input type="checkbox" id="rel" checked><span></span></label>
-      <div><div class="st" id="rel_st"><span data-lang="de">Für die Studie freigegeben, ohne Namen.</span><span data-lang="en">Released to the study, without name.</span></div>
+      <div><div class="st" id="rel_st"><span data-lang="de">Für andere Piloten freigegeben, ohne Namen.</span><span data-lang="en">Released to other pilots, without name.</span></div>
       <div class="sub"><span data-lang="de">Nur dieses Fenster von wenigen Minuten, nicht der Flug. Jederzeit widerrufbar.</span><span data-lang="en">Only this window of a few minutes, not the flight. Can be withdrawn at any time.</span></div></div>
     </div>
-    <p><span data-lang="de">Die Bilder bleiben auf dem Gerät; nichts verlässt es ohne diesen Schalter. Freigegebene Störungen werden ohne Namen ausgewertet: Flugphase, Art der Störung, Höhe, Gebiet, Ausgang. Die Studie gibt nichts an Versicherungen, Verbände, Behörden oder Gerichte weiter; sie hat nur, was freigegeben ist, und das trägt keinen Namen.</span>
-    <span data-lang="en">The images stay on the device; nothing leaves it without this switch. Released incidents are analysed without names: flight phase, kind of incident, altitude, region, outcome. The study passes nothing to insurers, associations, authorities or courts; it only has what was released, and that carries no name.</span></p>
-    <details>
-      <summary><span data-lang="de">Die ganze Datencharta</span><span data-lang="en">The full data charter</span></summary>
-      <div data-lang="de">
-      <p>Die Parabox zeichnet auf, was ein Pilot im Flug selbst sieht: die Kappe, die Hände, die Spur, die Höhe. Diese Aufzeichnungen gehören dem Piloten. Was mit ihnen geschieht, regelt diese Charta, und sie gilt für jedes Gerät, das im Rahmen der Studie oder danach abgegeben wird.</p>
-      <p>Die Bilder bleiben auf dem Gerät. Die Box hat keinen Funk und keine Verbindung; nichts verlässt sie, solange der Pilot sie nicht selbst an sein Handy oder seinen Computer steckt. Dort sieht er seine Flüge und Störungen allein.</p>
-      <p>Geteilt wird nur, was der Pilot freigibt, und nur Störung für Störung. Jede freigegebene Störung umfasst die Bilder, die Spur und die Höhe eines Fensters von wenigen Minuten, nicht den ganzen Flug und nie die anderen Flüge. Ab Werk ist das Teilen eingeschaltet, damit es nicht am Vergessen scheitert; der Pilot kann es für jede Störung und für das ganze Gerät abschalten, und er kann jede Freigabe zurückziehen, worauf die Störung aus der Auswertung entfernt wird.</p>
-      <p>Freigegebene Störungen werden ohne Namen ausgewertet. Die Auswertung kennt Flugphase, Art der Störung, Höhe, Gebiet und Ausgang; sie kennt keinen Namen, kein XContest-Konto und keinen Wohnort. Was veröffentlicht wird, sind Zahlen über viele Störungen und einzelne Störungen als Lehrstück; ein Lehrstück erscheint nur, wenn der Pilot dieser einen Veröffentlichung ausdrücklich zugestimmt hat.</p>
-      <p>Niemand ausser dem Piloten erhält Zugriff auf das Gerät. Die Studie gibt keine Aufzeichnungen an Versicherungen, Verbände, Behörden oder Gerichte weiter; sie hat sie nicht, solange der Pilot sie nicht freigegeben hat, und freigegebene Störungen tragen keinen Namen. Was der Pilot aus seinem Gerät selbst weitergibt, entscheidet er allein.</p>
-      <p>Für den schlimmsten Fall entscheidet der Pilot im Voraus. Beim Einrichten legt er fest, ob nach einem tödlichen Unfall seine Angehörigen die Aufzeichnung auswerten lassen dürfen, damit sie und andere erfahren, was geschah. Ohne diese Festlegung bleibt das Gerät verschlossen.</p>
-      <p>Das Gerät erhebt nichts anderes. Keine Mikrofone, keine Position ausserhalb des Flugs, keine Nutzung der Bilder für andere Zwecke als die Sicherheit des Gleitschirmfliegens. Ändert sich diese Charta, gilt die Änderung nur für Störungen, die danach freigegeben werden.</p>
-      </div>
-      <div data-lang="en">
-      <p>The Parabox records what a pilot sees in flight: the canopy, the hands, the track, the altitude. These recordings belong to the pilot. What happens to them is governed by this charter, and it applies to every device handed out within the study or after it.</p>
-      <p>The images stay on the device. The box has no radio and no connection; nothing leaves it unless the pilot plugs it into his phone or computer himself. There he sees his flights and incidents alone.</p>
-      <p>Only what the pilot releases is shared, and only incident by incident. Each released incident comprises the images, the track and the altitude of a window of a few minutes, not the whole flight and never the other flights. Sharing is switched on from the factory so that it does not fail by forgetting; the pilot can switch it off for any incident and for the whole device, and he can withdraw any release, whereupon the incident is removed from the analysis.</p>
-      <p>Released incidents are analysed without names. The analysis knows flight phase, kind of incident, altitude, region and outcome; it knows no name, no XContest account and no place of residence. What is published are numbers over many incidents and single incidents as lessons; a lesson appears only if the pilot has expressly agreed to that one publication.</p>
-      <p>Nobody but the pilot gets access to the device. The study passes no recordings to insurers, associations, authorities or courts; it does not have them unless the pilot has released them, and released incidents carry no name. What the pilot passes on from his own device, he decides alone.</p>
-      <p>For the worst case the pilot decides in advance. When setting up, he determines whether after a fatal accident his relatives may have the recording analysed, so that they and others learn what happened. Without this decision the device stays sealed.</p>
-      <p>The device collects nothing else. No microphones, no position outside the flight, no use of the images for any purpose other than paragliding safety. If this charter changes, the change applies only to incidents released afterwards.</p>
-      </div>
-    </details>
+    <p><span data-lang="de">Die Bilder sind auf dem Gerät verschlüsselt. In der Studie sehen die Studienleitung und die Experten die hochgeladenen Störungen; die Experten, die bewerten, sehen den Namen nicht. Andere Piloten und die Öffentlichkeit sehen eine Störung nur, wenn der Pilot sie ausdrücklich freigibt. Ohne Namen heisst nicht anonym: Ort, Zeit und Bilder können eine Zuordnung ermöglichen. Gesetzliche Pflichten und behördliche Befugnisse bleiben vorbehalten.</span>
+    <span data-lang="en">The images are encrypted on the device. In the study, the study team and the experts see the uploaded incidents; the experts who rate them do not see the name. Other pilots and the public see an incident only if the pilot expressly releases it. Without a name does not mean anonymous: place, time and images can allow identification. Legal obligations and the powers of the authorities remain reserved.</span></p>
+    <p class="note"><span data-lang="de">Studienvereinbarung und Datencharta sind Teil des Gesuchs zur <a href="https://joerxc.org/xcdebrief/">XCDebrief-Studie</a>.</span><span data-lang="en">The study agreement and the data charter are part of the application for the <a href="https://joerxc.org/xcdebrief/">XCDebrief study</a>.</span></p>
     <div class="foot"><button id="b_close" class="ok"><span data-lang="de">Schliessen</span><span data-lang="en">Close</span></button></div>
   </div>
 </div>
@@ -313,7 +250,7 @@ html.de [data-lang="en"]{display:none!important}
   var MARKS=[];
   var marksEl=document.getElementById('marks');
   function renderMarks(){
-    marksEl.innerHTML='';
+    if(!marksEl) return; marksEl.innerHTML='';
     if(!MARKS.length){ var li=document.createElement('li'); li.className='none'; li.textContent=de()?'Noch keine. Im Player ein Bild anhalten und «Marke» drücken.':'None yet. Stop at a frame in the player and press "Mark".'; marksEl.appendChild(li); return; }
     MARKS.forEach(function(m,idx){
       var li=document.createElement('li');
@@ -323,10 +260,7 @@ html.de [data-lang="en"]{display:none!important}
       li.appendChild(b); li.appendChild(inp); li.appendChild(x); marksEl.appendChild(li);
     });
   }
-  document.getElementById('b_mark').onclick=function(){ stop(); if(MARKS.some(function(m){return m.i===cur;})) return; MARKS.push({i:cur,txt:''}); MARKS.sort(function(a,b){return a.i-b.i;}); renderMarks(); drawTimeline(FT[cur]); var last=marksEl.querySelector('input'); };
-  document.getElementById('b_down').onclick=function(){ document.getElementById('debrief').scrollIntoView({behavior:'smooth'}); };
-  document.getElementById('b_sust').onclick=function(){ var n=document.getElementById('sust_note'); n.style.display=(n.style.display==='none')?'block':'none'; };
-  document.getElementById('b_copy').onclick=function(){ var f=document.getElementById('share_link'); f.select(); try{ navigator.clipboard.writeText(f.value); }catch(e){} };
+  document.getElementById('b_mark').onclick=function(){ stop(); if(MARKS.some(function(m){return m.i===cur;})) return; MARKS.push({i:cur,txt:''}); MARKS.sort(function(a,b){return a.i-b.i;}); renderMarks(); drawTimeline(FT[cur]); var last=marksEl?marksEl.querySelector('input'):null; };
   var flags=document.getElementById('flags');
   function buildFlags(){ flags.innerHTML=''; EV.forEach(function(e){var b=document.createElement('button'); b.textContent='⚑ '+e.t+' s · '+(de()?e.de:e.en); b.onclick=function(){stop(); show(nearest(e.t-2));}; flags.appendChild(b);});
     var k=document.createElement('span'); k.className='kbd'; k.textContent=de()?'Tasten: ← → ein Bild · Umschalt ← → eine Sekunde · Leertaste Abspielen':'Keys: ← → one frame · Shift ← → one second · Space play'; flags.appendChild(k); }
@@ -468,7 +402,7 @@ html.de [data-lang="en"]{display:none!important}
 
   // ---------- release switch ----------
   var rel=document.getElementById('rel'), relSt=document.getElementById('rel_st');
-  function relLabel(){ relSt.textContent = rel.checked ? (de()?'Für die Studie freigegeben, ohne Namen.':'Released to the study, without name.') : (de()?'Nur ich sehe diese Störung.':'Only I can see this incident.'); }
+  function relLabel(){ relSt.textContent = rel.checked ? (de()?'Für andere Piloten freigegeben, ohne Namen.':'Released to other pilots, without name.') : (de()?'Nur Studienleitung und Experten sehen diese Störung.':'Only the study team and the experts see this incident.'); }
   rel.addEventListener('change',relLabel);
   var ov=document.getElementById('ov');
   function openRel(){ stop(); ov.classList.add('on'); relLabel(); }
