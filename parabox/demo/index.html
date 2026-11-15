@@ -106,8 +106,8 @@ html.de [data-lang="en"]{display:none!important}
 <button class="langbtn" id="lang" type="button" aria-label="Sprache / language"><span data-lang="de">EN</span><span data-lang="en">DE</span></button></div>
 <div class="wrap">
 <p class="note">
-<span data-lang="de">Demonstration. Bilder aus einem öffentlichen Sicherheitstrainings-Video, gespeichert wie in der Box: 480 × 480 Punkte, Bildkreis der 170-Grad-Optik, 10 Bilder pro Sekunde, durchgehend; der Pilot setzt mit dem Knopf eine Marke. Das Trainingsvideo deckt nur die inneren rund 100 Grad ab, der graue Ring aussen bleibt deshalb leer; die Box sähe dort Horizont und Boden. Der Flug ist eine andere IGC-Datei, Sicherheitstraining über dem Brienzersee, nur das Fenster mit der Spirale; die Zuordnung ist nachgebildet.</span>
-<span data-lang="en">Demonstration. Images from a public SIV video, stored as in the box: 480 × 480 pixels, image circle of the 170-degree optics, 10 frames per second, continuously; the pilot sets a mark with the button. The training video covers only the inner 100 degrees or so, which is why the grey ring outside stays empty; the box would see horizon and ground there. The flight is a different IGC file, an SIV course over Lake Brienz, only the window with the spiral; the matching is simulated.</span>
+<span data-lang="de">Demonstration mit Bildern aus einem öffentlichen Sicherheitstrainings-Video, umgerechnet auf den Bildkreis einer Fisheye-Optik und 10 Bilder pro Sekunde, wie sie das Studiengerät durchgehend aufnimmt. Das Video deckt nur die inneren rund 100 Grad ab, deshalb bleibt der graue Ring aussen leer; das Gerät sähe dort Horizont und Boden. Der Flug ist eine andere IGC-Datei, ein Sicherheitstraining über dem Brienzersee; die Zuordnung ist nachgebildet.</span>
+<span data-lang="en">Demonstration with images from a public SIV video, converted to the image circle of a fisheye lens and 10 frames per second, as the study device records continuously. The video covers only the inner 100 degrees or so, which is why the grey ring outside stays empty; the device would see horizon and ground there. The flight is a different IGC file, an SIV course over Lake Brienz; the matching is simulated.</span>
 </p>
 
 <div class="bar">
@@ -120,14 +120,12 @@ html.de [data-lang="en"]{display:none!important}
   <div class="tl"><canvas id="tl"></canvas></div>
   <span class="sp"><span data-lang="de">Tempo</span><span data-lang="en">Speed</span>
   <select id="rate"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></span>
-  <button id="b_mark" class="mk" title="Marke an diesem Bild setzen">⌖ <span data-lang="de">Marke</span><span data-lang="en">Mark</span></button>
-  <button id="b_rel" class="rel"><span data-lang="de">Freigabe</span><span data-lang="en">Release</span></button>
 </div>
 <div class="flags" id="flags"></div>
 
 <div class="grid">
   <div class="tile">
-    <div class="hd"><span class="k"><span data-lang="de">Box · Bild</span><span data-lang="en">Box · frame</span> <span id="v_f">0</span>/<span id="v_n">0</span></span><span class="v" id="v_t">0.0<span class="u">s</span></span></div>
+    <div class="hd"><span class="k"><span data-lang="de">Gerät · Bild</span><span data-lang="en">Device · frame</span> <span id="v_f">0</span>/<span id="v_n">0</span></span><span class="v" id="v_t">0.0<span class="u">s</span></span></div>
     <div class="bd"><img id="img" alt="Box"><span class="stamp" id="v_rate"></span></div>
   </div>
   <div class="tile">
@@ -153,21 +151,7 @@ html.de [data-lang="en"]{display:none!important}
 </div>
 
 
-<div class="ov" id="ov" role="dialog" aria-modal="true">
-  <div class="dlg">
-    <h2><span data-lang="de">Wem diese Bilder gehören</span><span data-lang="en">Who owns these images</span></h2>
-    <div class="row">
-      <label class="switch"><input type="checkbox" id="rel" checked><span></span></label>
-      <div><div class="st" id="rel_st"><span data-lang="de">Für andere Piloten freigegeben, ohne Namen.</span><span data-lang="en">Released to other pilots, without name.</span></div>
-      <div class="sub"><span data-lang="de">Nur dieses Fenster von wenigen Minuten, nicht der Flug. Jederzeit widerrufbar.</span><span data-lang="en">Only this window of a few minutes, not the flight. Can be withdrawn at any time.</span></div></div>
-    </div>
-    <p><span data-lang="de">Die Bilder sind auf dem Gerät verschlüsselt. In der Studie sehen die Studienleitung und die Experten die hochgeladenen Störungen; die Experten, die bewerten, sehen den Namen nicht. Andere Piloten und die Öffentlichkeit sehen eine Störung nur, wenn der Pilot sie ausdrücklich freigibt. Ohne Namen heisst nicht anonym: Ort, Zeit und Bilder können eine Zuordnung ermöglichen. Gesetzliche Pflichten und behördliche Befugnisse bleiben vorbehalten.</span>
-    <span data-lang="en">The images are encrypted on the device. In the study, the study team and the experts see the uploaded incidents; the experts who rate them do not see the name. Other pilots and the public see an incident only if the pilot expressly releases it. Without a name does not mean anonymous: place, time and images can allow identification. Legal obligations and the powers of the authorities remain reserved.</span></p>
-    <p class="note"><span data-lang="de">Studienvereinbarung und Datencharta sind Teil des Gesuchs zur <a href="https://joerxc.org/xcdebrief/">XCDebrief-Studie</a>.</span><span data-lang="en">The study agreement and the data charter are part of the application for the <a href="https://joerxc.org/xcdebrief/">XCDebrief study</a>.</span></p>
-    <div class="foot"><button id="b_close" class="ok"><span data-lang="de">Schliessen</span><span data-lang="en">Close</span></button></div>
-  </div>
-</div>
-<p class="end"><span data-lang="de">Teil des Langzeitprojekts</span><span data-lang="en">Part of the long-term project</span> <a href="https://joerxc.org/parabox/">Parabox</a> · <a href="https://joerxc.org/">joerxc.org</a></p>
+<p class="end"><span data-lang="de">Die Aufnahmen gehören dem Piloten.</span><span data-lang="en">The recordings belong to the pilot.</span> <a href="https://joerxc.org/parabox/">Parabox</a> · <a href="https://joerxc.org/xcdebrief/"><span data-lang="de">XCDebrief-Studie</span><span data-lang="en">XCDebrief study</span></a> · <a href="https://joerxc.org/">joerxc.org</a></p>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -216,11 +200,7 @@ html.de [data-lang="en"]{display:none!important}
   var W0=lo(igcT(0)), W1=Math.min(N-1,lo(igcT(WIN))+1);
 
   // flags in window seconds
-  var EV = [
-    {t:10,  de:'Dynamische Kurve', en:'Dynamic turn'},
-    {t:50,  de:'Spirale', en:'Spiral dive'},
-    {t:66,  de:'Knopf gedrückt: Marke gesetzt', en:'Button pressed: mark set', trig:true}
-  ];
+  var EV = [];
 
   // ---------- frames + controls ----------
   var img=document.getElementById('img'), cur=0, playing=false, timer=null;
@@ -260,7 +240,6 @@ html.de [data-lang="en"]{display:none!important}
       li.appendChild(b); li.appendChild(inp); li.appendChild(x); marksEl.appendChild(li);
     });
   }
-  document.getElementById('b_mark').onclick=function(){ stop(); if(MARKS.some(function(m){return m.i===cur;})) return; MARKS.push({i:cur,txt:''}); MARKS.sort(function(a,b){return a.i-b.i;}); renderMarks(); drawTimeline(FT[cur]); var last=marksEl?marksEl.querySelector('input'):null; };
   var flags=document.getElementById('flags');
   function buildFlags(){ flags.innerHTML=''; EV.forEach(function(e){var b=document.createElement('button'); b.textContent='⚑ '+e.t+' s · '+(de()?e.de:e.en); b.onclick=function(){stop(); show(nearest(e.t-2));}; flags.appendChild(b);});
     var k=document.createElement('span'); k.className='kbd'; k.textContent=de()?'Tasten: ← → ein Bild · Umschalt ← → eine Sekunde · Leertaste Abspielen':'Keys: ← → one frame · Shift ← → one second · Space play'; flags.appendChild(k); }
@@ -396,20 +375,10 @@ html.de [data-lang="en"]{display:none!important}
     MARKS.forEach(function(m){ var x=xs(FT[m.i]); g.fillStyle=cssVar('--accent'); g.beginPath(); g.moveTo(x,h/2-10); g.lineTo(x+5,h/2-5); g.lineTo(x,h/2); g.lineTo(x-5,h/2-5); g.closePath(); g.fill(); });
     g.fillStyle=cssVar('--cur'); g.beginPath(); g.arc(xs(wt),h/2,6,0,7); g.fill();
     g.font='10.5px -apple-system,Helvetica,Arial'; g.fillStyle=cssVar('--text3'); g.textAlign='left'; g.fillText('0 s',8,h-1); g.textAlign='right'; g.fillText(WIN+' s',w-8,h-1);
-    g.fillStyle=cssVar('--cur'); g.textAlign='right'; g.fillText(de()?'Knopf':'button',xs(T_BTN)-9,9);
     cTl.onclick=function(e){var r=cTl.getBoundingClientRect(); var t=((e.clientX-r.left)-8)/(w-16)*WIN; stop(); show(nearest(t));};
   }
 
-  // ---------- release switch ----------
-  var rel=document.getElementById('rel'), relSt=document.getElementById('rel_st');
-  function relLabel(){ relSt.textContent = rel.checked ? (de()?'Für andere Piloten freigegeben, ohne Namen.':'Released to other pilots, without name.') : (de()?'Nur Studienleitung und Experten sehen diese Störung.':'Only the study team and the experts see this incident.'); }
-  rel.addEventListener('change',relLabel);
-  var ov=document.getElementById('ov');
-  function openRel(){ stop(); ov.classList.add('on'); relLabel(); }
-  function closeRel(){ ov.classList.remove('on'); }
-  document.getElementById('b_rel').onclick=openRel;
-  document.getElementById('b_close').onclick=closeRel;
-  ov.addEventListener('click',function(e){ if(e.target===ov) closeRel(); });
+  var ov={classList:{contains:function(){return false;}}}; function closeRel(){} function relLabel(){}
 
   // ---------- update ----------
   function update(){
